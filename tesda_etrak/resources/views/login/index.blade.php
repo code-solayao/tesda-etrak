@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="form-box">
-        <form action="{{ route('login.post') }}" method="POST">
+        <form action="{{ route('login') }}" method="POST">
             @csrf
             <div class="form-header">
                 <h1>Sign In</h1>
@@ -27,7 +27,7 @@
                 </button>
             </div>
             <div class="action-link">
-                <p>Create an account <a href="{{ route('login.signup') }}">here</a>.</p>
+                <p>Create an account <a href="{{ route('signup-page') }}">here</a>.</p>
             </div>
         </form>
     </div>

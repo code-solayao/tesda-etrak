@@ -11,10 +11,10 @@ use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
     public function index() {
-        return view('login.index');
+        return view('/login/index');
     }
 
-    public function login_post(Request $request) {
+    public function login(Request $request) {
         $credentials = $request->validate([
             'email' => ['required', 'email'], 
             'password' => 'required'
@@ -31,11 +31,11 @@ class UserController extends Controller
         ])->onlyInput('email');
     }
 
-    public function signup() {
-        return view('login.signup');
+    public function signup_page() {
+        return view('/login/signup');
     }
 
-    public function signup_post(Request $request) {
+    public function signup(Request $request) {
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'min:2', 'max:100'], 
             'email' => ['required', 'string', 'email', Rule::unique('users', 'email')], 
@@ -46,7 +46,7 @@ class UserController extends Controller
         $user = User::create($validatedData);
         Auth::login($user);
 
-        return redirect()->route('e-trak.index')->with('success', 'Account created successfully!');
+        return redirect()->route('e-trak')->with('success', 'Account created successfully!');
     }
 
     public function logout(Request $request) {
@@ -54,6 +54,6 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login.index');
+        return redirect()->route('login');
     }
 }

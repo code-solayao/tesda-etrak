@@ -9,7 +9,7 @@
         <a href="https://lookerstudio.google.com/reporting/9d6c7c0a-dcfb-4dda-ba67-589c230b57bd/page/GzuKE?fbclid=IwY2xjawGZXIlleHRuA2FlbQIxMAABHWw1eJ0SY4OlJju7W9T7gV5eNEVFGy5QgPEYOM0jkeni293iDCwtfhtkkQ_aem_jBd-8gTDT5g2pEeWlbhpFQ" 
             class="btn btn-primary mb-2" target="_blank">Dashboard</a>
         <br />
-        <a href="" class="btn btn-primary mb-2">View Records</a>
+        <a href="{{ route('view-records') }}" class="btn btn-primary mb-2">View Records</a>
         <br />
         <a href="" class="btn btn-primary mb-4">Import Excel File</a>
     </div>

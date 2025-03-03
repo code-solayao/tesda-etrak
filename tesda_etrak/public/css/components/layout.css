@@ -1,0 +1,8 @@
+.success {
+    padding: 4px;
+    text-align: center;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}

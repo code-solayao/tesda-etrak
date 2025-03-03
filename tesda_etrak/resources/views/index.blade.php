@@ -14,7 +14,7 @@
 
             <div class="center text-center">
                 <h1 class="display-4">Welcome to <strong>E-TRAK</strong> by TESDA-NCR</h1>
-                <a href="{{ route('login.index') }}" class="btn btn-primary" role="button">Go to Login</a>
+                <a href="{{ route('login-page') }}" class="btn btn-primary" role="button">Go to Login</a>
             </div>
 
         </main>
