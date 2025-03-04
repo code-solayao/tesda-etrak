@@ -15,21 +15,34 @@
     </div>
     <div class="container mt-4">
         <form action="{{ route('create-record') }}" method="POST">
+            @csrf
+            {{-- VALIDATION ERRORS --}}
+            @if ($errors->any()) 
+                <div style="border: 5px ridge red; border-radius: 10px;" class="bg-danger bg-gradient mb-4">
+                    <ul class="px-5">
+                        @foreach ($errors as $error)
+                            <li class="my-3 text-white fw-bolder">
+                                {{ $error }}
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <!-- FULL NAME -->
             <div class="form-group mb-4">
                 <label for="last_name" class="form-label control-label-1">Last Name</label>
-                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter last name" required">
+                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ old('last_name') }}" placeholder="Enter last name" required>
             </div>
             <div class="form-group mb-4">
                 <label for="first_name" class="form-label control-label-1">First Name</label>
-                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter first name" required>
+                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ old('first_name') }}" placeholder="Enter first name" required>
             </div>
             <div class="form-group mb-4">
                 <label for="middle_name" class="form-label control-label-1">Middle Name</label>
-                <input type="text" class="form-control" id="middle_name" name="middle_name" placeholder="Enter middle name">
+                <input type="text" class="form-control" id="middle_name" name="middle_name" value="{{ old('middle_name') }}" placeholder="Enter middle name">
             </div>
             <div class="form-group mb-5">
-                <label for="extension_name" class="form-label control-label-1">Extension Name</label>
+                <label for="extension_name" class="form-label control-label-1">Extension Name</label> <!-- Tapusin ang OLD INPUT -->
                 <select name="extension_name" id="extension_name" class="form-control">
                     <option value="">None</option>
                     <option value="Sr.">Sr.</option>

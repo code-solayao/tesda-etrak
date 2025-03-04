@@ -1,3 +1,12 @@
+@section('title', 'E-TRAK - Record details')
+
+@section('styles')
+    <link rel="stylesheet" href="">
+@endsection
+
+@section('scripts')
+    <script></script>
+@endsection
 
 <x-layout>
     <div class="text-center mb-4">
