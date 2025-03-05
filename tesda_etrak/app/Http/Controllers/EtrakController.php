@@ -14,10 +14,10 @@ class EtrakController extends Controller
     }
 
     public function view_records() {
+        $graduates = Graduate::select('id', 'last_name', 'first_name', 'middle_name', 'extension_name', 'employment_status', 'allocation', 'qualification_title')->get();
         //$graduates = DB::select("CALL read_records()");
 
-        //return view('e-trak.records', compact('graduates'));
-        return view('/e-trak/view-records');
+        return view('/e-trak/view-records', compact('graduates'));
     }
 
     public function create_record_page() {
@@ -67,6 +67,19 @@ class EtrakController extends Controller
         ]);
 
         return redirect()->route('view-records')->with('success', 'Created record successfully!');
+    }
+
+    public function record_details(Graduate $graduate) {
+        //$graduate = Graduate::findOrFail($id);
+        return view('/e-trak/record-details', compact('graduate'));
+    }
+
+    public function update_record_page(Graduate $graduate) {
+        return view('/e-trak/update_record', compact($graduate));
+    }
+
+    public function update_record(Request $request) {
+        
     }
 
     private function full_name_format($last_name, $first_name, $middle_name, $extension_name) {

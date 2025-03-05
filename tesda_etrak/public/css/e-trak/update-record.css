@@ -1,0 +1,65 @@
+label.control-label-1 {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+label.control-label-2 {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+dd {
+    margin-bottom: 1em;
+}
+
+div.verification-status-div {
+    margin-top: 20px;
+    width: 100%;
+}
+
+label.employment-status-label {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#details {
+    background-color: white;
+    font-size: 1.3em;
+}
+
+#verification {
+    background-color: white;
+}
+
+#employment {
+    background-color: white;
+}
+
+.tablink {
+    background-color: #0d6efd;
+    border: hidden;
+    color: white;
+    cursor: pointer;
+    float: inline-start;
+    font-size: 17px;
+    outline: hidden;
+    padding: 14px 16px;
+    width: 33.334%;
+}
+
+.tablink:hover {
+    background-color: #258cfb;
+}
+
+.tablink:disabled {
+    background-color: #258cfb;
+    cursor: not-allowed;
+}
+
+.tabcontent {
+    border-radius: 5px;
+    color: black;
+    height: 100%;
+    outline: solid;
+    padding: 100px 20px;
+}
