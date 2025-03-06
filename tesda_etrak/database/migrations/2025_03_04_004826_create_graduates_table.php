@@ -49,7 +49,7 @@ return new class extends Migration
             $table->string('hired_date', 50)->nullable();
             $table->string('submitted_documents_date', 50)->nullable();
             $table->string('interview_date', 50)->nullable();
-            $table->string('not_hired_date', 50)->nullable();
+            $table->string('not_hired_reason', 50)->nullable();
             $table->string('training_status', 50)->nullable();
             $table->string('assessment_result')->nullable();
             $table->string('employment_before_training', 50)->nullable();

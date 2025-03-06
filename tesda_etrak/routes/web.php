@@ -30,4 +30,4 @@ Route::post('/e-trak/create-record/post', [EtrakController::class, 'create_recor
 Route::get('/e-trak/record-details/{graduate}', [EtrakController::class, 'record_details'])->name('record-details');
 
 Route::get('/e-trak/update-record/{graduate}', [EtrakController::class, 'update_record_page'])->name('update-record-page');
-Route::post('/e-trak/update-record/{graduate}/post', [EtrakController::class, 'update_record'])->name('update-record');
+Route::put('/e-trak/update-record/{graduate}/post', [EtrakController::class, 'update_record'])->name('update-record');
