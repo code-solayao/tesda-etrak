@@ -31,6 +31,84 @@
         @csrf
         @method('PUT')
         <div class="tabcontent" id="details">
+            <fieldset hidden>
+                <div class="form-group mb-4">
+                    <label for="verification_means" class="form-label control-label-2">Means of Verification</label>
+                    <input type="text" class="form-control" id="verification_means" name="verification_means" value="{{ $graduate->verification_means }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="verification_date" class="form-label control-label-2">Date of Verification</label>
+                    <input type="text" class="form-control" id="verification_date" name="verification_date" value="{{ $graduate->verification_date }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="verification_status" class="form-label control-label-2">Status of Verification</label>
+                    <input type="text" class="form-control" id="verification_status" name="verification_status" value="{{ $graduate->verification_status }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="follow_up_date_1" class="form-label control-label-2">First Follow-up Date</label>
+                    <input type="text" class="form-control" id="follow_up_date_1" name="follow_up_date_1" value="{{ $graduate->follow_up_date_1 }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="follow_up_date_2" class="form-label control-label-2">Second Follow-up Date</label>
+                    <input type="text" class="form-control" id="follow_up_date_2" name="follow_up_date_2" value="{{ $graduate->follow_up_date_2 }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="response_status" class="form-label control-label-2">Type of Response</label>
+                    <input type="text" class="form-control" id="response_status" name="response_status" value="{{ $graduate->response_status }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="not_interested_reason" class="form-label control-label-2">Reason (Not Interested)</label>
+                    <input type="text" class="form-control" id="not_interested_reason" name="not_interested_reason" value="{{ $graduate->not_interested_reason }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="referral_status" class="form-label control-label-2">Refer to Company?</label>
+                    <input type="text" class="form-control" id="referral_status" name="referral_status" value="{{ $graduate->referral_status }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="referral_date" class="form-label control-label-2">Date of Referral</label>
+                    <input type="text" class="form-control" id="referral_date" name="referral_date" value="{{ $graduate->referral_date }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="no_referral_reason" class="form-label control-label-2">Reason (No Referral)</label>
+                    <input type="text" class="form-control" id="no_referral_reason" name="no_referral_reason" value="{{ $graduate->no_referral_reason }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="invalid_contact" class="form-label control-label-2">Invalid Contact</label>
+                    <input type="text" class="form-control" id="invalid_contact" name="invalid_contact" value="{{ $graduate->invalid_contact }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="company_name" class="form-label control-label-2">Name of Company</label>
+                    <input type="text" class="form-control" id="company_name" name="company_name" value="{{ $graduate->company_name }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="company_address" class="form-label control-label-2">Address of Company</label>
+                    <input type="text" class="form-control" id="company_address" name="company_address" value="{{ $graduate->company_address }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="job_title" class="form-label control-label-2">Job Title</label>
+                    <input type="text" class="form-control" id="job_title" name="job_title" value="{{ $graduate->job_title }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="employment_status" class="form-label control-label-2">Status of Employment</label>
+                    <input type="text" class="form-control" id="employment_status" name="employment_status" value="{{ $graduate->employment_status }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="hired_date" class="form-label control-label-2">Hired</label>
+                    <input type="text" class="form-control" id="hired_date" name="hired_date" value="{{ $graduate->hired_date }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="submitted_documents_date" class="form-label control-label-2">Submitted Documents</label>
+                    <input type="text" class="form-control" id="submitted_documents_date" name="submitted_documents_date" value="{{ $graduate->submitted_documents_date }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="interview_date" class="form-label control-label-2">For Interview</label>
+                    <input type="text" class="form-control" id="interview_date" name="interview_date" value="{{ $graduate->interview_date }}" />
+                </div>
+                <div class="form-group mb-4">
+                    <label for="not_hired_reason" class="form-label control-label-2">Reason (Not Hired)</label>
+                    <input type="text" class="form-control" id="not_hired_reason" name="not_hired_reason" value="{{ $graduate->not_hired_reason }}" />
+                </div>
+            </fieldset>
             <fieldset disabled>
                 <!-- FULL NAME -->
                 <div class="form-group mb-4">

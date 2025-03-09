@@ -51,6 +51,8 @@ class EtrakController extends Controller
         $full_name = $this->full_name_format($validated['last_name'], $validated['first_name'], $validated['middle_name'], $validated['extension_name']);
         $sex = isset($validated['sex']) == true ? $validated['sex'] : '';
 
+        // Add default values for extra fields in Excel. Either implement here or with the Factory-Seeder method
+
         Graduate::create([
             'district' => $validated['district'], 
             'city' => $validated['city'], 
@@ -150,6 +152,11 @@ class EtrakController extends Controller
         ]);
 
         return redirect()->route('record-details', $graduate->id)->with('success', 'Updated record successfully!');
+    }
+
+    public function delete_record(Graduate $graduate) {
+        $graduate->delete();
+        return redirect()->route('view-records')->with('success', 'Deleted record successfully!');
     }
 
     private function full_name_format($last_name, $first_name, $middle_name, $extension_name) {
