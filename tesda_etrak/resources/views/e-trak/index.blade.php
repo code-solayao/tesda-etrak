@@ -11,6 +11,6 @@
         <br>
         <a href="{{ route('view-records') }}" class="btn btn-primary mb-2">View Records</a>
         <br>
-        <a href="" class="btn btn-primary mb-4">Import Excel File</a>
+        <a href="{{ route('import-excel-file-page') }}" class="btn btn-primary mb-4">Import Excel File</a>
     </div>
 </x-layout>

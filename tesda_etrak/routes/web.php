@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EtrakController;
+use App\Http\Controllers\ImportExcelFileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,3 +34,6 @@ Route::get('/e-trak/update-record/{graduate}', [EtrakController::class, 'update_
 Route::put('/e-trak/update-record/{graduate}/put', [EtrakController::class, 'update_record'])->name('update-record');
 
 Route::delete('/e-trak/record-details/{graduate}/delete', [EtrakController::class, 'delete_record'])->name('delete-record');
+
+Route::get('/import-excel-file', [ImportExcelFileController::class, 'index'])->name('import-excel-file-page');
+Route::post('/import-excel-file/post', [ImportExcelFileController::class, 'import'])->name('import-excel-file');
