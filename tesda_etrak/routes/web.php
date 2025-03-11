@@ -36,4 +36,4 @@ Route::put('/e-trak/update-record/{graduate}/put', [EtrakController::class, 'upd
 Route::delete('/e-trak/record-details/{graduate}/delete', [EtrakController::class, 'delete_record'])->name('delete-record');
 
 Route::get('/import-excel-file', [ImportExcelFileController::class, 'index'])->name('import-excel-file-page');
-Route::post('/import-excel-file/post', [ImportExcelFileController::class, 'import'])->name('import-excel-file');
+Route::post('/import-excel-file/post', [ImportExcelFileController::class, 'import_excel_file'])->name('import-excel-file');

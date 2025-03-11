@@ -19,6 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        ini_set('post_max_size', env('POST_MAX_SIZE', '100M'));
     }
 }

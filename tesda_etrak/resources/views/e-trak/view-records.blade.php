@@ -6,17 +6,11 @@
 
 <x-layout>
     <div class="container">
-        <div class="row">
-            <div class="col-4 pt-4" style="background-color: transparent;">
+        <div class="row" style="background-color: transparent;">
+            <div class="col-6 pt-4" style="background-color: transparent;">
                 <h1 class="display-4">Data Records</h1>
             </div>
-            <div class="col-4 text-end pt-5" style="background-color: transparent;">
-                <form action="" method="GET">
-                    <input type="text" class="form-control w-75 d-inline ml-1" name="search" value="" placeholder="Search record..." />
-                    <input type="submit" class="btn btn-secondary" value="Search" />
-                </form>
-            </div>
-            <div class="col-4 text-end pt-5" style="background-color: transparent;">
+            <div class="col-6 text-end pt-5" style="background-color: transparent;">
                 <a href="{{ route('create-record-page') }}" class="btn btn-primary" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-plus" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5" />
@@ -30,6 +24,14 @@
                     </svg> Clear All Records
                 </button>
             </div>
+        </div>
+        <div class="row" style="background-color: transparent;">
+            <form action="" method="GET">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="search" value="" placeholder="Search record..." />
+                    <input type="submit" class="btn btn-secondary input-group-text" value="Search" />
+                </div>
+            </form>
         </div>
     </div>
     <div class="container">
