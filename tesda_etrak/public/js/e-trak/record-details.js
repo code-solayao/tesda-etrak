@@ -10,7 +10,8 @@ document.getElementById("employmentTab").onclick = function () {
 
 document.getElementById("detailsTab").click();
 
-hideShowTab();
+document.getElementById("employmentTab").disabled = false;
+//hideShowTab();
 dateFormatRead();
 
 function openTabPage(name, element, backgroundColor, color) {
@@ -62,7 +63,11 @@ function dateFormatRead() {
 
     let monthName = "";
     for (let dateFormat of dateFormats) {
-        if (dateFormat.textContent == "") {
+        if (dateFormat.textContent == "" || !isValidDateStrict(dateFormat.textContent)) {
+            if (dateFormat.textContent.length > 11) {
+                let sliced = dateFormat.textContent.slice(0, 11);
+                dateFormat.textContent = sliced;
+            }
             continue;
         }
 
@@ -126,4 +131,16 @@ function dateFormatRead() {
 
         dateFormat.textContent = `${monthName} ${day}, ${year}`;
     }
+}
+
+function isValidDateStrict(dateString) {
+    const regex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+    if (!regex.test(dateString)) return false;
+
+    const date = new Date(dateString);
+    const [year, month, day] = dateString.split("-").map(Number);
+
+    return date.getFullYear() === year && 
+           date.getMonth() + 1 === month && 
+           date.getDate() === day;
 }

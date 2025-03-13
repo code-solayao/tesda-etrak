@@ -14,10 +14,58 @@ class EtrakController extends Controller
     }
 
     public function view_records() {
-        $graduates = Graduate::select('id', 'last_name', 'first_name', 'middle_name', 'extension_name', 'employment_status', 'allocation', 'qualification_title')->get();
+        $graduates = Graduate::select('id', 'last_name', 'first_name', 'middle_name', 'extension_name', 'employment_status', 'allocation', 'qualification_title')
+        ->orderBy('id', 'desc')->get();
         //$graduates = DB::select("CALL read_records()");
 
         return view('/e-trak/view-records', compact('graduates'));
+    }
+
+    public function search_graduates(Request $request) {
+        // $search = $request->search;
+        // $graduates = Graduate::where(function($query) use ($search) {
+        //     $query->where('id', 'like', "%$search%")
+        //     ->orWhere('last_name', 'like', "%$search%")
+        //     ->orWhere('first_name', 'like', "%$search%")
+        //     ->orWhere('extension_name', 'like', "%$search%")
+        //     ->orWhere('employment_status', 'like', "%$search%")
+        //     ->orWhere('allocation', 'like', "%$search%")
+        //     ->orWhere('qualification_title', 'like', "%$search%");
+        // })->orderBy('id', 'desc')->paginate(10);
+
+        // return view('/e-trak/view-records', compact('graduates', 'search'));
+
+        // Get search query from request
+        $searchQuery = $request->input('search', '');
+
+        // Set pagination values
+        $perPage = 5; // Number of students per page
+        $page = $request->input('page', 1);
+        $offset = ($page - 1) * $perPage;
+
+        $graduates = DB::select("CALL import_records(?, ?, ?)", [$searchQuery, $offset, $perPage]);
+
+        // Get total count for pagination
+        $total = DB::table('graduates')
+            ->where(function ($query) use ($searchQuery) {
+                $query->where('id', 'like', "%$searchQuery%")
+                ->orWhere('last_name', 'like', "%$searchQuery%")
+                ->orWhere('first_name', 'like', "%$searchQuery%")
+                ->orWhere('extension_name', 'like', "%$searchQuery%")
+                ->orWhere('employment_status', 'like', "%$searchQuery%")
+                ->orWhere('allocation', 'like', "%$searchQuery%")
+                ->orWhere('qualification_title', 'like', "%$searchQuery%");
+            })->count();
+
+        $totalPages = max(1, ceil($total / $perPage));
+
+        // Pass data to view
+        return view('e-trak.view-records', [
+            'graduates' => $graduates,
+            'searchQuery' => $searchQuery,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+        ]);
     }
 
     public function create_record_page() {

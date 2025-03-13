@@ -5,7 +5,7 @@
 @endsection
 
 <x-layout>
-    <div class="container">
+    <div class="container mb-4">
         <div class="row" style="background-color: transparent;">
             <div class="col-6 pt-4" style="background-color: transparent;">
                 <h1 class="display-4">Data Records</h1>
@@ -25,16 +25,18 @@
                 </button>
             </div>
         </div>
+    </div>
+    <div class="container">
         <div class="row" style="background-color: transparent;">
             <form action="" method="GET">
+                @csrf
                 <div class="input-group">
-                    <input type="text" class="form-control" name="search" value="" placeholder="Search record..." />
+                    {{-- <input type="text" class="form-control" name="search" value="{{ isset($search) ? $search : '' }}" placeholder="Search record..." /> --}}
+                    <input type="text" class="form-control" name="search" value="{{ request('search') }}" placeholder="Search record..." />
                     <input type="submit" class="btn btn-secondary input-group-text" value="Search" />
                 </div>
             </form>
         </div>
-    </div>
-    <div class="container">
         <div class="row">
             <div class="col">
                 <div class="table-responsive table-wrapper">
@@ -76,17 +78,6 @@
                     </table>
                 </div>
             </div>
-        </div>
-        <div>
-            <nav>
-                <ul class="pagination">
-                    @for ($i = 0; $i < 1; $i++)
-                        <li class="page-item">
-                            <a href="" class="page-link"></a>
-                        </li>
-                    @endfor
-                </ul>
-            </nav>
         </div>
     </div>
     <!-- Modal -->
