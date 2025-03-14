@@ -12,25 +12,24 @@ div.table-wrapper {
     box-shadow: 0px 0px 3px black;
     margin: 20px;
     max-height: 624px;
-    overflow-y: scroll;
 }
 
-#recordsTable {
+.table-style {
     border: 1px solid black;
     border-collapse: separate;
     border-spacing: 0px;
     min-width: max-content;
 }
 
-th.table-header {
+th.th-style {
     background-color: grey;
     color: white;
+    padding: 10px;
     position: sticky;
-    top: 0px;
     /* background-color: #7fbafa; */
 }
 
-th.table-header, td.table-data {
-    /* border-bottom: 1px solid black; */
+td.td-style {
+    border-right: 1px solid black;
     padding: 10px;
 }

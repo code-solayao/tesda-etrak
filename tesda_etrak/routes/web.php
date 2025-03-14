@@ -24,7 +24,7 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/e-trak', [EtrakController::class, 'index'])->name('e-trak');
 
 Route::get('/e-trak/view-records', [EtrakController::class, 'view_records'])->name('view-records');
-// Route::get('/e-trak/view-records/get', [EtrakController::class, 'search_graduates'])->name('search-graduates');
+Route::get('/e-trak/view-records/get', [EtrakController::class, 'search_graduates'])->name('search-graduates');
 
 Route::get('/e-trak/create-record', [EtrakController::class, 'create_record_page'])->name('create-record-page');
 Route::post('/e-trak/create-record/post', [EtrakController::class, 'create_record'])->name('create-record');

@@ -4,6 +4,11 @@
     <link rel="stylesheet" href="{{ asset('css/e-trak/view-records.css') }}">
 @endsection
 
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script src="{{ asset('js/e-trak/view-records.js') }}"></script> --}}
+@endsection
+
 <x-layout>
     <div class="container mb-4">
         <div class="row" style="background-color: transparent;">
@@ -28,11 +33,10 @@
     </div>
     <div class="container">
         <div class="row" style="background-color: transparent;">
-            <form action="" method="GET">
-                @csrf
+            <form action="{{ route('search-graduates') }}" method="GET">
                 <div class="input-group">
                     {{-- <input type="text" class="form-control" name="search" value="{{ isset($search) ? $search : '' }}" placeholder="Search record..." /> --}}
-                    <input type="text" class="form-control" name="search" value="{{ request('search') }}" placeholder="Search record..." />
+                    <input type="text" class="form-control" name="search" value="{{ request()->input('search') ? request()->input('search') : '' }}" placeholder="Search record..." />
                     <input type="submit" class="btn btn-secondary input-group-text" value="Search" />
                 </div>
             </form>
@@ -40,31 +44,31 @@
         <div class="row">
             <div class="col">
                 <div class="table-responsive table-wrapper">
-                    <table class="table table-striped table-hover" id="recordsTable">
+                    <table class="table table-striped table-hover table-style">
                         <thead>
                             <tr>
-                                <th class="table-header">No.</th>
-                                <th class="table-header">Last name</th>
-                                <th class="table-header">First name</th>
-                                <th class="table-header">Middle name</th>
-                                <th class="table-header">Ext.</th>
-                                <th class="table-header">Status of Employment</th>
-                                <th class="table-header">Year of Graduation</th>
-                                <th class="table-header">Qualification Title</th>
-                                <th class="table-header"></th>
+                                <th class="th-style">No.</th>
+                                <th class="th-style">Last name</th>
+                                <th class="th-style">First name</th>
+                                <th class="th-style">Middle name</th>
+                                <th class="th-style">Ext.</th>
+                                <th class="th-style">Status of Employment</th>
+                                <th class="th-style">Year of Graduation</th>
+                                <th class="th-style">Qualification Title</th>
+                                <th class="th-style"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($graduates as $graduate)
                             <tr>
-                                <td class="table-data">{{ $graduate->id }}</td>
-                                <td class="table-data">{{ $graduate->last_name }}</td>
-                                <td class="table-data">{{ $graduate->first_name }}</td>
-                                <td class="table-data">{{ $graduate->middle_name }}</td>
-                                <td class="table-data">{{ $graduate->extension_name }}</td>
-                                <td class="table-data">{{ $graduate->employment_status }}</td>
-                                <td class="table-data">{{ $graduate->allocation }}</td>
-                                <td class="table-data">{{ $graduate->qualification_title }}</td>
+                                <td class="td-style">{{ $graduate->id }}</td>
+                                <td class="td-style">{{ $graduate->last_name }}</td>
+                                <td class="td-style">{{ $graduate->first_name }}</td>
+                                <td class="td-style">{{ $graduate->middle_name }}</td>
+                                <td class="td-style">{{ $graduate->extension_name }}</td>
+                                <td class="td-style">{{ $graduate->employment_status }}</td>
+                                <td class="td-style">{{ $graduate->allocation }}</td>
+                                <td class="td-style">{{ $graduate->qualification_title }}</td>
                                 <td>
                                     <a href="{{ route('record-details', $graduate->id) }}" class="btn btn-secondary btn-sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book-half" viewBox="0 0 16 16">
@@ -78,6 +82,9 @@
                     </table>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            {{ $graduates->withQueryString()->links('pagination::bootstrap-5') }}
         </div>
     </div>
     <!-- Modal -->

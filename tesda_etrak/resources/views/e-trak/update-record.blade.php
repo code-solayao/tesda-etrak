@@ -284,7 +284,18 @@
                         <label for="jobTitle" class="form-label control-label-1">Job Title</label>
                         <input type="text" class="form-control" id="jobTitle" name="job_title" value="{{ old('job_title', $graduate->job_title) }}" />
                     </div>
-                    <div class="form-group mb-4">
+                    <div class="form-group">
+                        <label for="continuedBtn" class="form-label control-label-1">Application Status</label>
+    
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="continuedBtn" name="application_status" value="Continued" {{ old('application_status', $graduate->application_status) == "Continued" ? 'checked' : '' }} />
+                            <label for="continuedBtn" class="form-label">Continued</label>
+                            <br>
+                            <input type="radio" class="form-check-input" id="withdrawnBtn" name="application_status" value="Withdrawn" {{ old('application_status', $graduate->application_status) == "Withdrawn" ? 'checked' : '' }} />
+                            <label for="withdrawnBtn" class="form-label">Withdrawn</label>
+                        </div>
+                    </div>
+                    <div class="form-group mb-4 application-status-div" id="continued">
                         <label class="form-label control-label-1">Employment Status</label>
 
                         <div class="form-check">
@@ -316,6 +327,12 @@
                                     @endforeach
                                 </select>
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-4 application-status-div" id="withdrawn">
+                        <div class="form-group mb-4">
+                            <label for="withdrawn_reason" class="form-label control-label-1">Reason</label>
+                            <textarea name="withdrawn_reason" id="withdrawn_reason" class="form-control" rows="3">{{ old('withdrawn_reason', $graduate->withdrawn_reason) }}</textarea>
                         </div>
                     </div>
                     <div>

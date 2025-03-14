@@ -12,7 +12,7 @@ dd {
     margin-bottom: 1em;
 }
 
-div.verification-status-div {
+div.verification-status-div, div.application-status-div {
     margin-top: 20px;
     width: 100%;
 }

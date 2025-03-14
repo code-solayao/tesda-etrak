@@ -14,6 +14,11 @@ var noReferralReason = document.getElementById("noReferralReason");
 
 var notInterestedReason = document.getElementById("notInterestedReason");
 
+var continuedBtn = document.getElementById("continuedBtn");
+var withdrawnBtn = document.getElementById("withdrawnBtn");
+var continued = document.getElementById("continued");
+var withdrawn = document.getElementById("withdrawn");
+
 detailsTab.onclick = function () {
     openTabPage(`details`, this, `#7fbafa`, `white`);
 }
@@ -57,6 +62,13 @@ referNoBtn.onclick = function () {
     referralStatus(false);
 }
 
+continuedBtn.onclick = function () {
+    applicationStatusValue(true);
+}
+withdrawnBtn.onclick = function () {
+    applicationStatusValue(false);
+}
+
 document.getElementById("hired").onclick = function () {
     employmentStatusValue(this.id);
 }
@@ -72,6 +84,8 @@ document.getElementById("notHired").onclick = function () {
 
 document.getElementById("responded").style.display = "none";
 document.getElementById("noResponse").style.display = "none";
+continued.style.display = "none";
+withdrawn.style.display = "none";
 
 dateFormatRead();
 
@@ -161,6 +175,7 @@ function referralStatus(refer) {
 }
 
 function employmentField(isDisabled) {
+    let withdrawn_reason = document.getElementById("withdrawn_reason");
     let hiredDate = document.getElementById("hiredDate");
     let submitDocsDate = document.getElementById("submitDocsDate");
     let interviewDate = document.getElementById("interviewDate");
@@ -172,6 +187,12 @@ function employmentField(isDisabled) {
         document.getElementById("companyName").value = "";
         document.getElementById("companyAddress").value = "";
         document.getElementById("jobTitle").value = "";
+
+        continuedBtn.checked = false;
+        withdrawnBtn.checked = false;
+
+        withdrawn_reason.disabled = true;
+        withdrawn_reason.value = "";
 
         document.getElementById("hired").checked = false;
         document.getElementById("submitDocs").checked = false;
@@ -187,6 +208,43 @@ function employmentField(isDisabled) {
         notHiredReason.disabled = true;
         notHiredReason.value = "";
     }
+}
+
+function applicationStatusValue(proceed) {
+    if (proceed == true) {
+        continued.style.display = "block";
+        withdrawn.style.display = "none";
+        continuedStatus();
+    }
+    else {
+        withdrawn.style.display = "block";
+        continued.style.display = "none";
+        withdrawnStatus();
+    }
+}
+
+function continuedStatus() {
+    let withdrawn_reason = document.getElementById("withdrawn_reason");
+    withdrawn_reason.disabled = true;
+    withdrawn_reason.value = "";
+}
+
+function withdrawnStatus() {
+    withdrawn_reason.disabled = false;
+
+    document.getElementById("hired").checked = false;
+    document.getElementById("submitDocs").checked = false;
+    document.getElementById("forInterview").checked = false;
+    document.getElementById("notHired").checked = false;
+
+    hiredDate.disabled = true;
+    resetDate(hiredDate);
+    submitDocsDate.disabled = true;
+    resetDate(submitDocsDate);
+    interviewDate.disabled = true;
+    resetDate(interviewDate);
+    notHiredReason.disabled = true;
+    notHiredReason.value = "";
 }
 
 function employmentStatusValue(id) {
