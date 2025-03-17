@@ -206,7 +206,7 @@
                         <input type="radio" class="form-check-input" id="respondedBtn" name="verification_status" value="Responded" {{ old('verification_status', $graduate->verification_status) == "Responded" ? 'checked' : '' }} />
                         <label class="form-label" for="respondedBtn">Responded</label>
                         <br>
-                        <input type="radio" class="form-check-input" id="noResponseBtn" name="verification_status" value="No Response" {{ old('verification_status', $graduate->verification_status) == "No Response" ? 'checked' : '' }} />
+                        <input type="radio" class="form-check-input" id="noResponseBtn" name="verification_status" value="No Response (For Follow-Up)" {{ old('verification_status', $graduate->verification_status) == "No Response (For Follow-Up)" ? 'checked' : '' }} />
                         <label class="form-label" for="noResponseBtn">No Response</label>
                     </div>
                 </div>

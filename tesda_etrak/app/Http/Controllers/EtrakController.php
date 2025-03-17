@@ -22,27 +22,75 @@ class EtrakController extends Controller
     }
 
     public function search_graduates(Request $request) {
-        if (!empty($request)) {
-            $search = $request->input('search');
+        $graduates = null;
 
-            $graduates = Graduate::where(function($query) use ($search) {
-                $query->where('id', 'like', "%$search%")
-                ->orWhere('last_name', 'like', "%$search%")
-                ->orWhere('first_name', 'like', "%$search%")
-                ->orWhere('extension_name', 'like', "%$search%")
-                ->orWhere('full_name', 'like', "%$search%")
-                ->orWhere('employment_status', 'like', "%$search%")
-                ->orWhere('allocation', 'like', "%$search%")
-                ->orWhere('qualification_title', 'like', "%$search%");
-            })->orderBy('id', 'desc')->paginate(10);
-
-            return view('/e-trak/view-records', compact('graduates'));
-        }
-        else {
+        if (empty($request)) {
             $graduates = DB::table('graduates')->orderBy('id', 'desc')->paginate(10);
-
             return view('/e-trak/view-records', compact('graduates'));
         }
+
+        $search = $request->input('search');
+        $search_category = $request->input('search_category');
+
+        switch ($search_category) {
+            case "Record number":
+                $graduates = Graduate::where(function($query) use ($search) {
+                    $query->where('id', 'LIKE', "%$search%");
+                })->orderBy('id', 'desc')->paginate(10);
+                break;
+            case "Last name":
+                $graduates = Graduate::where(function($query) use ($search) {
+                    $query->where('last_name', 'LIKE', "%$search%");
+                })->orderBy('id', 'desc')->paginate(10);
+                break;
+            case "First name":
+                $graduates = Graduate::where(function($query) use ($search) {
+                    $query->where('first_name', 'LIKE', "%$search%");
+                })->orderBy('id', 'desc')->paginate(10);
+                break;
+            case "Middle name":
+                $graduates = Graduate::where(function($query) use ($search) {
+                    $query->where('middle_name', 'LIKE', "%$search%");
+                })->orderBy('id', 'desc')->paginate(10);
+                break;
+            case "Extension name":
+                $graduates = Graduate::where(function($query) use ($search) {
+                    $query->where('extension_name', 'LIKE', "%$search%");
+                })->orderBy('id', 'desc')->paginate(10);
+                break;
+            case "Status of Employment":
+                $graduates = Graduate::where(function($query) use ($search) {
+                    $query->where('employment_status', 'LIKE', "%$search%");
+                })->orderBy('id', 'desc')->paginate(10);
+                break;
+            case "Year of Graduation":
+                $graduates = Graduate::where(function($query) use ($search) {
+                    $query->where('allocation', 'LIKE', "%$search%");
+                })->orderBy('id', 'desc')->paginate(10);
+                break;
+            case "Qualification Title":
+                $graduates = Graduate::where(function($query) use ($search) {
+                    $query->where('qualification_title', 'LIKE', "%$search%");
+                })->orderBy('id', 'desc')->paginate(10);
+                break;
+            default:
+                $graduates = DB::table('graduates')->orderBy('id', 'desc')->paginate(10);
+        }
+
+        return view('/e-trak/view-records', compact('graduates'));
+
+        /*$graduates = Graduate::where(function($query) use ($search) {
+            $query->where('id', 'like', "%$search%")
+            ->orWhere('last_name', 'like', "%$search%")
+            ->orWhere('first_name', 'like', "%$search%")
+            ->orWhere('extension_name', 'like', "%$search%")
+            ->orWhere('full_name', 'like', "%$search%")
+            ->orWhere('employment_status', 'like', "%$search%")
+            ->orWhere('allocation', 'like', "%$search%")
+            ->orWhere('qualification_title', 'like', "%$search%");
+        })->orderBy('id', 'desc')->paginate(10);
+
+        return view('/e-trak/view-records', compact('graduates'));*/
     }
 
     public function create_record_page() {
@@ -103,6 +151,7 @@ class EtrakController extends Controller
 
     public function record_details(Graduate $graduate) {
         //$graduate = Graduate::findOrFail($id);
+        dd($graduate->verification_date);
         return view('/e-trak/record-details', compact('graduate'));
     }
 
@@ -126,6 +175,8 @@ class EtrakController extends Controller
             'company_name' => ['nullable', 'string', 'max:255'], 
             'company_address' => ['nullable', 'string', 'max:255'], 
             'job_title' => ['nullable', 'string', 'max:255'], 
+            'application_status' => ['nullable', 'string', 'max:255'], 
+            'withdrawn_reason' => ['nullable', 'string', 'max:255'], 
             'employment_status' => ['nullable', 'string', 'max:255'], 
             'hired_date' => ['nullable', 'string', 'max:50'], 
             'submitted_documents_date' => ['nullable', 'string', 'max:50'], 
@@ -148,6 +199,8 @@ class EtrakController extends Controller
         $company_name = isset($validated['company_name']) == true ? $validated['company_name'] : '';
         $company_address = isset($validated['company_address']) == true ? $validated['company_address'] : '';
         $job_title = isset($validated['job_title']) == true ? $validated['job_title'] : '';
+        $application_status = isset($validated['application_status']) == true ? $validated['application_status'] : '';
+        $withdrawn_reason = isset($validated['withdrawn_reason']) == true ? $validated['withdrawn_reason'] : ''; 
         $employment_status = isset($validated['employment_status']) == true ? $validated['employment_status'] : '';
         $hired_date = isset($validated['hired_date']) == true ? $validated['hired_date'] : '';
         $submission_documents_date = isset($validated['submission_documents_date']) == true ? $validated['submission_documents_date'] : '';
@@ -169,6 +222,8 @@ class EtrakController extends Controller
             'company_name' => $company_name, 
             'company_address' => $company_address, 
             'job_title' => $job_title, 
+            'application_status' => $application_status, 
+            'withdrawn_reason' => $withdrawn_reason, 
             'employment_status' => $employment_status, 
             'hired_date' => $hired_date, 
             'submitted_documents_date' => $submission_documents_date, 

@@ -9,13 +9,26 @@
     {{-- <script src="{{ asset('js/e-trak/view-records.js') }}"></script> --}}
 @endsection
 
+@php
+    $categories = [
+        "Record number", 
+        "Last name", 
+        "First name", 
+        "Middle name", 
+        "Extension name", 
+        "Status of Employment", 
+        "Year of Graduation", 
+        "Qualification Title", 
+    ];
+@endphp
+
 <x-layout>
     <div class="container mb-4">
-        <div class="row" style="background-color: transparent;">
-            <div class="col-6 pt-4" style="background-color: transparent;">
+        <div class="row">
+            <div class="col-6 pt-4">
                 <h1 class="display-4">Data Records</h1>
             </div>
-            <div class="col-6 text-end pt-5" style="background-color: transparent;">
+            <div class="col-6 text-end pt-5">
                 <a href="{{ route('create-record-page') }}" class="btn btn-primary" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-plus" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5" />
@@ -32,11 +45,16 @@
         </div>
     </div>
     <div class="container">
-        <div class="row" style="background-color: transparent;">
+        <div class="row">
             <form action="{{ route('search-graduates') }}" method="GET">
                 <div class="input-group">
-                    {{-- <input type="text" class="form-control" name="search" value="{{ isset($search) ? $search : '' }}" placeholder="Search record..." /> --}}
-                    <input type="text" class="form-control" name="search" value="{{ request()->input('search') ? request()->input('search') : '' }}" placeholder="Search record..." />
+                    <input type="text" class="form-control w-25" name="search" value="{{ request()->input('search') ? request()->input('search') : '' }}" placeholder="Search record..." />
+                    <select name="search_category" style="background-color: lightgrey;" class="form-control">
+                        <option value="">-- Select a Category --</option>
+                        @foreach ($categories as $category)
+                            <option style="background-color: aliceblue;" value="{{ $category }}">{{ $category }}</option>
+                        @endforeach
+                    </select>
                     <input type="submit" class="btn btn-secondary input-group-text" value="Search" />
                 </div>
             </form>

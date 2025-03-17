@@ -114,26 +114,79 @@
             <dd>{{ $graduate->company_address }}</dd>
             <dt>Job Title: </dt>
             <dd>{{ $graduate->job_title }}</dd>
-            <dt>Status of Employment: </dt>
-            <dd>{{ $graduate->employment_status }}</dd>
 
-            @switch($graduate->employment_status)
-                @case("Hired")
-                    <dt>Date Hired: </dt>
-                    <dd class="dateFormat">{{ $graduate->hired_date }}</dd>
+            <dt>Application Status: </dt>
+            <dd>{{ $graduate->application_status }}</dd>
+            @switch($graduate->application_status)
+                @case("Continued")
+                    <dt>Status of Employment: </dt>
+                    <dd>{{ $graduate->employment_status }}</dd>
+                    @switch($graduate->employment_status)
+                        @case("Hired")
+                            <dt>Date Hired: </dt>
+                            <dd class="dateFormat">{{ $graduate->hired_date }}</dd>
+                            @break
+                        @case("Submitted Documents")
+                            <dt>Submission of Documents Date: </dt>
+                            <dd class="dateFormat">{{ $graduate->submitted_documents_date }}</dd>
+                            @break
+                        @case("For Interview")
+                            <dt>Interview Date: </dt>
+                            <dd class="dateFormat">{{ $graduate->interview_date }}</dd>
+                            @break
+                        @case("Not Hired")
+                            <dt>Reason (Not Hired): </dt>
+                            <dd>{{ $graduate->not_hired_reason }}</dd>
+                            @break
+                        @default
+                            <dt class="indented-1">Date Hired: </dt>
+                            <dd class="dateFormat indented-1">{{ $graduate->hired_date }}</dd>
+                            <dt class="indented-1">Submission of Documents Date: </dt>
+                            <dd class="dateFormat indented-1">{{ $graduate->submitted_documents_date }}</dd>
+                            <dt class="indented-1">Interview Date: </dt>
+                            <dd class="dateFormat indented-1">{{ $graduate->interview_date }}</dd>
+                            <dt class="indented-1">Reason (Not Hired): </dt>
+                            <dd class="indented-1">{{ $graduate->not_hired_reason }}</dd>
+                    @endswitch
                     @break
-                @case("Submitted Documents")
-                    <dt>Submission of Documents Date: </dt>
-                    <dd class="dateFormat">{{ $graduate->submitted_documents_date }}</dd>
+
+                @case("Withdrawn")
+                    <dt>Reason (Withdrawn): </dt>
+                    <dd>{{ $graduate->withdrawn_reason }}</dd>
                     @break
-                @case("For Interview")
-                    <dt>Interview Date: </dt>
-                    <dd class="dateFormat">{{ $graduate->interview_date }}</dd>
-                    @break
-                @case("Not Hired")
-                    <dt>Reason (Not Hired): </dt>
-                    <dd>{{ $graduate->not_hired_reason }}</dd>
-                    @break
+
+                @default
+                    <dt>Status of Employment: </dt>
+                    <dd>{{ $graduate->employment_status }}</dd>
+                    @switch($graduate->employment_status)
+                        @case("Hired")
+                            <dt>Date Hired: </dt>
+                            <dd class="dateFormat">{{ $graduate->hired_date }}</dd>
+                            @break
+                        @case("Submitted Documents")
+                            <dt>Submission of Documents Date: </dt>
+                            <dd class="dateFormat">{{ $graduate->submitted_documents_date }}</dd>
+                            @break
+                        @case("For Interview")
+                            <dt>Interview Date: </dt>
+                            <dd class="dateFormat">{{ $graduate->interview_date }}</dd>
+                            @break
+                        @case("Not Hired")
+                            <dt>Reason (Not Hired): </dt>
+                            <dd>{{ $graduate->not_hired_reason }}</dd>
+                            @break
+                        @default
+                            <dt class="indented-1">Date Hired: </dt>
+                            <dd class="dateFormat indented-1">{{ $graduate->hired_date }}</dd>
+                            <dt class="indented-1">Submission of Documents Date: </dt>
+                            <dd class="dateFormat indented-1">{{ $graduate->submitted_documents_date }}</dd>
+                            <dt class="indented-1">Interview Date: </dt>
+                            <dd class="dateFormat indented-1">{{ $graduate->interview_date }}</dd>
+                            <dt class="indented-1">Reason (Not Hired): </dt>
+                            <dd class="indented-1">{{ $graduate->not_hired_reason }}</dd>
+                    @endswitch
+                    <dt>Reason (Withdrawn): </dt>
+                    <dd>{{ $graduate->withdrawn_reason }}</dd>
             @endswitch
         </dl>
     </div>

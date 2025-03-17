@@ -7,6 +7,10 @@ dd {
     margin-bottom: 1em;
 }
 
+.indented-1 {
+    margin-inline-start: 30px;
+}
+
 #details {
     background-color: white;
     font-size: 1.3em;
