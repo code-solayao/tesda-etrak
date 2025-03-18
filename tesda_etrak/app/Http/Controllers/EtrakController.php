@@ -151,7 +151,6 @@ class EtrakController extends Controller
 
     public function record_details(Graduate $graduate) {
         //$graduate = Graduate::findOrFail($id);
-        dd($graduate->verification_date);
         return view('/e-trak/record-details', compact('graduate'));
     }
 

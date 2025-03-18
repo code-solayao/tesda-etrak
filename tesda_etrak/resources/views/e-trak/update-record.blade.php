@@ -10,7 +10,7 @@
 
 @php
     $verification_means = [
-        "For Verification", "Phone-called", "E-mailed", "SMS"
+        "For Verification", "E-mail", "Phone (SMS & Call)", "Phone and E-mail"
     ];
     $not_hired_reasons = [
         "Underage", "Upskilling", "Lack of Experience", "Did not meet the requirements"
