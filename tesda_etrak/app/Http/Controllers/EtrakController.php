@@ -13,20 +13,24 @@ class EtrakController extends Controller
         return view('/e-trak/index');
     }
 
-    public function view_records() {
+    public function view_records(Request $request) {
         $graduates = Graduate::select('id', 'last_name', 'first_name', 'middle_name', 'extension_name', 'employment_status', 'allocation', 'qualification_title')
         ->orderBy('id', 'desc')->paginate(10);
+        $search = $request->input('search');
+        $search_category = $request->input('search_category');
         //$graduates = DB::select("CALL read_records()");
 
-        return view('/e-trak/view-records', compact('graduates'));
+        return view('/e-trak/view-records', compact('graduates', 'search', 'search_category'));
     }
 
     public function search_graduates(Request $request) {
         $graduates = null;
+        $search = null;
+        $search_category = null;
 
         if (empty($request)) {
             $graduates = DB::table('graduates')->orderBy('id', 'desc')->paginate(10);
-            return view('/e-trak/view-records', compact('graduates'));
+            return view('/e-trak/view-records', compact('graduates', 'search', 'search_category'));
         }
 
         $search = $request->input('search');
@@ -77,20 +81,7 @@ class EtrakController extends Controller
                 $graduates = DB::table('graduates')->orderBy('id', 'desc')->paginate(10);
         }
 
-        return view('/e-trak/view-records', compact('graduates'));
-
-        /*$graduates = Graduate::where(function($query) use ($search) {
-            $query->where('id', 'like', "%$search%")
-            ->orWhere('last_name', 'like', "%$search%")
-            ->orWhere('first_name', 'like', "%$search%")
-            ->orWhere('extension_name', 'like', "%$search%")
-            ->orWhere('full_name', 'like', "%$search%")
-            ->orWhere('employment_status', 'like', "%$search%")
-            ->orWhere('allocation', 'like', "%$search%")
-            ->orWhere('qualification_title', 'like', "%$search%");
-        })->orderBy('id', 'desc')->paginate(10);
-
-        return view('/e-trak/view-records', compact('graduates'));*/
+        return view('/e-trak/view-records', compact('graduates', 'search', 'search_category'));
     }
 
     public function create_record_page() {

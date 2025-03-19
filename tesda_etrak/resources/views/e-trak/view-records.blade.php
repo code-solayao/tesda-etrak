@@ -48,11 +48,11 @@
         <div class="row">
             <form action="{{ route('search-graduates') }}" method="GET">
                 <div class="input-group">
-                    <input type="text" class="form-control w-25" name="search" value="{{ request()->input('search') ? request()->input('search') : '' }}" placeholder="Search record..." />
+                    <input type="text" class="form-control w-25" name="search" value="{{ $search }}" placeholder="Search record..." />
                     <select name="search_category" style="background-color: lightgrey;" class="form-control">
                         <option value="">-- Select a Category --</option>
                         @foreach ($categories as $category)
-                            <option style="background-color: aliceblue;" value="{{ $category }}">{{ $category }}</option>
+                            <option style="background-color: aliceblue;" value="{{ $category }}" {{ $search_category == $category ? 'selected' : '' }}>{{ $category }}</option>
                         @endforeach
                     </select>
                     <input type="submit" class="btn btn-secondary input-group-text" value="Search" />
