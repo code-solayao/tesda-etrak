@@ -30,7 +30,7 @@
                 </button>
             </div>
             <div class="action-link">
-                <p>Create an account <a href="{{ route('login-page') }}">here</a>.</p>
+                <p>Return to <a href="{{ route('login-page') }}">login</a>.</p>
             </div>
         </form>
     </div>

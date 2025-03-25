@@ -1,35 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>E-TRAK - Sign In</title>
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('css/login/style.css') }}">
+    <title>E-TRAK - Sign in</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    <div class="form-box">
-        <form action="{{ route('login') }}" method="POST">
-            @csrf
-            <div class="form-header">
-                <h1>Sign In</h1>
+    <main role="main">
+
+        <div class="flex items-center justify-center min-h-screen bg-sky-200">
+            <div class="w-full max-w-md p-8 space-y-6 bg-sky-400 rounded-2xl shadow-lg">
+                <h2 class="text-2xl font-bold text-center text-gray-800">Sign in to E-TRAK</h2>
+                @if (session('error'))
+                    <div class="px-3 py-2 text-md text-white bg-red-400 rounded-md">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                <form action="{{ route('login') }}" method="POST" class="space-y-4">
+                    @csrf
+                    <div>
+                        <input type="email" name="email" 
+                        class="w-full px-4 py-2 mt-1 text-gray-800 bg-gray-100 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                        placeholder="E-mail" autofocus />
+                    </div>
+                    <div>
+                        <input type="password" name="password" 
+                        class="w-full px-4 py-2 mt-1 text-gray-800 bg-gray-100 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                        placeholder="Password" />
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label for="remember_me" class="flex items-center">
+                            <input type="checkbox" id="remember_me" name="remember_me" class="text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                            <span class="ml-1 text-sm text-gray-700">Remember me</span>
+                        </label>
+                        <a href="#" class="text-sm text-blue-700 hover:underline">Forgot password?</a>
+                    </div>
+                    <div>
+                        <input type="submit" name="login" value="Sign In" 
+                        class="w-full px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                </form>
+                <div>
+                    <p class="text-sm text-center text-gray-700">
+                        Create an account 
+                        <a href="{{ route('signup.index') }}" class="text-blue-700 hover:underline">here</a>.
+                    </p>
+                </div>
             </div>
-            <div class="input-box">
-                <input type="email" class="input-field" name="email" placeholder="E-mail" required>
-            </div>
-            <div class="input-box">
-                <input type="password" class="input-field" name="password" placeholder="Password" required>
-            </div>
-            <div class="input-submit">
-                <button type="submit" class="submit-btn" id="login" name="login">
-                    <label for="login">Confirm</label>
-                </button>
-            </div>
-            <div class="action-link">
-                <p>Create an account <a href="{{ route('signup-page') }}">here</a>.</p>
-            </div>
-        </form>
-    </div>
+        </div>
+
+    </main>
 </body>
 </html>
