@@ -11,8 +11,10 @@
         <nav class="container mx-auto p-4 flex justify-between items-center">
             <a href="{{ url('/') }}" class="font-[Fremont,Verdana] font-bold text-3xl text-blue-700">E-TRAK</a>
             <div class="flex items-center space-x-4">
-                <span class="text-gray-600">Welcome, user!</span>
-                <form action="" method="POST">
+                <span class="text-gray-600 border-r-2 pr-2">
+                    Welcome, {{ Auth::user()->name }}
+                </span>
+                <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <input type="submit" class="btn btn-secondary" role="button" name="logout" value="Log Out">
                 </form>
@@ -24,8 +26,9 @@
         <aside class="w-64 bg-[#f1f1f1] shadow-md p-6 hidden md:block">
             <ul class="space-y-4 tab">
                 <li><a href="#" class="tablinks">Dashboard</a></li>
-                <li><a href="#" class="tablinks">View Records</a></li>
-                <li><a href="#" class="tablinks">Import Excel File</a></li>
+                <li><a href="{{ route('view-records') }}" class="tablinks">View records</a></li>
+                <li><a href="#" class="tablinks">Create a record</a></li>
+                <li><a href="#" class="tablinks">Import an Excel file</a></li>
             </ul>
         </aside>
         {{-- Main --}}

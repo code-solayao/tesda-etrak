@@ -12,27 +12,34 @@
         <div class="flex items-center justify-center min-h-screen bg-sky-200">
             <div class="w-full max-w-md p-8 space-y-6 bg-sky-400 rounded-2xl shadow-lg">
                 <h2 class="text-2xl font-bold text-center text-gray-800">Create an E-TRAK account</h2>
-                @if (session('error'))
-                    <div class="px-3 py-2 text-md text-white bg-red-400 rounded-md">
-                        {{ session('error') }}
-                    </div>
+                @if ($errors->any())
+                    <ul class="px-3 py-2 bg-red-400 rounded-md">
+                        @foreach ($errors->all() as $error)
+                            <li class="text-md text-white">{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 @endif
                 <form action="{{ route('signup') }}" method="POST" class="space-y-4">
                     @csrf
                     <div>
                         <input type="text" name="name" 
                         class="w-full px-4 py-2 mt-1 text-gray-800 bg-gray-100 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="Username" autofocus />
+                        placeholder="Username" required autofocus />
                     </div>
                     <div>
                         <input type="email" name="email" 
                         class="w-full px-4 py-2 mt-1 text-gray-800 bg-gray-100 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="E-mail" />
+                        placeholder="E-mail" required />
                     </div>
                     <div>
                         <input type="password" name="password" 
                         class="w-full px-4 py-2 mt-1 text-gray-800 bg-gray-100 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="Password" />
+                        placeholder="Password" required />
+                    </div>
+                    <div>
+                        <input type="password" name="password_confirmation" 
+                        class="w-full px-4 py-2 mt-1 text-gray-800 bg-gray-100 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                        placeholder="Confirm Password" required />
                     </div>
                     <div>
                         <input type="submit" name="signup" value="Sign Up" 
@@ -41,7 +48,7 @@
                     <div>
                         <p class="text-sm text-center text-gray-700">
                             Return to  
-                            <a href="#" class="text-blue-700 hover:underline">login</a>.
+                            <a href="{{ route('view.login') }}" class="text-blue-700 hover:underline">login</a>.
                         </p>
                     </div>
                 </form>

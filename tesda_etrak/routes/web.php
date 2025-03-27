@@ -1,18 +1,23 @@
 <?php
 
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EtrakController;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/', function () {
-    return view('index');
-});
 
 Route::get('/laravel', function () {
     return view('welcome');
 });
 
-Route::get('/login', [UserController::class, 'login_view'])->name('login.index');
-Route::post('/login/post', [UserController::class, 'login'])->name('login');
+Route::middleware('guest')->controller(AuthController::class)->group(function () {
+    Route::get('/login', 'view_login')->name('view.login');
+    Route::get('/signup', 'view_signup')->name('view.signup');
+    Route::post('/login', 'login')->name('login');
+    Route::post('/signup', 'signup')->name('signup');
+});
 
-Route::get('/signup', [UserController::class, 'signup_view'])->name('signup.index');
-Route::post('/signup/post', [UserController::class, 'signup'])->name('signup');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+Route::middleware('auth')->controller(EtrakController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/view-records', 'view_records')->name('view-records');
+});
