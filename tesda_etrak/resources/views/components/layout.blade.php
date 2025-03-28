@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'E-TRAK')</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @yield('vite')
 </head>
 <body id="body">
     <header class="bg-white shadow-md">
@@ -23,11 +23,14 @@
     </header>
     <div class="flex min-h-screen">
         {{-- Sidebar --}}
-        <aside class="w-64 bg-[#f1f1f1] shadow-md p-6 hidden md:block">
+        <aside class="w-64 bg-[#f1f1f1] shadow-lg p-6 hidden md:block">
             <ul class="space-y-4 tab">
-                <li><a href="#" class="tablinks">Dashboard</a></li>
+                <li>
+                    <a href="https://lookerstudio.google.com/reporting/9d6c7c0a-dcfb-4dda-ba67-589c230b57bd/page/GzuKE?fbclid=IwY2xjawGZXIlleHRuA2FlbQIxMAABHWw1eJ0SY4OlJju7W9T7gV5eNEVFGy5QgPEYOM0jkeni293iDCwtfhtkkQ_aem_jBd-8gTDT5g2pEeWlbhpFQ" 
+                    class="tablinks" target="_blank" role="tab">Dashboard</a>
+                </li>
                 <li><a href="{{ route('view-records') }}" class="tablinks">View records</a></li>
-                <li><a href="#" class="tablinks">Create a record</a></li>
+                <li><a href="{{ route('view.create') }}" class="tablinks">Create a record</a></li>
                 <li><a href="#" class="tablinks">Import an Excel file</a></li>
             </ul>
         </aside>

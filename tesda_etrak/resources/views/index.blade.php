@@ -27,8 +27,8 @@
         @endif
         <main class="flex-1 px-24 py-6">
             <div class="text-center mb-10">
-                <h1 class="font-[Verdana] font-bold text-7xl ">Welcome</h1>
-                <p class="text-xl mt-2">This a new project of the <strong>Employment Monitoring System</strong></p>
+                <h1 class="mb-2">Welcome</h1>
+                <p>This a new project of the <strong>Employment Monitoring System</strong></p>
             </div>
             <div class="text-center">
                 <p class="mb-5">

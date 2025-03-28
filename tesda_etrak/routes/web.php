@@ -20,4 +20,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 Route::middleware('auth')->controller(EtrakController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/view-records', 'view_records')->name('view-records');
+    Route::get('/view-records/get', 'search_graduates')->name('search-graduates');
+    Route::get('/create-record', 'view_create')->name('view.create');
+    Route::post('/create-record', 'create')->name('create');
 });

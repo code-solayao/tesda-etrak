@@ -12,20 +12,36 @@
 
 @layer components {
     .btn {
-        @apply font-bold px-4 py-2 rounded;
+        @apply border font-bold px-4 py-2 rounded;
     }
 
     .btn-sm {
-        @apply font-bold px-3 py-1 rounded;
+        @apply border font-bold px-3 py-1 rounded;
     }
     
     .btn-primary {
-        @apply bg-blue-700 text-white hover:bg-blue-800;
+        @apply bg-blue-500 text-white hover:bg-blue-700;
     }
     
     .btn-secondary {
         @apply bg-gray-500 text-white hover:bg-gray-600;
     }
+
+    .btn-danger {
+        @apply bg-red-500 text-white hover:bg-red-700;
+    }
+
+    .form-input {
+        @apply mt-1 block w-full border-2 border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 p-2;
+    }
+
+    .form-label {
+        @apply block text-lg font-medium text-gray-700;
+    }
+}
+
+h1 {
+    @apply font-bold text-7xl;
 }
 
 #body {

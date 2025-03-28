@@ -1,5 +1,9 @@
 @section('title', 'E-TRAK - View records')
 
+@section('vite')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+@endsection
+
 @php
     $categories = [
         "Record number", 
@@ -16,15 +20,16 @@
 <x-layout>
     <div class="container mx-auto p-6">
         <h2 class="text-2xl font-semibold mb-4">Data Records</h2>
-        <form action="" method="GET">
-            <div class="mb-4 flex items-center">
+        <form action="{{ route('search-graduates') }}" method="GET">
+            <div class="mb-4 flex justify-baseline items-center">
                 <input type="text" class="border bg-white px-2 py-1 rounded w-1/3" name="search" value="{{ $search }}" placeholder="Search record..." />
-                <select name="search_category" class="border bg-gray-300 px-2 py-1 ml-1 rounded w-lg">
+                <select name="search_category" class="border bg-gray-300 px-2 py-1 ml-1 rounded w-lg inline">
                     <option value="">-- Select a category --</option>
                     @foreach ($categories as $category)
                         <option class="bg-gray-50" value="{{ $category }}" {{ $search_category == $category ? 'selected' : '' }}>{{ $category }}</option>
                     @endforeach
                 </select>
+                <a href="#" class="btn btn-danger ml-auto">Clear All Records</a>
             </div>
         </form>
         <div class="overflow-x-auto bg-white shadow-md rounded-lg">
@@ -59,7 +64,7 @@
                                     <form action="" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <input type="submit" class="btn-sm bg-red-500 font-normal text-white hover:bg-red-700" value="Delete" />
+                                        <input type="submit" class="btn-sm btn-danger font-normal" value="Delete" />
                                     </form>
                                 </div>
                             </td>
