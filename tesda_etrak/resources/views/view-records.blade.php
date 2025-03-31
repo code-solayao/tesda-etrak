@@ -4,6 +4,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 @endsection
 
+@section('main', 'Data Records')
+
 @php
     $categories = [
         "Record number", 
@@ -18,8 +20,7 @@
 @endphp
 
 <x-layout>
-    <div class="container mx-auto p-6">
-        <h2 class="text-2xl font-semibold mb-4">Data Records</h2>
+    <div>
         <form action="{{ route('search-graduates') }}" method="GET">
             <div class="mb-4 flex justify-baseline items-center">
                 <input type="text" class="border bg-white px-2 py-1 rounded w-1/3" name="search" value="{{ $search }}" placeholder="Search record..." />
@@ -60,7 +61,7 @@
                             <td class="px-6 py-3">{{ $graduate->qualification_title }}</td>
                             <td class="px-6 py-3 text-center">
                                 <div class="flex justify-center space-x-2">
-                                    <a href="#" class="btn-sm btn-secondary font-normal">View</a>
+                                    <a href="{{ route('view.details', $graduate->id) }}" class="btn-sm btn-secondary font-normal">View</a>
                                     <form action="" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')

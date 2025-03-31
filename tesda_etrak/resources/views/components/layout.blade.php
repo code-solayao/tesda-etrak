@@ -7,7 +7,7 @@
     @yield('vite')
 </head>
 <body id="body">
-    <header class="bg-white shadow-md">
+    <header class="bg-white shadow-md fixed top-0 left-0 w-full z-10">
         <nav class="container mx-auto p-4 flex justify-between items-center">
             <a href="{{ url('/') }}" class="font-[Fremont,Verdana] font-bold text-3xl text-blue-700">E-TRAK</a>
             <div class="flex items-center space-x-4">
@@ -21,9 +21,9 @@
             </div>
         </nav>
     </header>
-    <div class="flex min-h-screen">
+    <div class="flex flex-1 pt-16">
         {{-- Sidebar --}}
-        <aside class="w-64 bg-[#f1f1f1] shadow-lg p-6 hidden md:block">
+        <aside class="w-64 bg-[#f1f1f1] shadow-lg p-6 hidden md:block fixed left-0 top-16 h-[calc(100vh-4rem)]">
             <ul class="space-y-4 tab">
                 <li>
                     <a href="https://lookerstudio.google.com/reporting/9d6c7c0a-dcfb-4dda-ba67-589c230b57bd/page/GzuKE?fbclid=IwY2xjawGZXIlleHRuA2FlbQIxMAABHWw1eJ0SY4OlJju7W9T7gV5eNEVFGy5QgPEYOM0jkeni293iDCwtfhtkkQ_aem_jBd-8gTDT5g2pEeWlbhpFQ" 
@@ -35,12 +35,15 @@
             </ul>
         </aside>
         {{-- Main --}}
-        @if (session('success'))
-            <div class="success" id="flash">
-                {{ session('success') }}
-            </div>
-        @endif
-        <main class="flex-1 px-24 py-6">
+        <main class="flex-1 overflow-y-auto p-6 ml-64 h-[calc(100vh-4rem)]">
+            <header class="mb-10">
+                @if (session('success'))
+                    <div class="p-3 mb-3 text-center bg-green-200 text-green-600 font-semibold text-lg block rounded border drop-shadow">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                <h1 class="text-2xl font-bold text-gray-600">@yield('main', 'Title')</h1>
+            </header>
             {{ $slot }}
         </main>
     </div>

@@ -22,5 +22,6 @@ Route::middleware('auth')->controller(EtrakController::class)->group(function ()
     Route::get('/view-records', 'view_records')->name('view-records');
     Route::get('/view-records/get', 'search_graduates')->name('search-graduates');
     Route::get('/create-record', 'view_create')->name('view.create');
+    Route::get('/record-details/{graduate}', 'view_details')->name('view.details');
     Route::post('/create-record', 'create')->name('create');
 });

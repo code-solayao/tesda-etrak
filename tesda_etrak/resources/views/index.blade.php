@@ -20,12 +20,12 @@
         </nav>
     </header>
     <div class="flex min-h-screen">
-        @if (session('success'))
-            <div class="success" id="flash">
-                {{ session('success') }}
-            </div>
-        @endif
         <main class="flex-1 px-24 py-6">
+            @if (session('success'))
+                <div class="p-3 mb-3 text-center bg-green-200 text-green-600 font-semibold text-lg block rounded border drop-shadow">
+                    {{ session('success') }}
+                </div>
+            @endif
             <div class="text-center mb-10">
                 <h1 class="mb-2">Welcome</h1>
                 <p>This a new project of the <strong>Employment Monitoring System</strong></p>
