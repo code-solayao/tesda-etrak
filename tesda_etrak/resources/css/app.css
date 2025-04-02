@@ -38,6 +38,10 @@
     .btn-secondary-modal {
         @apply bg-white text-gray-900 hover:bg-gray-100 ring-gray-300 mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold ring-1 shadow-xs ring-inset sm:mt-0 sm:w-auto;
     }
+
+    .btn-danger-modal {
+        @apply bg-red-600 text-white hover:bg-red-500 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-xs sm:ml-3 sm:w-auto;
+    }
     
     .form-label {
         @apply block text-lg font-medium text-gray-700;
@@ -60,22 +64,12 @@ h1 {
     @apply bg-gray-100 text-gray-900;
 }
 
-/* Style the tab */
-.tab {
-    @apply float-left w-full;
+dt {
+    font-weight: bold;
 }
-
-/* Style the buttons that are used to open the tab content */
-.tablinks {
-    @apply block bg-inherit text-black px-[22px] py-[16px] w-full border-none outline-none text-left cursor-pointer duration-[0.3s];
+dd {
+    margin-bottom: 1em;
 }
-
-/* Change background color of buttons on hover */
-.tab .tablinks:hover {
-    @apply bg-[#ddd];
-}
-
-/* Create an active/current "tab button" class */
-.tab .tablinks.active {
-    @apply bg-[#808080];
+dt, dd {
+    @apply text-xl font-[Arial];
 }

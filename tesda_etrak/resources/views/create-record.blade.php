@@ -1,7 +1,7 @@
 @section('title', 'E-TRAK - Create record')
 
 @section('vite')
-    @vite(['resources/css/app.css', 'resources/js/e-trak/create-record.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/e-trak/create-record.js'])
 @endsection
 
 @section('main', 'Create an Entry')
@@ -145,7 +145,7 @@
                 </select>
             </div>
             <div class="flex items-center justify-baseline">
-                <button type="button" id="toggleCreate" class="btn btn-primary rounded-lg mr-2">Create</button>
+                <button type="button" class="btn btn-primary rounded-lg mr-2" id="toggleCreate">Create</button>
             </div>
             {{-- Modal --}}
             <div class="relative z-10 hidden" id="confirmationModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">

@@ -142,6 +142,15 @@ class EtrakController extends Controller
         return view('record-details', compact('graduate'));
     }
 
+    public function view_update(Graduate $graduate) {
+        return view('update-record', compact('graduate'));
+    }
+
+    public function delete(Graduate $graduate) {
+        $graduate->delete();
+        return redirect()->route('view-records')->with('success', 'Deleted record successfully!');
+    }
+
     private function full_name_format($last_name, $first_name, $middle_name, $extension_name) {
         $format = "";
 

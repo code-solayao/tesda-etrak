@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+
+/* Style the tab */
+.tab {
+    @apply float-left w-full;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tablinks {
+    @apply block bg-inherit text-black px-[22px] py-[16px] w-full border-none outline-none text-left cursor-pointer duration-[0.3s];
+}
+
+/* Change background color of buttons on hover */
+.tab .tablinks:hover {
+    @apply bg-[#ddd];
+}
+
+/* Create an active/current "tab button" class */
+.tab .tablinks.active {
+    @apply bg-[#808080];
+}
