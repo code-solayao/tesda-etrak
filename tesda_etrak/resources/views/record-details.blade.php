@@ -12,7 +12,7 @@
 <x-layout>
     <div class="mb-2">
         <a href="{{ route('view.update', $graduate->id) }}" class="btn btn-primary">Update</a>
-        <a href="{{ url()->previous() }}" class="btn btn-secondary">Go Back</a>
+        <a href="{{ route('view-records') }}" class="btn btn-secondary">Go Back</a>
         <button type="button" class="btn btn-danger py-[6.8px]" id="toggleCreate">Delete</button>
     </div>
     <div>

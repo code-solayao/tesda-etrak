@@ -1,10 +1,13 @@
 var verificationTab = document.getElementById("verificationTab");
 
+var noVerifStatusBtn = document.getElementById("noVerifStatusBtn");
 var respondedBtn = document.getElementById("respondedBtn");
 var noResponseBtn = document.getElementById("noResponseBtn");
 
 var interestedBtn = document.getElementById("interestedBtn");
 var notInterestedBtn = document.getElementById("notInterestedBtn");
+var interested = document.getElementById("interested");
+var notInterested = document.getElementById("notInterested");
 
 var referralStatusForm = document.getElementById("referralStatusForm");
 var referYesBtn = document.getElementById("referYesBtn");
@@ -20,38 +23,41 @@ var continued = document.getElementById("continued");
 var withdrawn = document.getElementById("withdrawn");
 
 document.getElementById("detailsTab").onclick = function () {
-    openTab(0);
+    openTab(0, "details");
 }
 verificationTab.onclick = function () {
-    openTab(1);
+    openTab(1, "verification");
+
+    interested.style.display = "none";
+    notInterested.style.display = "none";
+    refreshVerification();
 }
 document.getElementById("employmentTab").onclick = function () {
-    openTab(2);
+    openTab(2, "employment");
 }
 
-// document.getElementById("toggleCreate").onclick = function () {
-//     document.getElementById("confirmationModal").classList.remove('hidden');
-// }
-// document.getElementById("dismissCreate").onclick = function () {
-//     document.getElementById("confirmationModal").classList.add('hidden');
-// }
-
-verificationTab.click();
-dateFormatRead();
-
+noVerifStatusBtn.onclick = function () {
+    verificationStatusValue("");
+}
 respondedBtn.onclick = function () {
-    verificationStatusValue(true);
+    verificationStatusValue("responded");
 }
 noResponseBtn.onclick = function () {
-    verificationStatusValue(false);
+    verificationStatusValue("no response");
 }
 
 interestedBtn.onclick = function () {
+    interested.style.display = "block";
+    notInterested.style.display = "none";
+
     referralStatusForm.disabled = false;
     notInterestedReason.disabled = true;
     notInterestedReason.value = "";
 }
-document.getElementById("notInterestedBtn").onclick = function () {
+notInterestedBtn.onclick = function () {
+    notInterested.style.display = "block";
+    interested.style.display = "none";
+
     notInterestedReason.disabled = false;
     referralStatusForm.disabled = true;
     referYesBtn.checked = false;
@@ -94,7 +100,20 @@ document.getElementById("noResponse").style.display = "none";
 continued.style.display = "none";
 withdrawn.style.display = "none";
 
-function openTab(index) {
+document.getElementById("toggleUpdate1").onclick = function () {
+    document.getElementById("confirmationModal").classList.remove('hidden');
+}
+document.getElementById("toggleUpdate2").onclick = function () {
+    document.getElementById("confirmationModal").classList.remove('hidden');
+}
+document.getElementById("dismissUpdate").onclick = function () {
+    document.getElementById("confirmationModal").classList.add('hidden');
+}
+
+verificationTab.click();
+dateFormatRead();
+
+function openTab(index, tabName) {
     document.querySelectorAll(".tab-content").forEach((tab, i) => {
         tab.classList.toggle("hidden", i !== index);
     });
@@ -103,21 +122,34 @@ function openTab(index) {
         btn.classList.toggle("border-black", i === index);
         btn.classList.toggle("border-transparent", i !== index);
     });
+
+    if (tabName !== "employment") return;
+    if (referYesBtn.checked == true) {
+        employmentField(false);
+    }
+    else {
+        employmentField(true);
+    }
 }
 
-function verificationStatusValue(respond) {
+function verificationStatusValue(response) {
     let responded = document.getElementById("responded");
     let noResponse = document.getElementById("noResponse");
 
-    if (respond == true) {
+    if (response == "responded") {
         responded.style.display = "block";
         noResponse.style.display = "none";
         respondedStatus();
     }
-    else {
+    else if (response == "no response") {
         noResponse.style.display = "block";
         responded.style.display = "none";
         noResponseStatus();
+    }
+    else {
+        responded.style.display = "none";
+        noResponse.style.display = "none";
+        noVerificationStatus();
     }
 }
 
@@ -131,6 +163,9 @@ function respondedStatus() {
 }
 
 function noResponseStatus() {
+    interested.style.display = "none";
+    notInterested.style.display = "none";
+
     interestedBtn.checked = false;
     referralStatusForm.disabled = true;
     referYesBtn.checked = false;
@@ -140,9 +175,34 @@ function noResponseStatus() {
     noReferralReason.disabled = true;
     noReferralReason.value = "";
 
-    document.getElementById("notInterestedBtn").checked = false;
+    notInterestedBtn.checked = false;
     notInterestedReason.disabled = true;
     notInterestedReason.value = "";
+}
+
+function noVerificationStatus() {
+    interested.style.display = "none";
+    notInterested.style.display = "none";
+
+    interestedBtn.checked = false;
+    referralStatusForm.disabled = true;
+    referYesBtn.checked = false;
+    referNoBtn.checked = false;
+    referralDate.disabled = true;
+    resetDate(referralDate);
+    noReferralReason.disabled = true;
+    noReferralReason.value = "";
+
+    notInterestedBtn.checked = false;
+    notInterestedReason.disabled = true;
+    notInterestedReason.value = "";
+
+    resetDate(document.getElementById("followup1"));
+    resetDate(document.getElementById("followup2"));
+
+    let invalidContact = document.getElementById("invalidContact");
+    invalidContact.checked = false;
+    invalidContact.value = "";
 }
 
 function referralStatus(refer) {
@@ -277,17 +337,13 @@ function dateFormatRead() {
     let day = "";
 
     let monthName = "";
+    let dateValue = "";
     for (let dateFormat of dateFormats) {
-        let dateValue = dateFormat.value;
-        if (dateValue == "" || !isValidDateStrict(dateValue)) {
-            if (dateValue.length > 11) {
-                let sliced = dateValue.slice(0, 11);
-                dateFormat.value = sliced;
-            }
+        dateValue = dateFormat.value;
+        if (dateValue == "") {
             continue;
         }
 
-        dateValue = dateFormat.value;
         year = dateValue.slice(0, 4);
         month = dateValue.slice(5, 7);
         day = dateValue.slice(8, 10);
@@ -350,14 +406,39 @@ function dateFormatRead() {
     }
 }
 
-function isValidDateStrict(dateString) {
-    const regex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
-    if (!regex.test(dateString)) return false;
+function resetDate(element) {
+    element.value = "";
 
-    const date = new Date(dateString);
-    const [year, month, day] = dateString.split("-").map(Number);
+    // prevent error on older browsers (eg. IE8)
+    if (element.type === "date") {
+        // update the input content visually
+        element.type = "text";
+        element.type = "date";
+    }
+}
 
-    return date.getFullYear() === year && 
-           date.getMonth() + 1 === month && 
-           date.getDate() === day;
+function refreshVerification() {
+    if (noVerifStatusBtn.checked == true) {
+        noVerifStatusBtn.click();
+    }
+    if (respondedBtn.checked == true) {
+        respondedBtn.click();
+    }
+    if (noResponseBtn.checked == true) {
+        noResponseBtn.click();
+    }
+
+    if (interestedBtn.checked == true) {
+        interestedBtn.click();
+    }
+    if (notInterestedBtn.checked == true) {
+        notInterestedBtn.click();
+    }
+
+    if (referYesBtn.checked == true) {
+        referYesBtn.click();
+    }
+    if (referNoBtn.checked == true) {
+        referNoBtn.click();
+    }
 }

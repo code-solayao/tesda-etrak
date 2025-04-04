@@ -19,10 +19,7 @@
 @endphp
 
 <x-layout>
-    <div class="mx-auto bg-white p-8 rounded-lg shadow-md">
-        <div class="mb-5">
-            <a href="{{ route('view.details', $graduate->id) }}" class="btn btn-secondary rounded-lg">Cancel</a>
-        </div>
+    <div class="mx-auto bg-white px-8 pb-8 pt-5 rounded-lg shadow-md">
         @if ($errors->any())
             <ul class="px-3 py-2 bg-red-400 rounded-md mb-5">
                 @foreach ($errors->all() as $error)
@@ -38,10 +35,10 @@
             </div>
         </div>
         <div class="p-4">
-            <form action="#" method="POST">
+            <form action="{{ route('update', $graduate->id) }}" method="POST">
                 @csrf
                 @method('PUT')
-                <div class="tab-content">
+                <div class="tab-content" id="details">
                     <fieldset disabled>
                         {{-- FULL NAME --}}
                         <div class="mb-5">
@@ -111,7 +108,7 @@
                         </div>
                     </fieldset>
                 </div>
-                <div class="tab-content hidden">
+                <div class="tab-content hidden" id="verification">
                     <div class="mb-5">
                         <label for="verification_means" class="form-label">Means of Verification</label>
                         <select name="verification_means" id="verification_means" class="form-input">
@@ -130,42 +127,46 @@
                     <div class="mb-5">
                         <label class="form-label">Status of Verification</label>
                         <div class="mt-2 space-y-2">
+                            <label for="noVerifStatusBtn" class="flex items-center">
+                                <input type="radio" name="verification_status" id="noVerifStatusBtn" class="form-radio" value="" {{ old('verification_status', $graduate->verification_status) == '' ? 'checked' : '' }} />
+                                <span class="ml-2 text-gray-700">None</span>
+                            </label>
                             <label for="respondedBtn" class="flex items-center">
-                                <input type="radio" name="verification_status" id="respondedBtn" value="Responded" class="form-radio" {{ old('verification_status', $graduate->verification_status) == 'Responded' ? 'checked' : '' }} />
+                                <input type="radio" name="verification_status" id="respondedBtn" class="form-radio" value="Responded" {{ old('verification_status', $graduate->verification_status) == 'Responded' ? 'checked' : '' }} />
                                 <span class="ml-2 text-gray-700">Responded</span>
                             </label>
                             <label for="noResponseBtn" class="flex items-center">
-                                <input type="radio" name="verification_status" id="noResponseBtn" value="No Response (For Follow-Up)" class="form-radio" {{ old('verification_status', $graduate->verification_status) == 'No Response (For Follow-Up)' ? 'checked' : '' }} />
-                                <span class="ml-2 text-gray-700">No Response (For Follow-Up)</span>
+                                <input type="radio" name="verification_status" id="noResponseBtn" class="form-radio" value="No Response (For Follow-up)" {{ old('verification_status', $graduate->verification_status) == 'No Response (For Follow-up)' ? 'checked' : '' }} />
+                                <span class="ml-2 text-gray-700">No Response (For Follow-up)</span>
                             </label>
                         </div>
                         <hr class="mt-5">
                     </div>
-                    <div class="verification-status-div mb-4" id="responded">
+                    <div class="mb-4" id="responded">
                         <div>
                             <label class="form-label">Type of Response</label>
-                            <div class="mt-2 space-y-2">
+                            <div class="mt-2 space-y-2 ml-[30px]">
                                 <label for="interestedBtn" class="flex items-center">
-                                    <input type="radio" name="response_status" id="interestedBtn" value="Interested" {{ old('response_status', $graduate->response_status) == "Interested" ? 'checked' : '' }} />
+                                    <input type="radio" name="response_status" id="interestedBtn" class="form-radio" value="Interested" {{ old('response_status', $graduate->response_status) == 'Interested' ? 'checked' : '' }} />
                                     <span class="ml-2 text-gray-700">Interested</span>
                                 </label>
                                 <label for="notInterestedBtn" class="flex items-center">
-                                    <input type="radio" name="response_status" id="notInterestedBtn" value="Not Interested" {{ old('response_status', $graduate->response_status) == "Not Interested" ? 'checked' : '' }} />
+                                    <input type="radio" name="response_status" id="notInterestedBtn" class="form-radio" value="Not Interested" {{ old('response_status', $graduate->response_status) == 'Not Interested' ? 'checked' : '' }} />
                                     <span class="ml-2 text-gray-700">Not Interested</span>
                                 </label>
                                 {{-- response_status : Interested --}}
-                                <div>
+                                <div id="interested">
                                     <label class="form-label">Refer to Company?</label>
                                     <fieldset id="referralStatusForm" class="mt-2 space-y-2" disabled>
                                         {{-- referral_status : Yes --}}
                                         <label for="referYesBtn" class="flex items-center">
-                                            <input type="radio" name="referral_status" id="referYesBtn" value="Yes" {{ old('referral_status', $graduate->referral_status) == "Yes" ? 'checked' : '' }} />
+                                            <input type="radio" name="referral_status" id="referYesBtn" class="form-radio" value="Yes" {{ old('referral_status', $graduate->referral_status) == 'Yes' ? 'checked' : '' }} />
                                             <span class="ml-2 text-gray-700">YES</span>
                                         </label>
                                         <input type="date" name="referral_date" id="referralDate" class="form-input mb-3 ml-5" value="{{ old('referral_date', $graduate->referral_date) }}" disabled />
                                         {{-- referral_status : No --}}
                                         <label for="referNoBtn" class="flex items-center">
-                                            <input type="radio" name="referral_status" id="referNoBtn" value="No" {{ old('referral_status', $graduate->referral_status) == "No" ? 'checked' : '' }} />
+                                            <input type="radio" name="referral_status" id="referNoBtn" class="form-radio" value="No" {{ old('referral_status', $graduate->referral_status) == 'No' ? 'checked' : '' }} />
                                             <span class="ml-2 text-gray-700">NO</span>
                                         </label>
                                         <textarea name="no_referral_reason" id="noReferralReason" rows="3" class="form-input mb-3 ml-5" placeholder="Reason" disabled>
@@ -174,7 +175,7 @@
                                     </fieldset>
                                 </div>
                                 {{-- response_status : Not Interested --}}
-                                <div>
+                                <div id="notInterested">
                                     <label for="notInterestedReason" class="form-label">Reason</label>
                                     <textarea name="not_interested_reason" id="notInterestedReason" rows="3" class="form-input" disabled>
                                         {{ old('not_interested_reason', $graduate->not_interested_reason) }}
@@ -183,49 +184,136 @@
                             </div>
                         </div>
                     </div>
-                    <div class="verification-status-div mb-4" id="noResponse">
-                        <div></div>
+                    <div class="mb-4" id="noResponse">
+                        <div>
+                            <label class="form-label mb-4">No Response (For Follow-up)</label>
+                            <div class="mb-4 ml-[30px]">
+                                <label for="followup1" class="form-label">First Follow-up</label>
+                                <input type="date" name="follow_up_date_1" id="followup1" class="form-input" value="{{ old('follow_up_date_1', $graduate->follow_up_date_1) }}" />
+                            </div>
+                            <div class="mb-4 ml-[30px]">
+                                <label for="followup2" class="form-label">Second Follow-up</label>
+                                <input type="date" name="follow_up_date_2" id="followup2" class="form-input" value="{{ old('follow_up_date_2', $graduate->follow_up_date_2) }}" />
+                            </div>
+                            <div class="mb-4 ml-[30px]">
+                                <label for="invalidContact" class="flex items-center">
+                                    <input type="checkbox" name="invalid_contact" id="invalidContact" value="Yes" {{ old('invalid_contact', $graduate->invalid_contact) == 'Yes' ? 'checked' : '' }} />
+                                    <span class="ml-2 text-gray-700">Invalid Contact</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-baseline">
+                        <button type="button" class="btn btn-primary rounded-lg mr-2" id="toggleUpdate1">Update</button>
+                        <a href="{{ route('view.details', $graduate->id) }}" class="btn btn-secondary rounded-lg">Cancel</a>
                     </div>
                 </div>
-                <div class="tab-content hidden">
-                    Employment
-                </div>
-            </form>
-        </div>
-    </div>
-    {{-- Modal --}}
-    <div class="relative z-10 hidden" id="confirmationModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
-        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <div class="sm:flex sm:items-start">
-                            <div class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                </svg>
+                <div class="tab-content hidden" id="employment">
+                    <div>
+                        <fieldset id="employmentField" disabled>
+                            <div class="mb-5">
+                                <label for="companyName" class="form-label">Name of Company</label>
+                                <input type="text" name="company_name" id="companyName" class="form-input" value="{{ old('company_name', $graduate->company_name) }}" />
                             </div>
-                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                <h3 class="text-base font-semibold text-gray-900" id="modal-title">Delete Record</h3>
-                                <div class="mt-2">
-                                    <p class="text-sm text-gray-500">
-                                        Are you sure you want to delete this record? All of its data will be permanently removed and this action cannot be undone.
-                                    </p>
+                            <div class="mb-5">
+                                <label for="companyAddress" class="form-label">Address of Company</label>
+                                <textarea name="company_address" id="companyAddress" rows="3" class="form-input">{{ old('company_address', $graduate->company_address) }}</textarea>
+                            </div>
+                            <div class="mb-5">
+                                <label for="jobTitle" class="form-label">Job Title</label>
+                                <input type="text" name="job_title" id="jobTitle" class="form-input" value="{{ old('job_title', $graduate->job_title) }}" />
+                            </div>
+                            <div class="mt-2 space-y-2">
+                                <label class="form-label">Application Status</label>
+                                <label for="continuedBtn" class="flex items-center">
+                                    <input type="radio" name="application_status" id="continuedBtn" class="form-radio" value="Continued" {{ old('application_status', $graduate->application_status) == 'Continued' ? 'checked' : '' }} />
+                                    <span class="ml-2 text-gray-700">Continued</span>
+                                </label>
+                                <label for="withdrawnBtn" class="flex items-center">
+                                    <input type="radio" name="application_status" id="withdrawnBtn" class="form-radio" value="Withdrawn" {{ old('application_status', $graduate->application_status) == 'Withdrawn' ? 'checked' : '' }} />
+                                    <span class="ml-2 text-gray-700">Withdrawn</span>
+                                </label>
+                            </div>
+                            <hr class="my-4">
+                            {{-- application_status : Continued --}}
+                            <div class="mt-2 space-y-2" id="continued">
+                                <label class="form-label">Employment Status</label>
+                                {{-- employment_status : Hired --}}
+                                <label for="hired" class="flex items-center">
+                                    <input type="radio" name="employment_status" id="hired" class="form-radio" value="Hired" {{ old('employment_status', $graduate->employment_status) == 'Hired' ? 'checked' : '' }} />
+                                    <span class="ml-2 text-gray-700">Hired</span>
+                                </label>
+                                <input type="date" name="hired_date" id="hiredDate" class="form-input mb-3 ml-5" value="{{ old('hired_date', $graduate->hired_date) }}" disabled />
+                                {{-- employment_status : Submitted Documents --}}
+                                <label for="submitDocs" class="flex items-center">
+                                    <input type="radio" name="employment_status" id="submitDocs" class="form-radio" value="Submitted Documents" {{ old('employment_status', $graduate->employment_status) == 'Submitted Documents' ? 'checked' : '' }} />
+                                    <span class="ml-2 text-gray-700">Submitted Documents</span>
+                                </label>
+                                <input type="date" name="submitted_documents_date" id="submitDocsDate" class="form-input mb-3 ml-5" value="{{ old('submitted_documents_date', $graduate->submitted_documents_date) }}" disabled />
+                                {{-- employment_status : For Interview --}}
+                                <label for="forInterview" class="flex items-center">
+                                    <input type="radio" name="employment_status" id="forInterview" class="form-radio" value="For Interview" {{ old('employment_status', $graduate->employment_status) == 'For Interview' ? 'checked' : '' }} />
+                                    <span class="ml-2 text-gray-700">For Interview</span>
+                                </label>
+                                <input type="date" name="interview_date" id="interviewDate" class="form-input mb-3 ml-5" value="{{ old('interview_date', $graduate->interview_date) }}" disabled />
+                                {{-- employment_status : Not Hired --}}
+                                <label for="notHired" class="flex items-center">
+                                    <input type="radio" name="employment_status" id="notHired" class="form-radio" value="Not Hired" {{ old('employment_status', $graduate->employment_status) == 'Not Hired' ? 'checked' : '' }} />
+                                    <span class="ml-2 text-gray-700">Not Hired</span>
+                                </label>
+                                <select name="not_hired_reason" id="notHiredReason" class="form-input mb-3 ml-5" disabled>
+                                    <option value="">-- Select a reason --</option>
+                                    @foreach ($not_hired_reasons as $reason)
+                                        <option value="{{ $reason }}" {{ old('not_hired_reason', $graduate->not_hired_reason) == $reason ? 'selected' : '' }}>
+                                            {{ $reason }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            {{-- application_status : Withdrawn --}}
+                            <div class="mb-5" id="withdrawn">
+                                <label for="withdrawn_reason" class="form-label">Reason</label>
+                                <textarea name="withdrawn_reason" id="withdrawn_reason" rows="3" class="form-input">{{ old('withdrawn_reason', $graduate->withdrawn_reason) }}</textarea>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="flex items-center justify-baseline">
+                        <button type="button" class="btn btn-primary rounded-lg mr-2" id="toggleUpdate2">Update</button>
+                        <a href="{{ route('view.details', $graduate->id) }}" class="btn btn-secondary rounded-lg">Cancel</a>
+                    </div>
+                </div>
+                {{-- Modal --}}
+                <div class="relative z-10 hidden" id="confirmationModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                    <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
+                    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                    <div class="sm:flex sm:items-start">
+                                        <div class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                              </svg>
+                                        </div>
+                                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                            <h3 class="text-base font-semibold text-gray-900" id="modal-title">Update Record</h3>
+                                            <div class="mt-2">
+                                                <p class="text-sm text-gray-500">
+                                                    Do you confirm updating record information of <strong>{{ $graduate->full_name }}</strong>?
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                    <input type="submit" name="update" class="btn-primary-modal" role="button" value="Confirm" />
+                                    <button type="button" id="dismissUpdate" class="btn-secondary-modal">Cancel</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                        <form action="{{ route('delete', $graduate->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <input type="submit" name="delete" class="btn-danger-modal" role="button" value="Delete" />
-                            <button type="button" id="dismissCreate" class="btn-secondary-modal">Cancel</button>
-                        </form>
-                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </x-layout>

@@ -82,7 +82,7 @@ class EtrakController extends Controller
         return view('view-records', compact('graduates', 'search', 'search_category'));
     }
 
-    public function view_create(Request $request) {
+    public function view_create() {
         return view('create-record');
     }
 
@@ -146,9 +146,89 @@ class EtrakController extends Controller
         return view('update-record', compact('graduate'));
     }
 
+    public function update(Graduate $graduate, Request $request) {
+        $validated = $request->validate([
+            'verification_means' => ['nullable', 'string', 'max:50'], 
+            'verification_date' => ['nullable', 'string', 'max:50'], 
+            'verification_status' => ['nullable', 'string', 'max:50'], 
+            'follow_up_date_1' => ['nullable', 'string', 'max:50'], 
+            'follow_up_date_2' => ['nullable', 'string', 'max:50'], 
+            'response_status' => ['nullable', 'string', 'max:50'], 
+            'not_interested_reason' => ['nullable', 'string', 'max:255'], 
+            'referral_status' => ['nullable', 'string', 'max:10'], 
+            'referral_date' => ['nullable', 'string', 'max:50'], 
+            'no_referral_reason' => ['nullable', 'string', 'max:255'], 
+            'invalid_contact' => ['nullable', 'string', 'max:10'], 
+            'company_name' => ['nullable', 'string', 'max:255'], 
+            'company_address' => ['nullable', 'string', 'max:255'], 
+            'job_title' => ['nullable', 'string', 'max:255'], 
+            'application_status' => ['nullable', 'string', 'max:255'], 
+            'withdrawn_reason' => ['nullable', 'string', 'max:255'], 
+            'employment_status' => ['nullable', 'string', 'max:255'], 
+            'hired_date' => ['nullable', 'string', 'max:50'], 
+            'submitted_documents_date' => ['nullable', 'string', 'max:50'], 
+            'interview_date' => ['nullable', 'string', 'max:50'], 
+            'not_hired_reason' => ['nullable', 'string', 'max:50']
+        ]);
+
+        foreach ($validated as $key => $value) {
+            $validated[$key] = strip_tags($value);
+        }
+
+        $verification_status = isset($validated['verification_status']) == true ? $validated['verification_status'] : '';
+        $response_status = isset($validated['response_status']) == true ? $validated['response_status'] : '';
+        $not_interested_reason = isset($validated['not_interested_reason']) == true ? $validated['not_interested_reason'] : '';
+        $referral_status = isset($validated['referral_status']) == true ? $validated['referral_status'] : '';
+        $referral_date = isset($validated['referral_date']) == true ? $validated['referral_date'] : '';
+        $no_referral_reason = isset($validated['no_referral_reason']) == true ? $validated['no_referral_reason'] : '';
+        $invalid_contact = isset($validated['invalid_contact']) == true ? $validated['invalid_contact'] : '';
+
+        $company_name = isset($validated['company_name']) == true ? $validated['company_name'] : '';
+        $company_address = isset($validated['company_address']) == true ? $validated['company_address'] : '';
+        $job_title = isset($validated['job_title']) == true ? $validated['job_title'] : '';
+        $application_status = isset($validated['application_status']) == true ? $validated['application_status'] : '';
+        $withdrawn_reason = isset($validated['withdrawn_reason']) == true ? $validated['withdrawn_reason'] : ''; 
+        $employment_status = isset($validated['employment_status']) == true ? $validated['employment_status'] : '';
+        $hired_date = isset($validated['hired_date']) == true ? $validated['hired_date'] : '';
+        $submission_documents_date = isset($validated['submission_documents_date']) == true ? $validated['submission_documents_date'] : '';
+        $interview_date = isset($validated['interview_date']) == true ? $validated['interview_date'] : '';
+        $not_hired_reason = isset($validated['not_hired_reason']) == true ? $validated['not_hired_reason'] : '';
+
+        $graduate->update([
+            'verification_means' => $validated['verification_means'], 
+            'verification_date' => $validated['verification_date'], 
+            'verification_status' => $verification_status, 
+            'follow_up_date_1' => $validated['follow_up_date_1'], 
+            'follow_up_date_2' => $validated['follow_up_date_2'], 
+            'response_status' => $response_status, 
+            'not_interested_reason' => $not_interested_reason, 
+            'referral_status' => $referral_status, 
+            'referral_date' => $referral_date, 
+            'no_referral_reason' => $no_referral_reason, 
+            'invalid_contact' => $invalid_contact, 
+            'company_name' => $company_name, 
+            'company_address' => $company_address, 
+            'job_title' => $job_title, 
+            'application_status' => $application_status, 
+            'withdrawn_reason' => $withdrawn_reason, 
+            'employment_status' => $employment_status, 
+            'hired_date' => $hired_date, 
+            'submitted_documents_date' => $submission_documents_date, 
+            'interview_date' => $interview_date, 
+            'not_hired_reason' => $not_hired_reason
+        ]);
+
+        return redirect()->route('view.details', $graduate->id)->with('success', 'Updated record successfully!');
+    }
+
     public function delete(Graduate $graduate) {
         $graduate->delete();
         return redirect()->route('view-records')->with('success', 'Deleted record successfully!');
+    }
+
+    public function delete_all() {
+        DB::select("CALL clear_all_records()");
+        return redirect()->route('view-records')->with('success', 'Cleared all records successfully!');
     }
 
     private function full_name_format($last_name, $first_name, $middle_name, $extension_name) {
