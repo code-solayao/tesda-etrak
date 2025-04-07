@@ -170,7 +170,7 @@ class EtrakController extends Controller
             'interview_date' => ['nullable', 'string', 'max:50'], 
             'not_hired_reason' => ['nullable', 'string', 'max:50']
         ]);
-
+        
         foreach ($validated as $key => $value) {
             $validated[$key] = strip_tags($value);
         }
@@ -190,7 +190,7 @@ class EtrakController extends Controller
         $withdrawn_reason = isset($validated['withdrawn_reason']) == true ? $validated['withdrawn_reason'] : ''; 
         $employment_status = isset($validated['employment_status']) == true ? $validated['employment_status'] : '';
         $hired_date = isset($validated['hired_date']) == true ? $validated['hired_date'] : '';
-        $submission_documents_date = isset($validated['submission_documents_date']) == true ? $validated['submission_documents_date'] : '';
+        $submitted_documents_date = isset($validated['submitted_documents_date']) == true ? $validated['submitted_documents_date'] : '';
         $interview_date = isset($validated['interview_date']) == true ? $validated['interview_date'] : '';
         $not_hired_reason = isset($validated['not_hired_reason']) == true ? $validated['not_hired_reason'] : '';
 
@@ -213,7 +213,7 @@ class EtrakController extends Controller
             'withdrawn_reason' => $withdrawn_reason, 
             'employment_status' => $employment_status, 
             'hired_date' => $hired_date, 
-            'submitted_documents_date' => $submission_documents_date, 
+            'submitted_documents_date' => $submitted_documents_date, 
             'interview_date' => $interview_date, 
             'not_hired_reason' => $not_hired_reason
         ]);
