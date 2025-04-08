@@ -96,7 +96,7 @@
                 <select name="sector" id="sector" class="form-input">
                     <option value="">-- Select an sector --</option>
                     @foreach ($sectors as $sector)
-                        <option value="{{ $sector }}" {{ old('sector') == $name ? 'selected' : '' }}>{{ $sector }}</option>
+                        <option value="{{ $sector }}" {{ old('sector') == $sector ? 'selected' : '' }}>{{ $sector }}</option>
                     @endforeach
                 </select>
             </div>

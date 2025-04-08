@@ -23,7 +23,7 @@
                 <button class="px-4 py-2 border-b-2 border-transparent hover:border-gray-300" id="employmentTab">Employment</button>
             </div>
         </div>
-        <div class="p-4 bg-neutral-300">
+        <div class="p-4 bg-neutral-200">
             <div class="tab-content">
                 <dl>
                     <dt>Name: </dt>

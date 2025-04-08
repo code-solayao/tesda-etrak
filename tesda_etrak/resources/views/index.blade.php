@@ -11,11 +11,21 @@
         <nav class="container mx-auto p-4 flex justify-between items-center">
             <div class="font-[Fremont,Verdana] font-bold text-3xl text-blue-700">E-TRAK</div>
             <div class="flex items-center space-x-4">
-                <span class="text-gray-600">Welcome, user!</span>
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <input type="submit" class="btn btn-secondary" role="button" name="logout" value="Log Out">
-                </form>
+                @guest
+                    <div class="flex flex-row-reverse">
+                        <a href="{{ route('view.login') }}">Log In</a>
+                        <a href="{{ route('view.signup') }}">Sign Up</a>
+                    </div>
+                @endguest
+                @auth
+                    <span class="text-gray-600 border-r-2 pr-2">
+                        Welcome, {{ Auth::user()->name }}
+                    </span>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <input type="submit" class="btn btn-secondary" role="button" name="logout" value="Log Out">
+                    </form>
+                @endauth
             </div>
         </nav>
     </header>

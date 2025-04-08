@@ -11,13 +11,21 @@
         <nav class="container mx-auto p-4 flex justify-between items-center">
             <a href="{{ url('/') }}" class="font-[Fremont,Verdana] font-bold text-3xl text-blue-700">E-TRAK</a>
             <div class="flex items-center space-x-4">
-                <span class="text-gray-600 border-r-2 pr-2">
-                    Welcome, {{ Auth::user()->name }}
-                </span>
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <input type="submit" class="btn btn-secondary" role="button" name="logout" value="Log Out">
-                </form>
+                @guest
+                    <div class="flex flex-row-reverse">
+                        <a href="{{ route('view.login') }}" class="btn btn-secondary ml-5">Log In</a>
+                        <a href="{{ route('view.signup') }}" class="btn btn-secondary">Sign Up</a>
+                    </div>
+                @endguest
+                @auth
+                    <span class="text-gray-600 border-r-2 pr-2">
+                        Welcome, {{ Auth::user()->name }}
+                    </span>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <input type="submit" class="btn btn-secondary" role="button" name="logout" value="Log Out">
+                    </form>
+                @endauth
             </div>
         </nav>
     </header>
@@ -25,10 +33,7 @@
         {{-- Sidebar --}}
         <aside class="w-64 bg-[#f1f1f1] shadow-lg p-6 hidden md:block fixed left-0 top-16 h-[calc(100vh-4rem)]">
             <ul class="space-y-4 tab">
-                <li>
-                    <a href="https://lookerstudio.google.com/reporting/9d6c7c0a-dcfb-4dda-ba67-589c230b57bd/page/GzuKE?fbclid=IwY2xjawGZXIlleHRuA2FlbQIxMAABHWw1eJ0SY4OlJju7W9T7gV5eNEVFGy5QgPEYOM0jkeni293iDCwtfhtkkQ_aem_jBd-8gTDT5g2pEeWlbhpFQ" 
-                    class="tablinks" target="_blank" role="tab">Dashboard</a>
-                </li>
+                <li><a href="{{ route('dashboard') }}" class="tablinks">Dashboard</a></li>
                 <li><a href="{{ route('view-records') }}" class="tablinks">View records</a></li>
                 <li><a href="{{ route('view.create') }}" class="tablinks">Create a record</a></li>
                 <li><a href="#" class="tablinks">Import an Excel file</a></li>

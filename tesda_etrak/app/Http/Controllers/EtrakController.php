@@ -12,6 +12,10 @@ class EtrakController extends Controller
         return view('index');
     }
 
+    public function dashboard() {
+        return view('dashboard');
+    }
+
     public function view_records(Request $request) {
         $graduates = Graduate::select('id', 'last_name', 'first_name', 'middle_name', 'extension_name', 'employment_status', 'allocation', 'qualification_title')
         ->orderBy('id', 'desc')->paginate(10);
