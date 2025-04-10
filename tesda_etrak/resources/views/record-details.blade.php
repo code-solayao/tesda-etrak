@@ -218,6 +218,8 @@
                                 @case("Not Hired")
                                     <dt>Reason (Not Hired): </dt>
                                     <dd>{{ $graduate->not_hired_reason }}</dd>
+                                    <dt>Remarks: </dt>
+                                    <dd>{{ $graduate->remarks }}</dd>
                                     @break
                                 @default
                                     <dt class="ms-[30px]">Date Hired: </dt>
@@ -228,6 +230,8 @@
                                     <dd class="ms-[30px] dateFormat">{{ $graduate->interview_date }}</dd>
                                     <dt class="ms-[30px]">Reason (Not Hired): </dt>
                                     <dd class="ms-[30px]">{{ $graduate->not_hired_reason }}</dd>
+                                    <dt class="ms-[30px]">Remarks: </dt>
+                                    <dd class="ms-[30px]">{{ $graduate->remarks }}</dd>
                             @endswitch
                             @break
         
@@ -255,6 +259,8 @@
                                 @case("Not Hired")
                                     <dt>Reason (Not Hired): </dt>
                                     <dd>{{ $graduate->not_hired_reason }}</dd>
+                                    <dt>Remarks: </dt>
+                                    <dd>{{ $graduate->remarks }}</dd>
                                     @break
                                 @default
                                     <dt class="ms-[30px]">Date Hired: </dt>
@@ -265,6 +271,8 @@
                                     <dd class="ms-[30px] dateFormat">{{ $graduate->interview_date }}</dd>
                                     <dt class="ms-[30px]">Reason (Not Hired): </dt>
                                     <dd class="ms-[30px]">{{ $graduate->not_hired_reason }}</dd>
+                                    <dt class="ms-[30px]">Remarks: </dt>
+                                    <dd class="ms-[30px]">{{ $graduate->remarks }}</dd>
                             @endswitch
                             <dt>Reason (Withdrawn): </dt>
                             <dd>{{ $graduate->withdrawn_reason }}</dd>

@@ -65,6 +65,7 @@ return new class extends Migration
             $table->char('no_of_employed', 10)->nullable();
             $table->string('verification', 50)->nullable();
             $table->char('job_vacancies', 10)->nullable();
+            $table->string('remarks')->nullable();
         });
     }
 
