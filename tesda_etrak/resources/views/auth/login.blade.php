@@ -33,7 +33,7 @@
                     </div>
                     <div class="flex items-center justify-between">
                         <label for="remember_me" class="flex items-center">
-                            <input type="checkbox" id="remember_me" name="remember_me" class="text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                            <input type="checkbox" id="remember_me" name="remember" class="text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
                             <span class="ml-1 text-sm text-gray-700">Remember me</span>
                         </label>
                         <a href="#" class="text-sm text-blue-700 hover:underline">Forgot password?</a>

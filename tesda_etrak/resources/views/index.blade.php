@@ -7,14 +7,14 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body id="body">
-    <header class="bg-white shadow-md">
+    <header class="bg-white shadow-md static top-0 left-0 w-full z-10">
         <nav class="container mx-auto p-4 flex justify-between items-center">
             <div class="font-[Fremont,Verdana] font-bold text-3xl text-blue-700">E-TRAK</div>
             <div class="flex items-center space-x-4">
                 @guest
                     <div class="flex flex-row-reverse">
-                        <a href="{{ route('view.login') }}">Log In</a>
-                        <a href="{{ route('view.signup') }}">Sign Up</a>
+                        <a href="{{ route('view.login') }}" class="btn btn-secondary ml-5">Log In</a>
+                        <a href="{{ route('view.signup') }}" class="btn btn-secondary">Sign Up</a>
                     </div>
                 @endguest
                 @auth

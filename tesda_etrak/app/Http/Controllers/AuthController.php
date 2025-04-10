@@ -23,7 +23,9 @@ class AuthController extends Controller
             'password' => 'required|string'
         ]);
 
-        if (Auth::attempt($credentials)) {
+        $remember = $request->filled('remember');
+
+        if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
             return redirect()->route('index');
         }
