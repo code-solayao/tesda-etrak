@@ -10,6 +10,14 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
+@font-face {
+    font-family: 'FremontBold';
+    src: url('../fonts/FremontBold.woff2') format('woff2'), 
+    url('../fonts/FremontBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 @layer components {
     .btn {
         @apply border font-bold px-4 py-2 rounded-md;

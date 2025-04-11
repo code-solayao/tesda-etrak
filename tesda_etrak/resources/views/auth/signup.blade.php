@@ -10,8 +10,10 @@
     <main role="main">
 
         <div class="flex items-center justify-center min-h-screen bg-sky-200">
-            <div class="w-full max-w-md p-8 space-y-6 bg-sky-400 rounded-2xl shadow-lg">
-                <h2 class="text-2xl font-bold text-center text-gray-800">Create an E-TRAK account</h2>
+            <div class="w-full max-w-md p-8 space-y-6 bg-sky-300 border-2 rounded-2xl shadow-lg">
+                <h2 class="text-2xl font-bold text-center text-gray-800">
+                    Create an <a href="{{ route('index') }}" class="font-[FremontBold,Verdana] text-blue-700">E-TRAK</a> account
+                </h2>
                 @if ($errors->any())
                     <ul class="px-3 py-2 bg-red-400 rounded-md">
                         @foreach ($errors->all() as $error)
