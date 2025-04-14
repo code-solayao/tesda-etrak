@@ -269,7 +269,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <textarea name="remarks" id="remarks" rows="3" class="form-input mb-3 ml-5" placeholder="Remarks">{{ old('remarks', $graduate->remarks) }}</textarea>
+                                <textarea name="remarks" id="remarks" rows="3" class="form-input mb-3 ml-5" placeholder="Remarks" disabled>{{ old('remarks', $graduate->remarks) }}</textarea>
                             </div>
                             {{-- application_status : Withdrawn --}}
                             <div class="mb-5" id="withdrawn">

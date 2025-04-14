@@ -69,7 +69,7 @@ h1 {
 }
 
 #body {
-    @apply bg-gray-100 text-gray-900;
+    @apply bg-cyan-50 text-gray-900;
 }
 
 dt {

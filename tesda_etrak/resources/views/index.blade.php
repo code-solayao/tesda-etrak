@@ -7,29 +7,29 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body id="body">
-    <header class="bg-white shadow-md static top-0 left-0 w-full z-10">
+    <header class="bg-blue-400 shadow-md static top-0 left-0 w-full z-10">
         <nav class="container mx-auto p-4 flex justify-between items-center">
-            <div class="font-[Fremont,Verdana] font-bold text-3xl text-blue-700">E-TRAK</div>
+            <div class="font-[Fremont,Verdana] font-bold text-3xl text-white">E-TRAK</div>
             <div class="flex items-center space-x-4">
                 @guest
                     <div class="flex flex-row-reverse">
-                        <a href="{{ route('view.login') }}" class="btn btn-secondary ml-5">Log In</a>
-                        <a href="{{ route('view.signup') }}" class="btn btn-secondary">Sign Up</a>
+                        <a href="{{ route('view.login') }}" class="btn btn-secondary bg-blue-100 hover:bg-blue-200 text-blue-700 ml-5">Log In</a>
+                        <a href="{{ route('view.signup') }}" class="btn btn-secondary bg-indigo-500 hover:bg-indigo-400">Sign Up</a>
                     </div>
                 @endguest
                 @auth
-                    <span class="text-gray-600 border-r-2 pr-2">
-                        Welcome, {{ Auth::user()->name }}
+                    <span class="text-white text-lg border-r-2 pr-2">
+                        Welcome, <b>{{ Auth::user()->name }}</b>
                     </span>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <input type="submit" class="btn btn-secondary" role="button" name="logout" value="Log Out">
+                        <input type="submit" class="btn btn-secondary bg-blue-100 hover:bg-blue-200 text-blue-700" role="button" name="logout" value="Log Out">
                     </form>
                 @endauth
             </div>
         </nav>
     </header>
-    <div class="flex min-h-screen">
+    <div class="flex">
         <main class="flex-1 px-24 py-6">
             @if (session('success'))
                 <div class="p-3 mb-3 text-center bg-green-200 text-green-600 font-semibold text-lg block rounded border drop-shadow">
