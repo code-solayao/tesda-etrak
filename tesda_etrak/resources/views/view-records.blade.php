@@ -12,10 +12,10 @@
 @php
     $categories = [
         "Record number", 
-        "Last name", 
-        "First name", 
-        "Middle name", 
-        "Extension name", 
+        "Last Name", 
+        "First Name", 
+        "Middle Name", 
+        "Extension Name", 
         "Status of Employment", 
         "Year of Graduation", 
         "Qualification Title", 
@@ -41,9 +41,9 @@
                 <thead>
                     <tr class="bg-gray-400 text-white uppercase text-sm leading-normal">
                         <th class="px-6 py-3 text-left">No.</th>
-                        <th class="px-6 py-3 text-left">Last name</th>
-                        <th class="px-6 py-3 text-left">First name</th>
-                        <th class="px-6 py-3 text-left">Middle name</th>
+                        <th class="px-6 py-3 text-left">Last Name</th>
+                        <th class="px-6 py-3 text-left">First Name</th>
+                        <th class="px-6 py-3 text-left">Middle Name</th>
                         <th class="px-6 py-3 text-left">Ext.</th>
                         <th class="px-6 py-3 text-left">Status of Employment</th>
                         <th class="px-6 py-3 text-left">Year of Graduation</th>
