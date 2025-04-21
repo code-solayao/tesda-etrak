@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EtrakController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,8 @@ Route::controller(EtrakController::class)->group(function () {
     Route::get('/view-records/get', 'search_graduates')->name('search-graduates');
     Route::get('/record-details/{graduate}', 'view_details')->name('view.details');
 });
+
+Route::get('/sheets-data', [ApiController::class, 'index']);
 
 Route::middleware('auth')->controller(EtrakController::class)->group(function () {
     Route::get('/create-record', 'view_create')->name('view.create');
