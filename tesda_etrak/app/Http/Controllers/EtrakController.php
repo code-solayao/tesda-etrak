@@ -105,8 +105,8 @@ class EtrakController extends Controller
             'birthdate' => ['nullable', 'string', 'max:50'], 
             'contact_number' => ['nullable', 'string', 'min:13', 'max:16'], 
             'email' => ['nullable', 'email', 'max:255'], 
-            'scholarship_type' => ['nullable', 'string', 'max:50'], 
             'address' => ['nullable', 'string', 'max:255'], 
+            'scholarship_type' => ['nullable', 'string', 'max:50'], 
             'allocation' => ['nullable', 'string', 'max:50']
         ]);
 
