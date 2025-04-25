@@ -40,7 +40,7 @@ class ImportSheetsData extends Command
         $service = new Sheets($client);
 
         $spreadsheetId = env('GOOGLE_SHEET_ID');
-        $range = 'List of Graduates!A1:AS2';
+        $range = 'List of Graduates';
 
         $response = $service->spreadsheets_values->get($spreadsheetId, $range);
         $values = $response->getValues();
@@ -60,19 +60,16 @@ class ImportSheetsData extends Command
 
         foreach ($chunks as $chunk) {
             $this->info('Processing chunk...');
-            $this->info('--------------------------------');
 
             foreach ($chunk as $row) {
                 $normalizedRow = array_pad($row, count($headers), null);
                 $normalizedRow = array_slice($normalizedRow, 0, count($headers));
                 $data = array_combine($headers, $normalizedRow);
-                $all_keys = array_keys($data);
+                /*$all_keys = array_keys($data);
                 $all_values = array_values($data);
                 for ($i = 0; $i < count($all_keys); $i++) {
                     $this->info("{$all_keys[$i]} = {$all_values[$i]}");
-                }
-                $this->info('--------------------------------');
-                continue;
+                }*/
 
                 // Validate row
                 $validator = Validator::make($data, [
@@ -176,7 +173,13 @@ class ImportSheetsData extends Command
                     'application_status' => trim($data['application status (proceed or not for job opening)'] ?? '')
                 ];
 
-                $birthdate = $sanitized['birthdate'] == '' ? '' : Carbon::parse($sanitized['birthdate']);
+                $sanitized['birthdate'] = $this->dateFormat1($sanitized['birthdate']);
+                $sanitized['date_hired'] = $this->dateFormat2($sanitized['date_hired']);
+                $sanitized['verification_date'] = $this->dateFormat1($sanitized['verification_date']);
+                $sanitized['follow_up_date_1'] = $this->dateFormat1($sanitized['follow_up_date_1']);
+                $sanitized['hired_date'] = $this->dateFormat3($sanitized['hired_date']);
+
+                /*$birthdate = $sanitized['birthdate'] == '' ? '' : Carbon::parse($sanitized['birthdate']);
                 $date_hired = $sanitized['date_hired'] == '' ? '' : Carbon::parse($sanitized['date_hired']);
                 $verification_date = $sanitized['verification_date'] == '' ? '' : Carbon::parse($sanitized['verification_date']);
                 $follow_up_date_1 = $sanitized['follow_up_date_1'] == '' ? '' : Carbon::parse($sanitized['follow_up_date_1']);
@@ -185,7 +188,7 @@ class ImportSheetsData extends Command
                 $sanitized['date_hired'] = $date_hired == '' ? '' : $date_hired->format('Y-m-d');
                 $sanitized['verification_date'] = $verification_date == '' ? '' : $verification_date->format('Y-m-d');
                 $sanitized['follow_up_date_1'] = $follow_up_date_1 == '' ? '' : $follow_up_date_1->format('Y-m-d');
-                $sanitized['hired_date'] = $hired_date == '' ? '' : $hired_date->format('Y-m-d');
+                $sanitized['hired_date'] = $hired_date == '' ? '' : $hired_date->format('Y-m-d');*/
 
                 Graduate::create([
                     'district' => $sanitized['district'], 
@@ -245,5 +248,41 @@ class ImportSheetsData extends Command
         }
 
         $this->info('Sheets data import completed.');
+    }
+
+    // Format: 08/05/1930
+    public function dateFormat1($date) {
+        $formattedDate = $date;
+
+        if (strlen($date) == 10 && str_contains($date, '/')) {
+            $date = Carbon::createFromFormat('m/d/Y', $date);
+            $formattedDate = $date->format('Y-m-d');
+        }
+
+        return $formattedDate;
+    }
+
+    // Format: 08-05-1930
+    public function dateFormat2($date) {
+        $formattedDate = $date;
+
+        if (strlen($date) == 10 && str_contains($date, '-')) {
+            $date = Carbon::createFromFormat('m-d-Y', $date);
+            $formattedDate = $date->format('Y-m-d');
+        }
+
+        return $formattedDate;
+    }
+
+    // Format: 05-Aug-1930
+    public function dateFormat3($date) {
+        $formattedDate = $date;
+
+        if (strlen($date) == 11 && str_contains($date, '-')) {
+            $date = Carbon::parse($date);
+            $formattedDate = $date->format('Y-m-d');
+        }
+
+        return $formattedDate;
     }
 }
