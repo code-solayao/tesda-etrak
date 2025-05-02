@@ -12,6 +12,7 @@
 @php
     $categories = [
         "Record number", 
+        "Full Name", 
         "Last Name", 
         "First Name", 
         "Middle Name", 
@@ -78,7 +79,7 @@
                 </tbody>
             </table>
         </div>
-        <div>{{ $graduates->links() }}</div>
+        <div>{{ $graduates->withQueryString()->links('pagination::tailwind') }}</div>
     </div>
     {{-- Modal --}}
     <div class="relative z-10 hidden" id="deleteModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">

@@ -44,22 +44,27 @@ class EtrakController extends Controller
                     $query->where('id', 'LIKE', "%$search%");
                 })->orderBy('id', 'desc')->paginate(10);
                 break;
-            case "Last name":
+            case "Full Name":
+                $graduates = Graduate::where(function($query) use ($search) {
+                    $query->where('full_name', 'LIKE', "%$search%");
+                })->orderBy('id', 'desc')->paginate(10);
+                break;
+            case "Last Name":
                 $graduates = Graduate::where(function($query) use ($search) {
                     $query->where('last_name', 'LIKE', "%$search%");
                 })->orderBy('id', 'desc')->paginate(10);
                 break;
-            case "First name":
+            case "First Name":
                 $graduates = Graduate::where(function($query) use ($search) {
                     $query->where('first_name', 'LIKE', "%$search%");
                 })->orderBy('id', 'desc')->paginate(10);
                 break;
-            case "Middle name":
+            case "Middle Name":
                 $graduates = Graduate::where(function($query) use ($search) {
                     $query->where('middle_name', 'LIKE', "%$search%");
                 })->orderBy('id', 'desc')->paginate(10);
                 break;
-            case "Extension name":
+            case "Extension Name":
                 $graduates = Graduate::where(function($query) use ($search) {
                     $query->where('extension_name', 'LIKE', "%$search%");
                 })->orderBy('id', 'desc')->paginate(10);
@@ -80,7 +85,22 @@ class EtrakController extends Controller
                 })->orderBy('id', 'desc')->paginate(10);
                 break;
             default:
-                $graduates = DB::table('graduates')->orderBy('id', 'desc')->paginate(10);
+                if ($search == '') {
+                    $graduates = Graduate::select('id', 'last_name', 'first_name', 'middle_name', 'extension_name', 'employment_status', 'allocation', 'qualification_title')
+                    ->orderBy('id', 'desc')->paginate(10);
+                }
+                else {
+                    $graduates = Graduate::where(function($query) use ($search) {
+                        $query->where('id', 'LIKE', "%$search%")
+                        ->orWhere('full_name', 'LIKE', "%$search%")
+                        ->orWhere('last_name', 'LIKE', "%$search%")
+                        ->orWhere('first_name', 'LIKE', "%$search%")
+                        ->orWhere('extension_name', 'LIKE', "%$search%")
+                        ->orWhere('employment_status', 'LIKE', "%$search%")
+                        ->orWhere('allocation', 'LIKE', "%$search%")
+                        ->orWhere('qualification_title', 'LIKE', "%$search%");
+                    })->orderBy('id', 'desc')->paginate(10);
+                }
         }
 
         return view('view-records', compact('graduates', 'search', 'search_category'));
