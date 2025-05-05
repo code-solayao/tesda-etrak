@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Graduate;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class EtrakController extends Controller
 {
@@ -31,7 +30,7 @@ class EtrakController extends Controller
         $search_category = null;
 
         if (empty($request)) {
-            $graduates = DB::table('graduates')->orderBy('id', 'desc')->paginate(10);
+            $graduates = Graduate::select()->orderBy('id', 'desc')->paginate(10);
             return view('view-records', compact('graduates', 'search', 'search_category'));
         }
 
@@ -251,7 +250,7 @@ class EtrakController extends Controller
     }
 
     public function delete_all() {
-        DB::select("CALL clear_all_records()");
+        Graduate::truncate();
         return redirect()->route('view-records')->with('success', 'Cleared all records successfully!');
     }
 
