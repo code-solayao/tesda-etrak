@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Controllers\GoogleSheetsService;
 use App\Models\Graduate;
 use Google\Client;
 use Google\Service\Sheets;
@@ -37,11 +36,13 @@ class ExportMySqlData extends Command
         $client->addScope(Sheets::SPREADSHEETS);
         $service = new Sheets($client);
 
-        $spreadsheetId = env('TEST_SHEET_ID');
-        $range = 'Sheet1';
+        $spreadsheetId = env('EXPORT_SHEET_ID');
+        $range = 'List of Graduates';
+        $total_rows = 0;
 
         Graduate::chunk(1000, function ($rows) use ($service, $spreadsheetId, $range) {
             $values = [];
+            $total_rows = 0;
 
             foreach ($rows as $row) {
                 $values[] = [
@@ -93,7 +94,6 @@ class ExportMySqlData extends Command
                 ];
             }
 
-
             $body = new Sheets\ValueRange([
                 'values' => $values
             ]);
@@ -102,6 +102,8 @@ class ExportMySqlData extends Command
 
             $service->spreadsheets_values->append($spreadsheetId, $range, $body, $params);
 
+            $total_rows += count($values);
+            $this->info("ROWS: $total_rows");
             $this->info(count($values) . ' rows appended. ');
         });
 

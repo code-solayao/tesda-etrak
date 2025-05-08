@@ -39,7 +39,7 @@ class ImportSheetsData extends Command
         $client->setAuthConfig(storage_path('app/credentials.json'));
         $service = new Sheets($client);
 
-        $spreadsheetId = env('GOOGLE_SHEET_ID');
+        $spreadsheetId = env('EMPLOYMENT_MONITORING_SYSTEM_ID');
         $range = 'List of Graduates';
 
         $response = $service->spreadsheets_values->get($spreadsheetId, $range);

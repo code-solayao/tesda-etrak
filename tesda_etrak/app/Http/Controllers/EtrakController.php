@@ -137,6 +137,9 @@ class EtrakController extends Controller
         $sex = isset($validated['sex']) == true ? $validated['sex'] : '';
 
         // Add default values for extra fields in Excel. Either implement here or with the Factory-Seeder method
+        $count = 1;
+        $no_of_graduates = 1;
+        $job_vacancies = 'No';
 
         Graduate::create([
             'district' => $validated['district'], 
@@ -155,7 +158,10 @@ class EtrakController extends Controller
             'email' => $validated['email'], 
             'scholarship_type' => $validated['scholarship_type'], 
             'address' => $validated['address'], 
-            'allocation' => $validated['allocation']
+            'allocation' => $validated['allocation'], 
+            'count' => $count, 
+            'no_of_graduates' => $no_of_graduates, 
+            'job_vacancies' => $job_vacancies
         ]);
 
         return redirect()->route('view-records')->with('success', 'Created record successfully!');
