@@ -24,6 +24,7 @@ Route::controller(EtrakController::class)->group(function () {
     Route::get('/view-records', 'view_records')->name('view-records');
     Route::get('/view-records/get', 'search_graduates')->name('search-graduates');
     Route::get('/record-details/{graduate}', 'view_details')->name('view.details');
+    Route::get('/google-sheets-data', 'view_sheets_data')->name('view.sheets-data');
 });
 
 Route::get('/sheets-data', [ApiController::class, 'index']);

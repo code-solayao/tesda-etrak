@@ -36,6 +36,7 @@
                 <li><a href="{{ route('dashboard') }}" class="tablinks">Dashboard</a></li>
                 <li><a href="{{ route('view-records') }}" class="tablinks">View records</a></li>
                 <li><a href="{{ route('view.create') }}" class="tablinks">Create a record</a></li>
+                <li><a href="{{ route('view.sheets-data') }}" class="tablinks">Google Sheets Data</a></li>
             </ul>
         </aside>
         {{-- Main --}}
