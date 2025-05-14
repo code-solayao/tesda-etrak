@@ -8,6 +8,6 @@
 
 <x-layout>
     <div>
-        
+        <a href="#" class="btn btn-primary">Import Data</a>
     </div>
 </x-layout>

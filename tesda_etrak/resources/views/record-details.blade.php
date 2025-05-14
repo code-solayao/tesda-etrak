@@ -24,9 +24,6 @@
             </svg>              
             Delete
         </a>
-        {{-- <button type="button" class="btn btn-danger py-[6.8px]" id="toggleCreate">
-            Delete
-        </button> --}}
     </div>
     <div>
         <div class="w-full">
