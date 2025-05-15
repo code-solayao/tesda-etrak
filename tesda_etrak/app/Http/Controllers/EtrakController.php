@@ -427,6 +427,7 @@ class EtrakController extends Controller
         }
 
         // Sheets data import completed
+        return redirect()->route('view-records')->with('Google Sheets data import complete.');
     }
 
     public function export_data() {
@@ -502,7 +503,7 @@ class EtrakController extends Controller
             // $this->info(count($values) . ' rows appended. ');
         });
 
-        return redirect()->route('view-records')->with('MySQL database export complete.');
+        return redirect()->route('view.sheets-data')->with('MySQL database export complete.');
     }
 
     private function full_name_format($last_name, $first_name, $middle_name, $extension_name) {

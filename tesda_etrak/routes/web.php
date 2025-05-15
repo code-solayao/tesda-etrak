@@ -36,4 +36,6 @@ Route::middleware('auth')->controller(EtrakController::class)->group(function ()
     Route::put('/update-record/{graduate}', 'update')->name('update');
     Route::delete('/record-details/{graduate}', 'delete')->name('delete');
     Route::delete('/view-records', 'delete_all')->name('delete-all');
+    Route::get('/google-sheets-data/import-data', 'import_data')->name('import.data');
+    Route::get('/google-sheets-data/export-data', 'export_data')->name('export.data');
 });
