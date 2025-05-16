@@ -27,8 +27,6 @@ Route::controller(EtrakController::class)->group(function () {
     Route::get('/google-sheets-data', 'view_sheets_data')->name('view.sheets-data');
 });
 
-Route::get('/sheets-data', [ApiController::class, 'index']);
-
 Route::middleware('auth')->controller(EtrakController::class)->group(function () {
     Route::get('/create-record', 'view_create')->name('view.create');
     Route::get('/update-record/{graduate}', 'view_update')->name('view.update');
