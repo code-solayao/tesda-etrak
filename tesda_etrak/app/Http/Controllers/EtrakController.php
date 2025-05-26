@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Graduate;
+use App\Services\GoogleSheetsService;
 use Carbon\Carbon;
 use Google\Client;
 use Google\Service\Sheets;
@@ -504,6 +505,71 @@ class EtrakController extends Controller
         });
 
         return redirect()->route('view.sheets-data')->with('MySQL database export complete.');
+    }
+
+    public function export_data_update(GoogleSheetsService $sheetsService) 
+    {
+        // Optional: clear old data
+        $sheetsService->clearSheet('List of Graduates');
+
+        $data = Graduate::all()->map(function ($row) {
+            return [
+                $row->district, 
+                $row->city, 
+                $row->tvi, 
+                $row->qualification_title, 
+                $row->sector, 
+                $row->last_name, 
+                $row->first_name, 
+                $row->middle_name, 
+                $row->extension_name, 
+                $row->full_name, 
+                $row->sex, 
+                $row->birthdate, 
+                $row->contact_number, 
+                $row->email, 
+                $row->address, 
+                $row->scholarship_type, 
+                $row->training_status, 
+                $row->assessment_result, 
+                $row->employment_before_training, 
+                $row->occupation, 
+                $row->employer_name, 
+                $row->employment_type, 
+                $row->work_address, 
+                $row->date_hired, 
+                $row->allocation, 
+                $row->verification_means, 
+                $row->verification_date, 
+                $row->verification_status, 
+                $row->follow_up_date_1, 
+                $row->response_status, 
+                $row->not_interested_reason, 
+                $row->referral_status, 
+                $row->company_name, 
+                $row->company_address, 
+                $row->job_title, 
+                $row->employment_status, 
+                $row->hired_date, 
+                $row->not_hired_reason, 
+                $row->count, 
+                $row->no_of_graduates, 
+                $row->no_of_employed, 
+                $row->verification, 
+                $row->job_vacancies, 
+                $row->remarks, 
+                $row->application_status,
+            ];
+        })->toArray(); // need to check carefully
+
+        // Optional: add headers
+        $headers = [['District', 'City', 'Name of TVI']];
+        $allRows = array_merge($headers, $data);
+
+        // Overwrite data in the sheet
+        $sheetsService->updateRows('List of Graduates', $allRows);
+
+        return redirect()->route('view.sheets-data')->with('Updated data export complete.');
     }
 
     private function full_name_format($last_name, $first_name, $middle_name, $extension_name) {
