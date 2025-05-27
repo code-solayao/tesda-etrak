@@ -20,7 +20,8 @@ class EtrakController extends Controller
         return view('dashboard');
     }
 
-    public function view_records(Request $request) {
+    public function view_records(Request $request) 
+    {
         $graduates = Graduate::select('id', 'last_name', 'first_name', 'middle_name', 'extension_name', 'employment_status', 'allocation', 'qualification_title')
         ->orderBy('id', 'desc')->paginate(10);
         $search = $request->input('search');
@@ -29,7 +30,8 @@ class EtrakController extends Controller
         return view('view-records', compact('graduates', 'search', 'search_category'));
     }
 
-    public function search_graduates(Request $request) {
+    public function search_graduates(Request $request) 
+    {
         $graduates = null;
         $search = null;
         $search_category = null;
@@ -114,24 +116,25 @@ class EtrakController extends Controller
         return view('create-record');
     }
 
-    public function create(Request $request) {
+    public function create(Request $request) 
+    {
         $validated = $request->validate([
-            'district' => ['nullable', 'string', 'max:50'], 
-            'city' => ['nullable', 'string', 'max:50'], 
-            'tvi' => ['nullable', 'string', 'max:255'], 
-            'qualification_title' => ['nullable', 'string', 'max:255'], 
-            'sector' => ['nullable', 'string', 'max:255'], 
-            'last_name' => ['required', 'string', 'max:255'], 
-            'first_name' => ['required', 'string', 'max:255'], 
-            'middle_name' => ['nullable', 'string', 'max:255'], 
-            'extension_name' => ['nullable', 'string', 'max:50'], 
-            'sex' => ['nullable', 'string', 'max:50'], 
-            'birthdate' => ['nullable', 'string', 'max:50'], 
-            'contact_number' => ['nullable', 'string', 'min:13', 'max:16'], 
-            'email' => ['nullable', 'email', 'max:255'], 
-            'address' => ['nullable', 'string', 'max:255'], 
-            'scholarship_type' => ['nullable', 'string', 'max:50'], 
-            'allocation' => ['nullable', 'string', 'max:50']
+            'district' => ['nullable', 'string', 'max:50'],
+            'city' => ['nullable', 'string', 'max:50'],
+            'tvi' => ['nullable', 'string', 'max:255'],
+            'qualification_title' => ['nullable', 'string', 'max:255'],
+            'sector' => ['nullable', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'middle_name' => ['nullable', 'string', 'max:255'],
+            'extension_name' => ['nullable', 'string', 'max:50'],
+            'sex' => ['nullable', 'string', 'max:50'],
+            'birthdate' => ['nullable', 'string', 'max:50'],
+            'contact_number' => ['nullable', 'string', 'min:13', 'max:16'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'scholarship_type' => ['nullable', 'string', 'max:50'],
+            'allocation' => ['nullable', 'string', 'max:50'],
         ]);
 
         foreach ($validated as $key => $value) {
@@ -147,26 +150,26 @@ class EtrakController extends Controller
         $job_vacancies = 'No';
 
         Graduate::create([
-            'district' => $validated['district'], 
-            'city' => $validated['city'], 
-            'tvi' => $validated['tvi'], 
-            'qualification_title' => $validated['qualification_title'], 
-            'sector' => $validated['sector'], 
-            'last_name' => $validated['last_name'], 
-            'first_name' => $validated['first_name'], 
-            'middle_name' => $validated['middle_name'], 
-            'extension_name' => $validated['extension_name'], 
-            'full_name' => $full_name, 
-            'sex' => $sex, 
-            'birthdate' => $validated['birthdate'], 
-            'contact_number' => $validated['contact_number'], 
-            'email' => $validated['email'], 
-            'scholarship_type' => $validated['scholarship_type'], 
-            'address' => $validated['address'], 
-            'allocation' => $validated['allocation'], 
-            'count' => $count, 
-            'no_of_graduates' => $no_of_graduates, 
-            'job_vacancies' => $job_vacancies
+            'district' => $validated['district'],
+            'city' => $validated['city'],
+            'tvi' => $validated['tvi'],
+            'qualification_title' => $validated['qualification_title'],
+            'sector' => $validated['sector'],
+            'last_name' => $validated['last_name'],
+            'first_name' => $validated['first_name'],
+            'middle_name' => $validated['middle_name'],
+            'extension_name' => $validated['extension_name'],
+            'full_name' => $full_name,
+            'sex' => $sex,
+            'birthdate' => $validated['birthdate'],
+            'contact_number' => $validated['contact_number'],
+            'email' => $validated['email'],
+            'scholarship_type' => $validated['scholarship_type'],
+            'address' => $validated['address'],
+            'allocation' => $validated['allocation'],
+            'count' => $count,
+            'no_of_graduates' => $no_of_graduates,
+            'job_vacancies' => $job_vacancies,
         ]);
 
         return redirect()->route('view-records')->with('success', 'Created record successfully!');
@@ -180,29 +183,30 @@ class EtrakController extends Controller
         return view('update-record', compact('graduate'));
     }
 
-    public function update(Graduate $graduate, Request $request) {
+    public function update(Graduate $graduate, Request $request) 
+    {
         $validated = $request->validate([
-            'verification_means' => ['nullable', 'string', 'max:50'], 
-            'verification_date' => ['nullable', 'string', 'max:50'], 
-            'verification_status' => ['nullable', 'string', 'max:50'], 
-            'follow_up_date_1' => ['nullable', 'string', 'max:50'], 
-            'follow_up_date_2' => ['nullable', 'string', 'max:50'], 
-            'response_status' => ['nullable', 'string', 'max:50'], 
-            'not_interested_reason' => ['nullable', 'string', 'max:255'], 
-            'referral_status' => ['nullable', 'string', 'max:10'], 
-            'referral_date' => ['nullable', 'string', 'max:50'], 
-            'no_referral_reason' => ['nullable', 'string', 'max:255'], 
-            'invalid_contact' => ['nullable', 'string', 'max:10'], 
-            'company_name' => ['nullable', 'string', 'max:255'], 
-            'company_address' => ['nullable', 'string', 'max:255'], 
-            'job_title' => ['nullable', 'string', 'max:255'], 
-            'application_status' => ['nullable', 'string', 'max:255'], 
-            'withdrawn_reason' => ['nullable', 'string', 'max:255'], 
-            'employment_status' => ['nullable', 'string', 'max:255'], 
-            'hired_date' => ['nullable', 'string', 'max:50'], 
-            'submitted_documents_date' => ['nullable', 'string', 'max:50'], 
-            'interview_date' => ['nullable', 'string', 'max:50'], 
-            'not_hired_reason' => ['nullable', 'string', 'max:50']
+            'verification_means' => ['nullable', 'string', 'max:50'],
+            'verification_date' => ['nullable', 'string', 'max:50'],
+            'verification_status' => ['nullable', 'string', 'max:50'],
+            'follow_up_date_1' => ['nullable', 'string', 'max:50'],
+            'follow_up_date_2' => ['nullable', 'string', 'max:50'],
+            'response_status' => ['nullable', 'string', 'max:50'],
+            'not_interested_reason' => ['nullable', 'string', 'max:255'],
+            'referral_status' => ['nullable', 'string', 'max:10'],
+            'referral_date' => ['nullable', 'string', 'max:50'],
+            'no_referral_reason' => ['nullable', 'string', 'max:255'],
+            'invalid_contact' => ['nullable', 'string', 'max:10'],
+            'company_name' => ['nullable', 'string', 'max:255'],
+            'company_address' => ['nullable', 'string', 'max:255'],
+            'job_title' => ['nullable', 'string', 'max:255'],
+            'application_status' => ['nullable', 'string', 'max:255'],
+            'withdrawn_reason' => ['nullable', 'string', 'max:255'],
+            'employment_status' => ['nullable', 'string', 'max:255'],
+            'hired_date' => ['nullable', 'string', 'max:50'],
+            'submitted_documents_date' => ['nullable', 'string', 'max:50'],
+            'interview_date' => ['nullable', 'string', 'max:50'],
+            'not_hired_reason' => ['nullable', 'string', 'max:50'],
         ]);
         
         foreach ($validated as $key => $value) {
@@ -229,27 +233,27 @@ class EtrakController extends Controller
         $not_hired_reason = isset($validated['not_hired_reason']) == true ? $validated['not_hired_reason'] : '';
 
         $graduate->update([
-            'verification_means' => $validated['verification_means'], 
-            'verification_date' => $validated['verification_date'], 
-            'verification_status' => $verification_status, 
-            'follow_up_date_1' => $validated['follow_up_date_1'], 
-            'follow_up_date_2' => $validated['follow_up_date_2'], 
-            'response_status' => $response_status, 
-            'not_interested_reason' => $not_interested_reason, 
-            'referral_status' => $referral_status, 
-            'referral_date' => $referral_date, 
-            'no_referral_reason' => $no_referral_reason, 
-            'invalid_contact' => $invalid_contact, 
-            'company_name' => $company_name, 
-            'company_address' => $company_address, 
-            'job_title' => $job_title, 
-            'application_status' => $application_status, 
-            'withdrawn_reason' => $withdrawn_reason, 
-            'employment_status' => $employment_status, 
-            'hired_date' => $hired_date, 
-            'submitted_documents_date' => $submitted_documents_date, 
-            'interview_date' => $interview_date, 
-            'not_hired_reason' => $not_hired_reason
+            'verification_means' => $validated['verification_means'],
+            'verification_date' => $validated['verification_date'],
+            'verification_status' => $verification_status,
+            'follow_up_date_1' => $validated['follow_up_date_1'],
+            'follow_up_date_2' => $validated['follow_up_date_2'],
+            'response_status' => $response_status,
+            'not_interested_reason' => $not_interested_reason,
+            'referral_status' => $referral_status,
+            'referral_date' => $referral_date,
+            'no_referral_reason' => $no_referral_reason,
+            'invalid_contact' => $invalid_contact,
+            'company_name' => $company_name,
+            'company_address' => $company_address,
+            'job_title' => $job_title,
+            'application_status' => $application_status,
+            'withdrawn_reason' => $withdrawn_reason,
+            'employment_status' => $employment_status,
+            'hired_date' => $hired_date,
+            'submitted_documents_date' => $submitted_documents_date,
+            'interview_date' => $interview_date,
+            'not_hired_reason' => $not_hired_reason,
         ]);
 
         return redirect()->route('view.details', $graduate->id)->with('success', 'Updated record successfully!');
@@ -269,7 +273,10 @@ class EtrakController extends Controller
         return view('google-sheets-data');
     }
 
-    public function import_data() {
+    public function import_data() 
+    {
+        logger()->info('Initialising Google Sheets data import.');
+
         $client = new Client();
         $client->setAuthConfig(storage_path('app/credentials.json'));
         $client->setScopes([Sheets::SPREADSHEETS_READONLY]);
@@ -280,11 +287,11 @@ class EtrakController extends Controller
 
         $response = $service->spreadsheets_values->get($spreadsheetId, $range);
         $values = $response->getValues();
-        // Rows found: count($values)
+        logger()->info("Rows found: count($values)");
 
         if (empty($values)) {
-            // No data found
-            return;
+            logger()->warning('Sheet is empty');
+            return 'No data found';
         }
 
         // First row headers
@@ -296,7 +303,7 @@ class EtrakController extends Controller
 
         $errorNum = 1;
         foreach ($chunks as $chunk) {
-            // Processing chunk...
+            logger()->info('Processing chunk...');
 
             foreach ($chunk as $row) {
                 $normalizedRow = array_pad($row, count($headers), null);
@@ -311,57 +318,57 @@ class EtrakController extends Controller
                 ]);
 
                 if ($validator->fails()) {
-                    // WARNING: ($errorNum) Skipping row due to validation: . json_encode($data) . \n
+                    logger()->warning("$errorNum. Skipping row due to validation: . json_encode($data) . \n");
                     $errorNum++;
                     continue;
                 }
 
                 $sanitized = [
-                    'district' => trim($data['district'] ?? ''), 
-                    'city' => trim($data['city'] ?? ''), 
-                    'tvi' => trim($data['name of tvi'] ?? ''), 
-                    'qualification_title' => trim($data['qualification title'] ?? ''), 
-                    'sector' => trim($data['sector'] ?? ''), 
-                    'last_name' => trim($data['ln']), 
-                    'first_name' => trim($data['fn']), 
-                    'middle_name' => trim($data['mi'] ?? ''), 
-                    'extension_name' => trim($data['ext'] ?? ''), 
-                    'full_name' => trim($data['name']), 
-                    'sex' => trim($data['sex'] ?? ''), 
-                    'birthdate' => trim($data['date of birth'] ?? ''), 
-                    'contact_number' => trim($data['contact number'] ?? ''), 
-                    'email' => trim($data['email address'] ?? ''), 
-                    'address' => trim($data['address'] ?? ''), 
-                    'scholarship_type' => trim($data['scholarship type'] ?? ''), 
-                    'training_status' => trim($data['training status'] ?? ''), 
-                    'assessment_result' => trim($data['assessment result'] ?? ''), 
-                    'employment_before_training' => trim($data['employment before training'] ?? ''), 
-                    'occupation' => trim($data['occupation'] ?? ''), 
-                    'employer_name' => trim($data['name of employer'] ?? ''), 
-                    'employment_type' => trim($data['employment type'] ?? ''), 
-                    'work_address' => trim($data['address of employer'] ?? ''), 
-                    'date_hired' => trim($data['date hired'] ?? ''), 
-                    'allocation' => trim($data['allocation'] ?? ''), 
-                    'verification_means' => trim($data['means of verification'] ?? ''), 
-                    'verification_date' => trim($data['date of verification'] ?? ''), 
-                    'verification_status' => trim($data['status of verification'] ?? ''), 
-                    'follow_up_date_1' => trim($data['follow-up date'] ?? ''), 
-                    'response_status' => trim($data['status of responses'] ?? ''), 
-                    'not_interested_reason' => trim($data['reasons (not interested)'] ?? ''), 
-                    'referral_status' => trim($data['referal status'] ?? ''), 
-                    'company_name' => trim($data['name of company'] ?? ''), 
-                    'company_address' => trim($data['address (city)'] ?? ''), 
-                    'job_title' => trim($data['job title'] ?? ''), 
-                    'employment_status' => trim($data['employment status'] ?? ''), 
-                    'hired_date' => trim($data['date of hired'] ?? ''), 
-                    'not_hired_reason' => trim($data['remarks'] ?? ''), 
-                    'count' => trim($data['count'] ?? ''), 
-                    'no_of_graduates' => trim($data['no. of graduates'] ?? ''), 
-                    'no_of_employed' => trim($data['no. of employed'] ?? ''), 
-                    'verification' => trim($data['verification'] ?? ''), 
-                    'job_vacancies' => trim($data['job vacancies (verification)'] ?? ''), 
-                    'remarks' => trim($data['follow-up remarks'] ?? ''), 
-                    'application_status' => trim($data['application status (proceed or not for job opening)'] ?? '')
+                    'district' => trim($data['district'] ?? ''),
+                    'city' => trim($data['city'] ?? ''),
+                    'tvi' => trim($data['name of tvi'] ?? ''),
+                    'qualification_title' => trim($data['qualification title'] ?? ''),
+                    'sector' => trim($data['sector'] ?? ''),
+                    'last_name' => trim($data['ln']),
+                    'first_name' => trim($data['fn']),
+                    'middle_name' => trim($data['mi'] ?? ''),
+                    'extension_name' => trim($data['ext'] ?? ''),
+                    'full_name' => trim($data['name']),
+                    'sex' => trim($data['sex'] ?? ''),
+                    'birthdate' => trim($data['date of birth'] ?? ''),
+                    'contact_number' => trim($data['contact number'] ?? ''),
+                    'email' => trim($data['email address'] ?? ''),
+                    'address' => trim($data['address'] ?? ''),
+                    'scholarship_type' => trim($data['scholarship type'] ?? ''),
+                    'training_status' => trim($data['training status'] ?? ''),
+                    'assessment_result' => trim($data['assessment result'] ?? ''),
+                    'employment_before_training' => trim($data['employment before training'] ?? ''),
+                    'occupation' => trim($data['occupation'] ?? ''),
+                    'employer_name' => trim($data['name of employer'] ?? ''),
+                    'employment_type' => trim($data['employment type'] ?? ''),
+                    'work_address' => trim($data['address of employer'] ?? ''),
+                    'date_hired' => trim($data['date hired'] ?? ''),
+                    'allocation' => trim($data['allocation'] ?? ''),
+                    'verification_means' => trim($data['means of verification'] ?? ''),
+                    'verification_date' => trim($data['date of verification'] ?? ''),
+                    'verification_status' => trim($data['status of verification'] ?? ''),
+                    'follow_up_date_1' => trim($data['follow-up date'] ?? ''),
+                    'response_status' => trim($data['status of responses'] ?? ''),
+                    'not_interested_reason' => trim($data['reasons (not interested)'] ?? ''),
+                    'referral_status' => trim($data['referal status'] ?? ''),
+                    'company_name' => trim($data['name of company'] ?? ''),
+                    'company_address' => trim($data['address (city)'] ?? ''),
+                    'job_title' => trim($data['job title'] ?? ''),
+                    'employment_status' => trim($data['employment status'] ?? ''),
+                    'hired_date' => trim($data['date of hired'] ?? ''),
+                    'not_hired_reason' => trim($data['remarks'] ?? ''),
+                    'count' => trim($data['count'] ?? ''),
+                    'no_of_graduates' => trim($data['no. of graduates'] ?? ''),
+                    'no_of_employed' => trim($data['no. of employed'] ?? ''),
+                    'verification' => trim($data['verification'] ?? ''),
+                    'job_vacancies' => trim($data['job vacancies (verification)'] ?? ''),
+                    'remarks' => trim($data['follow-up remarks'] ?? ''),
+                    'application_status' => trim($data['application status (proceed or not for job opening)'] ?? ''),
                 ];
 
                 $sanitized['birthdate'] = $this->dateFormat1($sanitized['birthdate']);
@@ -371,67 +378,204 @@ class EtrakController extends Controller
                 $sanitized['hired_date'] = $this->dateFormat3($sanitized['hired_date']);
 
                 Graduate::create([
-                    'district' => $sanitized['district'], 
-                    'city' => $sanitized['city'], 
-                    'tvi' => $sanitized['tvi'], 
-                    'qualification_title' => $sanitized['qualification_title'], 
-                    'sector' => $sanitized['sector'], 
-                    'last_name' => $sanitized['last_name'], 
-                    'first_name' => $sanitized['first_name'], 
-                    'middle_name' => $sanitized['middle_name'], 
-                    'extension_name' => $sanitized['extension_name'], 
-                    'full_name' => $sanitized['full_name'], 
-                    'sex' => $sanitized['sex'], 
-                    'birthdate' => $sanitized['birthdate'], 
-                    'contact_number' => $sanitized['contact_number'], 
-                    'email' => $sanitized['email'], 
-                    'address' => $sanitized['address'], 
-                    'scholarship_type' => $sanitized['scholarship_type'], 
-                    'training_status' => $sanitized['training_status'], 
-                    'assessment_result' => $sanitized['assessment_result'], 
-                    'employment_before_training' => $sanitized['employment_before_training'], 
-                    'occupation' => $sanitized['occupation'], 
-                    'employer_name' => $sanitized['employer_name'], 
-                    'employment_type' => $sanitized['employment_type'], 
-                    'work_address' => $sanitized['work_address'], 
-                    'date_hired' => $sanitized['date_hired'], 
-                    'allocation' => $sanitized['allocation'], 
-                    'verification_means' => $sanitized['verification_means'], 
-                    'verification_date' => $sanitized['verification_date'], 
-                    'verification_status' => $sanitized['verification_status'], 
-                    'follow_up_date_1' => $sanitized['follow_up_date_1'], 
-                    'follow_up_date_2' => null, 
-                    'response_status' => $sanitized['response_status'], 
-                    'not_interested_reason' => $sanitized['not_interested_reason'], 
-                    'referral_status' => $sanitized['referral_status'], 
-                    'referral_date' => null, 
-                    'no_referral_reason' => null, 
-                    'invalid_contact' => null, 
-                    'company_name' => $sanitized['company_name'], 
-                    'company_address' => $sanitized['company_address'], 
-                    'job_title' => $sanitized['job_title'], 
-                    'application_status' => $sanitized['application_status'], 
-                    'withdrawn_reason' => null, 
-                    'employment_status' => $sanitized['employment_status'], 
-                    'hired_date' => $sanitized['hired_date'], 
-                    'submitted_documents_date' => null, 
-                    'interview_date' => null, 
-                    'not_hired_reason' => $sanitized['not_hired_reason'], 
-                    'count' => $sanitized['count'], 
-                    'no_of_graduates' => $sanitized['no_of_graduates'], 
-                    'no_of_employed' => $sanitized['no_of_employed'], 
-                    'verification' => $sanitized['verification'], 
-                    'job_vacancies' => $sanitized['job_vacancies'], 
-                    'remarks' => $sanitized['remarks']
+                    'district' => $sanitized['district'],
+                    'city' => $sanitized['city'],
+                    'tvi' => $sanitized['tvi'],
+                    'qualification_title' => $sanitized['qualification_title'],
+                    'sector' => $sanitized['sector'],
+                    'last_name' => $sanitized['last_name'],
+                    'first_name' => $sanitized['first_name'],
+                    'middle_name' => $sanitized['middle_name'],
+                    'extension_name' => $sanitized['extension_name'],
+                    'full_name' => $sanitized['full_name'],
+                    'sex' => $sanitized['sex'],
+                    'birthdate' => $sanitized['birthdate'],
+                    'contact_number' => $sanitized['contact_number'],
+                    'email' => $sanitized['email'],
+                    'address' => $sanitized['address'],
+                    'scholarship_type' => $sanitized['scholarship_type'],
+                    'training_status' => $sanitized['training_status'],
+                    'assessment_result' => $sanitized['assessment_result'],
+                    'employment_before_training' => $sanitized['employment_before_training'],
+                    'occupation' => $sanitized['occupation'],
+                    'employer_name' => $sanitized['employer_name'],
+                    'employment_type' => $sanitized['employment_type'],
+                    'work_address' => $sanitized['work_address'],
+                    'date_hired' => $sanitized['date_hired'],
+                    'allocation' => $sanitized['allocation'],
+                    'verification_means' => $sanitized['verification_means'],
+                    'verification_date' => $sanitized['verification_date'],
+                    'verification_status' => $sanitized['verification_status'],
+                    'follow_up_date_1' => $sanitized['follow_up_date_1'],
+                    'follow_up_date_2' => null,
+                    'response_status' => $sanitized['response_status'],
+                    'not_interested_reason' => $sanitized['not_interested_reason'],
+                    'referral_status' => $sanitized['referral_status'],
+                    'referral_date' => null,
+                    'no_referral_reason' => null,
+                    'invalid_contact' => null,
+                    'company_name' => $sanitized['company_name'],
+                    'company_address' => $sanitized['company_address'],
+                    'job_title' => $sanitized['job_title'],
+                    'application_status' => $sanitized['application_status'],
+                    'withdrawn_reason' => null,
+                    'employment_status' => $sanitized['employment_status'],
+                    'hired_date' => $sanitized['hired_date'],
+                    'submitted_documents_date' => null,
+                    'interview_date' => null,
+                    'not_hired_reason' => $sanitized['not_hired_reason'],
+                    'count' => $sanitized['count'],
+                    'no_of_graduates' => $sanitized['no_of_graduates'],
+                    'no_of_employed' => $sanitized['no_of_employed'],
+                    'verification' => $sanitized['verification'],
+                    'job_vacancies' => $sanitized['job_vacancies'],
+                    'remarks' => $sanitized['remarks'],
                 ]);
             }
         }
 
-        // Sheets data import completed
+        logger()->info('Google Sheets data import completed');
         return redirect()->route('view-records')->with('Google Sheets data import complete.');
     }
+    public function export_data_update() 
+    {
+        logger()->info('Initialising local data export.');
 
-    public function export_data() {
+        $client = new Client();
+        $client->setAuthConfig(storage_path('app/credentials.json'));
+        $client->addScope(Sheets::SPREADSHEETS);
+        $service = new Sheets($client);
+
+        $spreadsheetId = env('EXPORT_SHEET_ID');
+        $range = 'List of Graduates';
+
+        // Optional: clear old data
+        $service->spreadsheets_values->clear(
+            $spreadsheetId,
+            $range,
+            new Sheets\ClearValuesRequest()
+        );
+
+        Graduate::chunk(1000, function ($rows) use ($service, $spreadsheetId, $range) {
+            $values = [];
+
+            foreach ($rows as $row) {
+                $values[] = [
+                    $row->district,
+                    $row->city,
+                    $row->tvi,
+                    $row->qualification_title,
+                    $row->sector,
+                    $row->last_name,
+                    $row->first_name,
+                    $row->middle_name,
+                    $row->extension_name,
+                    $row->full_name,
+                    $row->sex,
+                    $row->birthdate,
+                    $row->contact_number,
+                    $row->email,
+                    $row->address,
+                    $row->scholarship_type,
+                    $row->training_status,
+                    $row->assessment_result,
+                    $row->employment_before_training,
+                    $row->occupation,
+                    $row->employer_name,
+                    $row->employment_type,
+                    $row->work_address,
+                    $row->date_hired,
+                    $row->allocation,
+                    $row->verification_means,
+                    $row->verification_date,
+                    $row->verification_status,
+                    $row->follow_up_date_1,
+                    $row->response_status,
+                    $row->not_interested_reason,
+                    $row->referral_status,
+                    $row->company_name,
+                    $row->company_address,
+                    $row->job_title,
+                    $row->employment_status,
+                    $row->hired_date,
+                    $row->not_hired_reason,
+                    $row->count,
+                    $row->no_of_graduates,
+                    $row->no_of_employed,
+                    $row->verification,
+                    $row->job_vacancies,
+                    $row->remarks,
+                    $row->application_status,
+                ];
+            }
+            
+            $body = new Sheets\ValueRange([
+                'values' => $values
+            ]);
+            
+            $params = ['valueInputOption' => 'RAW'];
+            
+            $service->spreadsheets_values->update($spreadsheetId, $range, $body, $params);
+            logger()->info(count($values) . ' rows appended.');
+        });
+        
+        logger()->info('Local data export complete.');
+        return redirect()->route('view.sheets-data')->with('Local data export complete.');
+        
+        /* Optional: add headers
+        $headers = [[
+            'District',
+            'City',
+            'Name of TVI',
+            'Qualification Title',
+            'Sector',
+            'LN',
+            'FN',
+            'MI',
+            'Ext',
+            'Name',
+            'Sex',
+            'Date of Birth',
+            'Contact Number',
+            'Email Address',
+            'Address',
+            'Scholarship Type',
+            'Training Status',
+            'Assessment Result',
+            'Employment Before Training',
+            'Occupation',
+            'Name of Employer',
+            'Employment Type',
+            'Address of Employer',
+            'Date Hired',
+            'Allocation',
+            'Means of Verification',
+            'Date of Verification',
+            'Status of Verification',
+            'Follow-up Date',
+            'Status of Responses',
+            'Reasons (Not Interested)',
+            'Referal Status',
+            'Name of Company',
+            'Address (City)',
+            'Job Title',
+            'Employment Status',
+            'Date of Hired',
+            'Remarks',
+            'Count',
+            'No. of Graduates',
+            'No. of Employed',
+            'Verification',
+            'Job Vacancies (Verification)',
+            'Follow-up Remarks',
+            'Application Status (Proceed or Not for Job Opening)',
+
+        ]];
+        $values = array_merge($headers, $rows); */
+    }
+
+    public function export_data() 
+    {
         $client = new Client();
         $client->setAuthConfig(storage_path('app/credentials.json'));
         $client->addScope(Sheets::SPREADSHEETS);
@@ -445,51 +589,51 @@ class EtrakController extends Controller
 
             foreach ($rows as $row) {
                 $values[] = [
-                    $row->district, 
-                    $row->city, 
-                    $row->tvi, 
-                    $row->qualification_title, 
-                    $row->sector, 
-                    $row->last_name, 
-                    $row->first_name, 
-                    $row->middle_name, 
-                    $row->extension_name, 
-                    $row->full_name, 
-                    $row->sex, 
-                    $row->birthdate, 
-                    $row->contact_number, 
-                    $row->email, 
-                    $row->address, 
-                    $row->scholarship_type, 
-                    $row->training_status, 
-                    $row->assessment_result, 
-                    $row->employment_before_training, 
-                    $row->occupation, 
-                    $row->employer_name, 
-                    $row->employment_type, 
-                    $row->work_address, 
-                    $row->date_hired, 
-                    $row->allocation, 
-                    $row->verification_means, 
-                    $row->verification_date, 
-                    $row->verification_status, 
-                    $row->follow_up_date_1, 
-                    $row->response_status, 
-                    $row->not_interested_reason, 
-                    $row->referral_status, 
-                    $row->company_name, 
-                    $row->company_address, 
-                    $row->job_title, 
-                    $row->employment_status, 
-                    $row->hired_date, 
-                    $row->not_hired_reason, 
-                    $row->count, 
-                    $row->no_of_graduates, 
-                    $row->no_of_employed, 
-                    $row->verification, 
-                    $row->job_vacancies, 
-                    $row->remarks, 
-                    $row->application_status
+                    $row->district,
+                    $row->city,
+                    $row->tvi,
+                    $row->qualification_title,
+                    $row->sector,
+                    $row->last_name,
+                    $row->first_name,
+                    $row->middle_name,
+                    $row->extension_name,
+                    $row->full_name,
+                    $row->sex,
+                    $row->birthdate,
+                    $row->contact_number,
+                    $row->email,
+                    $row->address,
+                    $row->scholarship_type,
+                    $row->training_status,
+                    $row->assessment_result,
+                    $row->employment_before_training,
+                    $row->occupation,
+                    $row->employer_name,
+                    $row->employment_type,
+                    $row->work_address,
+                    $row->date_hired,
+                    $row->allocation,
+                    $row->verification_means,
+                    $row->verification_date,
+                    $row->verification_status,
+                    $row->follow_up_date_1,
+                    $row->response_status,
+                    $row->not_interested_reason,
+                    $row->referral_status,
+                    $row->company_name,
+                    $row->company_address,
+                    $row->job_title,
+                    $row->employment_status,
+                    $row->hired_date,
+                    $row->not_hired_reason,
+                    $row->count,
+                    $row->no_of_graduates,
+                    $row->no_of_employed,
+                    $row->verification,
+                    $row->job_vacancies,
+                    $row->remarks,
+                    $row->application_status,
                 ];
             }
 
@@ -507,72 +651,8 @@ class EtrakController extends Controller
         return redirect()->route('view.sheets-data')->with('MySQL database export complete.');
     }
 
-    public function export_data_update(GoogleSheetsService $sheetsService) 
+    private function full_name_format($last_name, $first_name, $middle_name, $extension_name) 
     {
-        // Optional: clear old data
-        $sheetsService->clearSheet('List of Graduates');
-
-        $data = Graduate::all()->map(function ($row) {
-            return [
-                $row->district, 
-                $row->city, 
-                $row->tvi, 
-                $row->qualification_title, 
-                $row->sector, 
-                $row->last_name, 
-                $row->first_name, 
-                $row->middle_name, 
-                $row->extension_name, 
-                $row->full_name, 
-                $row->sex, 
-                $row->birthdate, 
-                $row->contact_number, 
-                $row->email, 
-                $row->address, 
-                $row->scholarship_type, 
-                $row->training_status, 
-                $row->assessment_result, 
-                $row->employment_before_training, 
-                $row->occupation, 
-                $row->employer_name, 
-                $row->employment_type, 
-                $row->work_address, 
-                $row->date_hired, 
-                $row->allocation, 
-                $row->verification_means, 
-                $row->verification_date, 
-                $row->verification_status, 
-                $row->follow_up_date_1, 
-                $row->response_status, 
-                $row->not_interested_reason, 
-                $row->referral_status, 
-                $row->company_name, 
-                $row->company_address, 
-                $row->job_title, 
-                $row->employment_status, 
-                $row->hired_date, 
-                $row->not_hired_reason, 
-                $row->count, 
-                $row->no_of_graduates, 
-                $row->no_of_employed, 
-                $row->verification, 
-                $row->job_vacancies, 
-                $row->remarks, 
-                $row->application_status,
-            ];
-        })->toArray(); // need to check carefully
-
-        // Optional: add headers
-        $headers = [['District', 'City', 'Name of TVI']];
-        $allRows = array_merge($headers, $data);
-
-        // Overwrite data in the sheet
-        $sheetsService->updateRows('List of Graduates', $allRows);
-
-        return redirect()->route('view.sheets-data')->with('Updated data export complete.');
-    }
-
-    private function full_name_format($last_name, $first_name, $middle_name, $extension_name) {
         $format = "";
 
         if (empty($middle_name) && empty($extension_name)) {
@@ -592,7 +672,8 @@ class EtrakController extends Controller
     }
 
     // Format: 08/05/1930
-    public function dateFormat1($date) {
+    public function dateFormat1($date) 
+    {
         $formattedDate = $date;
 
         if (strlen($date) == 10 && str_contains($date, '/')) {
@@ -604,7 +685,8 @@ class EtrakController extends Controller
     }
 
     // Format: 08-05-1930
-    public function dateFormat2($date) {
+    public function dateFormat2($date) 
+    {
         $formattedDate = $date;
 
         if (strlen($date) == 10 && str_contains($date, '-')) {
@@ -616,7 +698,8 @@ class EtrakController extends Controller
     }
 
     // Format: 05-Aug-1930
-    public function dateFormat3($date) {
+    public function dateFormat3($date) 
+    {
         $formattedDate = $date;
 
         if (strlen($date) == 11 && str_contains($date, '-')) {

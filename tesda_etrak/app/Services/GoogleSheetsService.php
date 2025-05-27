@@ -21,22 +21,9 @@ class GoogleSheetsService
         $this->client = new Client();
         $this->client->setAuthConfig(storage_path('app/credentials.json'));
         $this->client->addScope(Sheets::SPREADSHEETS);
-        $this->client->setApplicationName("Laravel Google Sheets Export");
+        $this->client->setApplicationName("Laravel Google Sheets Service");
 
         $this->service = new Sheets($this->client);
-    }
-
-    public function appendRows($range, array $values)
-    {
-        $body = new Sheets\ValueRange([
-            'values' => $values
-        ]);
-
-        $params = ['valueInputOption' => 'RAW'];
-
-        return $this->service->spreadsheets_values->append(
-            $this->spreadsheetId, $range, $body, $params
-        );
     }
 
     public function clearSheet($sheetName) 
@@ -56,6 +43,8 @@ class GoogleSheetsService
 
         $params = ['valueInputOption' => 'RAW'];
 
-        return $this->service->spreadsheets_values->update($this->spreadsheetId, $range, $body, $params);
+        return $this->service->spreadsheets_values->update(
+            $this->spreadsheetId, $range, $body, $params
+        );
     }
 }
