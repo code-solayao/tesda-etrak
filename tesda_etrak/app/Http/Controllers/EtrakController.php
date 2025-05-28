@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Graduate;
-use App\Services\GoogleSheetsService;
 use Carbon\Carbon;
 use Google\Client;
 use Google\Service\Sheets;
@@ -283,7 +282,13 @@ class EtrakController extends Controller
         $service = new Sheets($client);
 
         $spreadsheetId = env('EMPLOYMENT_MONITORING_SYSTEM_ID');
+        // $spreadsheetId = config('services.google_sheets.spreadsheet_id');
         $range = 'List of Graduates';
+
+        if (empty($spreadsheetId)) {
+            logger()->error('Google Sheets data import failed: Spreadsheet ID is missing.');
+            return 'Spreadsheet ID is not configured.';
+        }
 
         $response = $service->spreadsheets_values->get($spreadsheetId, $range);
         $values = $response->getValues();
