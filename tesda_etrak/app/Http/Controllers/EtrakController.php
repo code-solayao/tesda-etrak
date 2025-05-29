@@ -281,8 +281,8 @@ class EtrakController extends Controller
         $client->setScopes([Sheets::SPREADSHEETS_READONLY]);
         $service = new Sheets($client);
 
-        $spreadsheetId = env('EMPLOYMENT_MONITORING_SYSTEM_ID');
-        // $spreadsheetId = config('services.google_sheets.spreadsheet_id');
+        // $spreadsheetId = env('EMPLOYMENT_MONITORING_SYSTEM_ID');
+        $spreadsheetId = '100jOk-835-aRxURFWkON1026rLkBKH8Rrwtdy8ojv6Q';
         $range = 'List of Graduates';
 
         if (empty($spreadsheetId)) {
@@ -292,7 +292,7 @@ class EtrakController extends Controller
 
         $response = $service->spreadsheets_values->get($spreadsheetId, $range);
         $values = $response->getValues();
-        logger()->info("Rows found: count($values)");
+        logger()->info("Rows found: " . count($values));
 
         if (empty($values)) {
             logger()->warning('Sheet is empty');
@@ -323,7 +323,7 @@ class EtrakController extends Controller
                 ]);
 
                 if ($validator->fails()) {
-                    logger()->warning("$errorNum. Skipping row due to validation: . json_encode($data) . \n");
+                    logger()->warning("$errorNum. Skipping row due to validation: " . json_encode($data) . "\n");
                     $errorNum++;
                     continue;
                 }
@@ -451,7 +451,8 @@ class EtrakController extends Controller
         $client->addScope(Sheets::SPREADSHEETS);
         $service = new Sheets($client);
 
-        $spreadsheetId = env('EXPORT_SHEET_ID');
+        // $spreadsheetId = env('EXPORT_SHEET_ID');
+        $spreadsheetId = '1-PlAbP1Y0dgqUEmblx3atGrjkkPWkOxrTE1qglkwfvM';
         $range = 'List of Graduates';
 
         // Optional: clear old data
@@ -527,7 +528,7 @@ class EtrakController extends Controller
         logger()->info('Local data export complete.');
         return redirect()->route('view.sheets-data')->with('Local data export complete.');
         
-        /* Optional: add headers
+        // Optional: add headers
         $headers = [[
             'District',
             'City',
@@ -576,7 +577,7 @@ class EtrakController extends Controller
             'Application Status (Proceed or Not for Job Opening)',
 
         ]];
-        $values = array_merge($headers, $rows); */
+        $values = array_merge($headers, $rows);
     }
 
     public function export_data() 

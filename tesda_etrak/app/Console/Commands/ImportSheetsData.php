@@ -39,7 +39,8 @@ class ImportSheetsData extends Command
         $client->setAuthConfig(storage_path('app/credentials.json'));
         $service = new Sheets($client);
 
-        $spreadsheetId = env('EMPLOYMENT_MONITORING_SYSTEM_ID');
+        // $spreadsheetId = env('EMPLOYMENT_MONITORING_SYSTEM_ID');
+        $spreadsheetId = '100jOk-835-aRxURFWkON1026rLkBKH8Rrwtdy8ojv6Q';
         $range = 'List of Graduates';
 
         $response = $service->spreadsheets_values->get($spreadsheetId, $range);

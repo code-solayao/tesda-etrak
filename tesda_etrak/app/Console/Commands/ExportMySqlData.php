@@ -36,7 +36,8 @@ class ExportMySqlData extends Command
         $client->addScope(Sheets::SPREADSHEETS);
         $service = new Sheets($client);
 
-        $spreadsheetId = env('EXPORT_SHEET_ID');
+        // $spreadsheetId = env('EXPORT_SHEET_ID');
+        $spreadsheetId = '1-PlAbP1Y0dgqUEmblx3atGrjkkPWkOxrTE1qglkwfvM';
         $range = 'List of Graduates';
 
         Graduate::chunk(1000, function ($rows) use ($service, $spreadsheetId, $range) {
