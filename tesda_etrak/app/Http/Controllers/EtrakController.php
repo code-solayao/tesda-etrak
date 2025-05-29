@@ -462,11 +462,11 @@ class EtrakController extends Controller
             new Sheets\ClearValuesRequest()
         );
 
-        Graduate::chunk(1000, function ($rows) use ($service, $spreadsheetId, $range) {
-            $values = [];
+        $allRows = [];
 
+        Graduate::chunk(1000, function ($rows) use (&$allRows) {
             foreach ($rows as $row) {
-                $values[] = [
+                $allRows[] = [
                     $row->district,
                     $row->city,
                     $row->tvi,
@@ -515,19 +515,9 @@ class EtrakController extends Controller
                 ];
             }
             
-            $body = new Sheets\ValueRange([
-                'values' => $values
-            ]);
-            
-            $params = ['valueInputOption' => 'RAW'];
-            
-            $service->spreadsheets_values->update($spreadsheetId, $range, $body, $params);
-            logger()->info(count($values) . ' rows appended.');
+            logger()->info(count($allRows) . ' rows appended.');
         });
-        
-        logger()->info('Local data export complete.');
-        return redirect()->route('view.sheets-data')->with('Local data export complete.');
-        
+
         // Optional: add headers
         $headers = [[
             'District',
@@ -577,7 +567,17 @@ class EtrakController extends Controller
             'Application Status (Proceed or Not for Job Opening)',
 
         ]];
-        $values = array_merge($headers, $rows);
+        $values = array_merge($headers, $allRows);
+
+        // Update rows
+        $body = new Sheets\ValueRange([
+            'values' => $values
+        ]);
+        $params = ['valueInputOption' => 'RAW'];
+        $service->spreadsheets_values->update($spreadsheetId, $range, $body, $params);
+        
+        logger()->info('Local data export complete.');
+        return redirect()->route('view.sheets-data')->with('Local data export complete.');
     }
 
     public function export_data() 
