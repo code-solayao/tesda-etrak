@@ -319,7 +319,7 @@ class EtrakController extends Controller
                     'ln' => ['required', 'string', 'max:255'],
                     'fn' => ['required', 'string', 'max:255'],
                     'name' => ['required', 'string', 'max:255'],
-                    'email address' => ['nullable', 'email', 'max:255'],
+                    'email address' => ['nullable', 'string', 'max:255'],
                 ]);
 
                 if ($validator->fails()) {
@@ -377,7 +377,7 @@ class EtrakController extends Controller
                 ];
 
                 $sanitized['birthdate'] = $this->dateFormat1($sanitized['birthdate']);
-                $sanitized['date_hired'] = $this->dateFormat2($sanitized['date_hired']);
+                // $sanitized['date_hired'] = $this->dateFormat2($sanitized['date_hired']);
                 $sanitized['verification_date'] = $this->dateFormat1($sanitized['verification_date']);
                 $sanitized['follow_up_date_1'] = $this->dateFormat1($sanitized['follow_up_date_1']);
                 $sanitized['hired_date'] = $this->dateFormat3($sanitized['hired_date']);
