@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EtrakController;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +26,7 @@ Route::controller(EtrakController::class)->group(function () {
     Route::get('/google-sheets-data', 'view_sheets_data')->name('view.sheets-data');
 });
 
-Route::middleware('auth')->controller(EtrakController::class)->group(function () {
+Route::middleware('auth', 'role:admin')->controller(EtrakController::class)->group(function () {
     Route::get('/create-record', 'view_create')->name('view.create');
     Route::get('/update-record/{graduate}', 'view_update')->name('view.update');
     Route::post('/create-record', 'create')->name('create');
