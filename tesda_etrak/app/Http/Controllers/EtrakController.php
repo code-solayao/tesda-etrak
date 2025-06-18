@@ -215,7 +215,7 @@ class EtrakController extends Controller
         $verification_status = isset($validated['verification_status']) == true ? $validated['verification_status'] : '';
         $response_status = isset($validated['response_status']) == true ? $validated['response_status'] : '';
         $not_interested_reason = isset($validated['not_interested_reason']) == true ? $validated['not_interested_reason'] : '';
-        $referral_status = isset($validated['referral_status']) == true ? $validated['referral_status'] : '';
+        $referral_status = isset($validated['referral_status']) == true ? $validated['referral_status'] : 'No';
         $referral_date = isset($validated['referral_date']) == true ? $validated['referral_date'] : '';
         $no_referral_reason = isset($validated['no_referral_reason']) == true ? $validated['no_referral_reason'] : '';
         $invalid_contact = isset($validated['invalid_contact']) == true ? $validated['invalid_contact'] : '';
@@ -377,10 +377,9 @@ class EtrakController extends Controller
                 ];
 
                 $sanitized['birthdate'] = $this->dateFormat1($sanitized['birthdate']);
-                // $sanitized['date_hired'] = $this->dateFormat2($sanitized['date_hired']);
                 $sanitized['verification_date'] = $this->dateFormat1($sanitized['verification_date']);
                 $sanitized['follow_up_date_1'] = $this->dateFormat1($sanitized['follow_up_date_1']);
-                $sanitized['hired_date'] = $this->dateFormat3($sanitized['hired_date']);
+                $sanitized['hired_date'] = $this->dateFormat2($sanitized['hired_date']);
 
                 Graduate::create([
                     'district' => $sanitized['district'],
@@ -690,26 +689,26 @@ class EtrakController extends Controller
         return $formattedDate;
     }
 
-    // Format: 08-05-1930
+    // Format: 05-Aug-1930
     public function dateFormat2($date) 
     {
         $formattedDate = $date;
 
-        if (strlen($date) == 10 && str_contains($date, '-')) {
-            $date = Carbon::createFromFormat('m-d-Y', $date);
+        if (strlen($date) == 11 && str_contains($date, '-')) {
+            $date = Carbon::parse($date);
             $formattedDate = $date->format('Y-m-d');
         }
 
         return $formattedDate;
     }
 
-    // Format: 05-Aug-1930
+    // Format: 08-05-1930
     public function dateFormat3($date) 
     {
         $formattedDate = $date;
 
-        if (strlen($date) == 11 && str_contains($date, '-')) {
-            $date = Carbon::parse($date);
+        if (strlen($date) == 10 && str_contains($date, '-')) {
+            $date = Carbon::createFromFormat('m-d-Y', $date);
             $formattedDate = $date->format('Y-m-d');
         }
 
