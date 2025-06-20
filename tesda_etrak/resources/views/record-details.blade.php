@@ -119,7 +119,7 @@
                                         <dt>Reason (No Referral): </dt>
                                         <dd>{{ $graduate->no_referral_reason }}</dd>
                                     @endif
-        
+
                                     <dt>Reason (Not Interested): </dt>
                                     <dd>{{ $graduate->not_interested_reason }}</dd>
                             @endswitch

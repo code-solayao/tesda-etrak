@@ -140,32 +140,87 @@ class EtrakController extends Controller
             $validated[$key] = strip_tags($value);
         }
 
+        $district = isset($validated['district']) == true ? $validated['district'] : "";
+        $city = isset($validated['city']) == true ? $validated['city'] : "";
+        $tvi = isset($validated['tvi']) == true ? $validated['tvi'] : "";
+        $qualification_title = isset($validated['qualification_title']) == true ? $validated['qualification_title'] : "";
+        $sector = isset($validated['sector']) == true ? $validated['sector'] : "";
+        $middle_name = isset($validated['middle_name']) == true ? $validated['middle_name'] : "";
+        $extension_name = isset($validated['extension_name']) == true ? $validated['extension_name'] : "";
         $full_name = $this->full_name_format($validated['last_name'], $validated['first_name'], $validated['middle_name'], $validated['extension_name']);
-        $sex = isset($validated['sex']) == true ? $validated['sex'] : '';
-
-        // Add default values for extra fields in Excel. Either implement here or with the Factory-Seeder method
+        $sex = isset($validated['sex']) == true ? $validated['sex'] : "";
+        $birthdate = isset($validated['birthdate']) == true ? $validated['birthdate'] : "";
+        $contact_number = isset($validated['contact_number']) == true ? $validated['contact_number'] : "";
+        $email = isset($validated['email']) == true ? $validated['email'] : "";
+        $address = isset($validated['address']) == true ? $validated['address'] : "";
+        $scholarship_type = isset($validated['scholarship_type']) == true ? $validated['scholarship_type'] : "";
+        $allocation = isset($validated['allocation']) == true ? $validated['allocation'] : "";
+        $training_status = "Pass";
+        $assessment_result = "";;
+        $employment_before_training = "Unemployed";
+        $occupation = "";
+        $employer_name = "";
+        $employment_type = "";
+        $work_address = "";
+        $date_hired = "";
+        $verification_means = "For Verification";
+        $verification_date = "";
+        $verification_status = "";
+        $follow_up_date_1 = "";
+        $response_status = "";
+        $not_interested_reason = "";
+        $referral_status = "No";
+        $company_name = "";
+        $company_address = "";
+        $job_title = "";
+        $application_status = "";
+        $employment_status = "";
+        $hired_date = "";
+        $not_hired_reason = "";
         $count = 1;
         $no_of_graduates = 1;
-        $job_vacancies = 'No';
+        $job_vacancies = "No";
 
         Graduate::create([
-            'district' => $validated['district'],
-            'city' => $validated['city'],
-            'tvi' => $validated['tvi'],
-            'qualification_title' => $validated['qualification_title'],
-            'sector' => $validated['sector'],
+            'district' => $district,
+            'city' => $city,
+            'tvi' => $tvi,
+            'qualification_title' => $qualification_title,
+            'sector' => $sector,
             'last_name' => $validated['last_name'],
             'first_name' => $validated['first_name'],
-            'middle_name' => $validated['middle_name'],
-            'extension_name' => $validated['extension_name'],
+            'middle_name' => $middle_name,
+            'extension_name' => $extension_name,
             'full_name' => $full_name,
             'sex' => $sex,
-            'birthdate' => $validated['birthdate'],
-            'contact_number' => $validated['contact_number'],
-            'email' => $validated['email'],
-            'scholarship_type' => $validated['scholarship_type'],
-            'address' => $validated['address'],
-            'allocation' => $validated['allocation'],
+            'birthdate' => $birthdate,
+            'contact_number' => $contact_number,
+            'email' => $email,
+            'address' => $address,
+            'scholarship_type' => $scholarship_type,
+            'allocation' => $allocation,
+            'training_status' => $training_status,
+            'assessment_result' => $assessment_result,
+            'employment_before_training' => $employment_before_training,
+            'occupation' => $occupation,
+            'employer_name' => $employer_name,
+            'employment_type' => $employment_type,
+            'work_address' => $work_address,
+            'date_hired' => $date_hired,
+            'verification_means' => $verification_means,
+            'verification_date' => $verification_date,
+            'verification_status' => $verification_status,
+            'follow_up_date_1' => $follow_up_date_1,
+            'response_status' => $response_status,
+            'not_interested_reason' => $not_interested_reason,
+            'referral_status' => $referral_status,
+            'company_name' => $company_name,
+            'company_address' => $company_address,
+            'job_title' => $job_title,
+            'application_status' => $application_status,
+            'employment_status' => $employment_status,
+            'hired_date' => $hired_date,
+            'not_hired_reason' => $not_hired_reason,
             'count' => $count,
             'no_of_graduates' => $no_of_graduates,
             'job_vacancies' => $job_vacancies,
