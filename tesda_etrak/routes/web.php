@@ -34,5 +34,5 @@ Route::middleware('auth', 'role:admin')->controller(EtrakController::class)->gro
     Route::delete('/record-details/{graduate}', 'delete')->name('delete');
     Route::delete('/view-records', 'delete_all')->name('delete-all');
     Route::get('/google-sheets-data/import-data', 'import_data')->name('import.data');
-    Route::get('/google-sheets-data/export-data', 'export_data_update')->name('export.data');
+    Route::get('/google-sheets-data/export-data', 'export_data')->name('export.data');
 });

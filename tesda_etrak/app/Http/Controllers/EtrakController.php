@@ -179,7 +179,10 @@ class EtrakController extends Controller
         $not_hired_reason = "";
         $count = 1;
         $no_of_graduates = 1;
+        $no_of_employed = "";
+        $verification = "";
         $job_vacancies = "No";
+        $remarks = "";
 
         Graduate::create([
             'district' => $district,
@@ -496,7 +499,8 @@ class EtrakController extends Controller
         logger()->info('Google Sheets data import completed');
         return redirect()->route('view-records')->with('Google Sheets data import complete.');
     }
-    public function export_data_update() 
+    
+    public function export_data() 
     {
         logger()->info('Initialising local data export.');
 
@@ -632,83 +636,6 @@ class EtrakController extends Controller
         
         logger()->info('Local data export complete.');
         return redirect()->route('view.sheets-data')->with('Local data export complete.');
-    }
-
-    public function export_data() 
-    {
-        $client = new Client();
-        $client->setAuthConfig(storage_path('app/credentials.json'));
-        $client->addScope(Sheets::SPREADSHEETS);
-        $service = new Sheets($client);
-
-        $spreadsheetId = env('EXPORT_SHEET_ID');
-        $range = 'List of Graduates';
-
-        Graduate::chunk(1000, function ($rows) use ($service, $spreadsheetId, $range) {
-            $values = [];
-
-            foreach ($rows as $row) {
-                $values[] = [
-                    $row->district,
-                    $row->city,
-                    $row->tvi,
-                    $row->qualification_title,
-                    $row->sector,
-                    $row->last_name,
-                    $row->first_name,
-                    $row->middle_name,
-                    $row->extension_name,
-                    $row->full_name,
-                    $row->sex,
-                    $row->birthdate,
-                    $row->contact_number,
-                    $row->email,
-                    $row->address,
-                    $row->scholarship_type,
-                    $row->training_status,
-                    $row->assessment_result,
-                    $row->employment_before_training,
-                    $row->occupation,
-                    $row->employer_name,
-                    $row->employment_type,
-                    $row->work_address,
-                    $row->date_hired,
-                    $row->allocation,
-                    $row->verification_means,
-                    $row->verification_date,
-                    $row->verification_status,
-                    $row->follow_up_date_1,
-                    $row->response_status,
-                    $row->not_interested_reason,
-                    $row->referral_status,
-                    $row->company_name,
-                    $row->company_address,
-                    $row->job_title,
-                    $row->employment_status,
-                    $row->hired_date,
-                    $row->not_hired_reason,
-                    $row->count,
-                    $row->no_of_graduates,
-                    $row->no_of_employed,
-                    $row->verification,
-                    $row->job_vacancies,
-                    $row->remarks,
-                    $row->application_status,
-                ];
-            }
-
-            $body = new Sheets\ValueRange([
-                'values' => $values
-            ]);
-
-            $params = ['valueInputOption' => 'RAW'];
-
-            $service->spreadsheets_values->append($spreadsheetId, $range, $body, $params);
-
-            // $this->info(count($values) . ' rows appended. ');
-        });
-
-        return redirect()->route('view.sheets-data')->with('MySQL database export complete.');
     }
 
     private function full_name_format($last_name, $first_name, $middle_name, $extension_name) 
