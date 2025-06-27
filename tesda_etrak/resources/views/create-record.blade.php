@@ -54,12 +54,7 @@
             </div>
             <div class="mb-10">
                 <label for="extension_name" class="form-label">Extension Name</label>
-                <select name="extension_name" id="extension_name" class="form-input">
-                    <option value="">-- Select an extension name --</option>
-                    @foreach ($extension_names as $name)
-                        <option value="{{ $name }}" {{ old('extension_name') == $name ? 'selected' : '' }}>{{ $name }}</option>
-                    @endforeach
-                </select>
+                <input type="text" name="extension_name" id="extension_name" class="form-input" value="{{ old('extension_name') }}" />
             </div>
             {{-- INITIAL DATA --}}
             <div>

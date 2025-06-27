@@ -201,6 +201,9 @@
                                     <span class="ml-2 text-gray-700">Invalid Contact</span>
                                 </label>
                             </div>
+                            <div class="mb-4 ml-[30px] mt-6">
+                                <textarea name="follow_up_remarks" id="follow_up_remarks" rows="3" placeholder="Remarks" class="form-input">{{ old('follow_up_remarks') }}</textarea>
+                            </div>
                         </div>
                     </div>
                     <div class="flex items-center justify-baseline">
@@ -212,31 +215,31 @@
                     <div>
                         <fieldset id="employmentField" disabled>
                             <div class="mb-5">
-                                <label for="companyName" class="form-label">Name of Company</label>
+                                <label for="company_name" class="form-label">Name of Company</label>
                                 <input type="text" name="company_name" id="companyName" class="form-input" value="{{ old('company_name', $graduate->company_name) }}" />
                             </div>
                             <div class="mb-5">
-                                <label for="companyAddress" class="form-label">Address of Company</label>
+                                <label for="company_address" class="form-label">Address of Company</label>
                                 <textarea name="company_address" id="companyAddress" rows="3" class="form-input">{{ old('company_address', $graduate->company_address) }}</textarea>
                             </div>
                             <div class="mb-5">
-                                <label for="jobTitle" class="form-label">Job Title</label>
+                                <label for="job_title" class="form-label">Job Title</label>
                                 <input type="text" name="job_title" id="jobTitle" class="form-input" value="{{ old('job_title', $graduate->job_title) }}" />
                             </div>
                             <div class="mt-2 space-y-2">
                                 <label class="form-label">Application Status</label>
-                                <label for="continuedBtn" class="flex items-center">
-                                    <input type="radio" name="application_status" id="continuedBtn" class="form-radio" value="Continued" {{ old('application_status', $graduate->application_status) == 'Continued' ? 'checked' : '' }} />
-                                    <span class="ml-2 text-gray-700">Continued</span>
+                                <label for="proceedBtn" class="flex items-center">
+                                    <input type="radio" name="application_status" id="proceedBtn" class="form-radio" value="Proceed" {{ old('application_status', $graduate->application_status) == 'Proceed' ? 'checked' : '' }} />
+                                    <span class="ml-2 text-gray-700">Proceed</span>
                                 </label>
-                                <label for="withdrawnBtn" class="flex items-center">
-                                    <input type="radio" name="application_status" id="withdrawnBtn" class="form-radio" value="Withdrawn" {{ old('application_status', $graduate->application_status) == 'Withdrawn' ? 'checked' : '' }} />
-                                    <span class="ml-2 text-gray-700">Withdrawn</span>
+                                <label for="notProceedBtn" class="flex items-center">
+                                    <input type="radio" name="application_status" id="notProceedBtn" class="form-radio" value="Don't Proceed" {{ old('application_status', $graduate->application_status) == 'Don\'t Proceed' ? 'checked' : '' }} />
+                                    <span class="ml-2 text-gray-700">Don't Proceed</span>
                                 </label>
                             </div>
                             <hr class="my-4">
-                            {{-- application_status : Continued --}}
-                            <div class="mt-2 space-y-2" id="continued">
+                            {{-- application_status : Proceed --}}
+                            <div class="mt-2 space-y-2" id="proceed">
                                 <label class="form-label">Employment Status</label>
                                 {{-- employment_status : Hired --}}
                                 <label for="hired" class="flex items-center">
@@ -269,12 +272,12 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <textarea name="remarks" id="remarks" rows="3" class="form-input mb-3 ml-5" placeholder="Remarks" disabled>{{ old('remarks', $graduate->remarks) }}</textarea>
+                                <textarea name="remarks" id="remarks" rows="3" class="form-input my-5" placeholder="Remarks" disabled>{{ old('remarks', $graduate->remarks) }}</textarea>
                             </div>
-                            {{-- application_status : Withdrawn --}}
-                            <div class="mb-5" id="withdrawn">
-                                <label for="withdrawn_reason" class="form-label">Reason</label>
-                                <textarea name="withdrawn_reason" id="withdrawn_reason" rows="3" class="form-input">{{ old('withdrawn_reason', $graduate->withdrawn_reason) }}</textarea>
+                            {{-- application_status : Don't Proceed --}}
+                            <div class="mb-5" id="not_proceed">
+                                <label for="not_proceed_reason" class="form-label">Reason</label>
+                                <textarea name="not_proceed_reason" id="not_proceed_reason" rows="3" class="form-input">{{ old('not_proceed_reason', $graduate->not_proceed_reason) }}</textarea>
                             </div>
                         </fieldset>
                     </div>

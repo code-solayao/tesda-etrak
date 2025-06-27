@@ -35,8 +35,8 @@ return new class extends Migration
             $table->string('employment_before_training', 50)->nullable();
             $table->string('occupation')->nullable();
             $table->string('employer_name')->nullable();
+            $table->string('employer_address')->nullable();
             $table->string('employment_type')->nullable();
-            $table->string('work_address')->nullable();
             $table->string('date_hired', 50)->nullable();
             $table->string('allocation', 50)->nullable();
             $table->string('verification_means', 50)->nullable();
@@ -44,6 +44,7 @@ return new class extends Migration
             $table->string('verification_status', 50)->nullable();
             $table->string('follow_up_date_1', 50)->nullable();
             $table->string('follow_up_date_2', 50)->nullable();
+            $table->string('follow_up_remarks')->nullable();
             $table->string('response_status', 50)->nullable();
             $table->string('not_interested_reason')->nullable();
             $table->char('referral_status', 10)->nullable();
@@ -54,18 +55,18 @@ return new class extends Migration
             $table->string('company_address')->nullable();
             $table->string('job_title')->nullable();
             $table->string('application_status')->nullable();
-            $table->string('withdrawn_reason')->nullable();
+            $table->string('not_proceed_reason')->nullable();
             $table->string('employment_status')->nullable();
             $table->string('hired_date', 50)->nullable();
             $table->string('submitted_documents_date', 50)->nullable();
             $table->string('interview_date', 50)->nullable();
             $table->string('not_hired_reason', 50)->nullable();
+            $table->string('remarks')->nullable();
             $table->char('count', 10)->nullable();
             $table->char('no_of_graduates', 10)->nullable();
             $table->char('no_of_employed', 10)->nullable();
             $table->string('verification', 50)->nullable();
             $table->char('job_vacancies', 10)->nullable();
-            $table->string('remarks')->nullable();
         });
     }
 

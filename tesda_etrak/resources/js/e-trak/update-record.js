@@ -17,10 +17,10 @@ var noReferralReason = document.getElementById("noReferralReason");
 
 var notInterestedReason = document.getElementById("notInterestedReason");
 
-var continuedBtn = document.getElementById("continuedBtn");
-var withdrawnBtn = document.getElementById("withdrawnBtn");
-var continued = document.getElementById("continued");
-var withdrawn = document.getElementById("withdrawn");
+var proceedBtn = document.getElementById("proceedBtn");
+var notProceedBtn = document.getElementById("notProceedBtn");
+var proceed = document.getElementById("proceed");
+var not_proceed = document.getElementById("not_proceed");
 
 document.getElementById("detailsTab").onclick = function () {
     openTab(0, "details");
@@ -75,10 +75,10 @@ referNoBtn.onclick = function () {
     referralStatus(false);
 }
 
-continuedBtn.onclick = function () {
+proceedBtn.onclick = function () {
     applicationStatusValue(true);
 }
-withdrawnBtn.onclick = function () {
+notProceedBtn.onclick = function () {
     applicationStatusValue(false);
 }
 
@@ -97,8 +97,8 @@ document.getElementById("notHired").onclick = function () {
 
 document.getElementById("responded").style.display = "none";
 document.getElementById("noResponse").style.display = "none";
-continued.style.display = "none";
-withdrawn.style.display = "none";
+proceed.style.display = "none";
+not_proceed.style.display = "none";
 
 document.getElementById("toggleUpdate1").onclick = function () {
     document.getElementById("confirmationModal").classList.remove('hidden');
@@ -223,8 +223,8 @@ function employmentField(isDisabled) {
     let submitDocsDate = document.getElementById("submitDocsDate");
     let interviewDate = document.getElementById("interviewDate");
     let notHiredReason = document.getElementById("notHiredReason");
+    let not_proceed_reason = document.getElementById("not_proceed_reason");
     let remarks = document.getElementById("remarks");
-    let withdrawn_reason = document.getElementById("withdrawn_reason");
 
     document.getElementById("employmentField").disabled = isDisabled;
 
@@ -233,8 +233,8 @@ function employmentField(isDisabled) {
         document.getElementById("companyAddress").value = "";
         document.getElementById("jobTitle").value = "";
 
-        continuedBtn.checked = false;
-        withdrawnBtn.checked = false;
+        proceedBtn.checked = false;
+        notProceedBtn.checked = false;
 
         document.getElementById("hired").checked = false;
         document.getElementById("submitDocs").checked = false;
@@ -252,32 +252,34 @@ function employmentField(isDisabled) {
         remarks.disabled = true;
         remarks.value = "";
 
-        withdrawn_reason.disabled = true;
-        withdrawn_reason.value = "";
+        not_proceed_reason.disabled = true;
+        not_proceed_reason.value = "";
     }
 }
 
-function applicationStatusValue(proceed) {
-    if (proceed == true) {
-        continued.style.display = "block";
-        withdrawn.style.display = "none";
-        continuedStatus();
+function applicationStatusValue(canProceed) {
+    if (canProceed == true) {
+        proceed.style.display = "block";
+        not_proceed.style.display = "none";
+        proceedStatus();
     }
     else {
-        withdrawn.style.display = "block";
-        continued.style.display = "none";
-        withdrawnStatus();
+        not_proceed.style.display = "block";
+        proceed.style.display = "none";
+        not_proceedStatus();
     }
 }
 
-function continuedStatus() {
-    let withdrawn_reason = document.getElementById("withdrawn_reason");
-    withdrawn_reason.disabled = true;
-    withdrawn_reason.value = "";
+function proceedStatus() {
+    let not_proceed_reason = document.getElementById("not_proceed_reason");
+    not_proceed_reason.disabled = true;
+    not_proceed_reason.value = "";
+
+    remarks.disabled = false;
 }
 
-function withdrawnStatus() {
-    withdrawn_reason.disabled = false;
+function not_proceedStatus() {
+    not_proceed_reason.disabled = false;
 
     document.getElementById("hired").checked = false;
     document.getElementById("submitDocs").checked = false;
@@ -292,6 +294,8 @@ function withdrawnStatus() {
     resetDate(interviewDate);
     notHiredReason.disabled = true;
     notHiredReason.value = "";
+    remarks.disabled = true;
+    remarks.value = "";
 }
 
 function employmentStatusValue(id) {
@@ -299,7 +303,6 @@ function employmentStatusValue(id) {
     let submitDocs = document.getElementById("submitDocsDate");
     let forInterview = document.getElementById("interviewDate");
     let notHired = document.getElementById("notHiredReason");
-    let remarks = document.getElementById("remarks");
 
     if (id === "hired") {
         hired.disabled = false;
@@ -327,13 +330,10 @@ function employmentStatusValue(id) {
 
     if (id === "notHired") {
         notHired.disabled = false;
-        remarks.disabled = false;
     }
     else {
         notHired.disabled = true;
         notHired.value = "";
-        remarks.disabled = true;
-        remarks.value = "";
     }
 }
 
