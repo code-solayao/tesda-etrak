@@ -190,7 +190,7 @@
                             <dd class="dateFormat">{{ $graduate->follow_up_date_1 }}</dd>
                             <dt>Second Follow-up Date: </dt>
                             <dd class="dateFormat">{{ $graduate->follow_up_date_2 }}</dd>
-        
+                            
                             @if (!empty($graduate->invalid_contact))
                                 <dt>Invalid Contact? </dt>
                                 <dd>{{ $graduate->invalid_contact }}</dd>

@@ -140,49 +140,57 @@ class EtrakController extends Controller
             $validated[$key] = strip_tags($value);
         }
 
-        $district = isset($validated['district']) == true ? $validated['district'] : "";
-        $city = isset($validated['city']) == true ? $validated['city'] : "";
-        $tvi = isset($validated['tvi']) == true ? $validated['tvi'] : "";
-        $qualification_title = isset($validated['qualification_title']) == true ? $validated['qualification_title'] : "";
-        $sector = isset($validated['sector']) == true ? $validated['sector'] : "";
-        $middle_name = isset($validated['middle_name']) == true ? $validated['middle_name'] : "";
-        $extension_name = isset($validated['extension_name']) == true ? $validated['extension_name'] : "";
+        $district = isset($validated['district']) == true ? $validated['district'] : '';
+        $city = isset($validated['city']) == true ? $validated['city'] : '';
+        $tvi = isset($validated['tvi']) == true ? $validated['tvi'] : '';
+        $qualification_title = isset($validated['qualification_title']) == true ? $validated['qualification_title'] : '';
+        $sector = isset($validated['sector']) == true ? $validated['sector'] : '';
+        $middle_name = isset($validated['middle_name']) == true ? $validated['middle_name'] : '';
+        $extension_name = isset($validated['extension_name']) == true ? $validated['extension_name'] : '';
         $full_name = $this->full_name_format($validated['last_name'], $validated['first_name'], $validated['middle_name'], $validated['extension_name']);
-        $sex = isset($validated['sex']) == true ? $validated['sex'] : "";
-        $birthdate = isset($validated['birthdate']) == true ? $validated['birthdate'] : "";
-        $contact_number = isset($validated['contact_number']) == true ? $validated['contact_number'] : "";
-        $email = isset($validated['email']) == true ? $validated['email'] : "";
-        $address = isset($validated['address']) == true ? $validated['address'] : "";
-        $scholarship_type = isset($validated['scholarship_type']) == true ? $validated['scholarship_type'] : "";
-        $allocation = isset($validated['allocation']) == true ? $validated['allocation'] : "";
-        $training_status = "Pass";
-        $assessment_result = "";;
-        $employment_before_training = "Unemployed";
-        $occupation = "";
-        $employer_name = "";
-        $employment_type = "";
-        $work_address = "";
-        $date_hired = "";
-        $verification_means = "For Verification";
-        $verification_date = "";
-        $verification_status = "";
-        $follow_up_date_1 = "";
-        $response_status = "";
-        $not_interested_reason = "";
-        $referral_status = "No";
-        $company_name = "";
-        $company_address = "";
-        $job_title = "";
-        $application_status = "";
-        $employment_status = "";
-        $hired_date = "";
-        $not_hired_reason = "";
+        $sex = isset($validated['sex']) == true ? $validated['sex'] : '';
+        $birthdate = isset($validated['birthdate']) == true ? $validated['birthdate'] : '';
+        $contact_number = isset($validated['contact_number']) == true ? $validated['contact_number'] : '';
+        $email = isset($validated['email']) == true ? $validated['email'] : '';
+        $address = isset($validated['address']) == true ? $validated['address'] : '';
+        $scholarship_type = isset($validated['scholarship_type']) == true ? $validated['scholarship_type'] : '';
+        $allocation = isset($validated['allocation']) == true ? $validated['allocation'] : '';
+        $training_status = 'Pass';
+        $assessment_result = '';
+        $employment_before_training = 'Unemployed';
+        $occupation = '';
+        $employer_name = '';
+        $employer_address = '';
+        $employment_type = '';
+        $date_hired = '';
+        $verification_means = 'For Verification';
+        $verification_date = '';
+        $verification_status = '';
+        $follow_up_date_1 = '';
+        $follow_up_date_2 = '';
+        $follow_up_remarks = '';
+        $response_status = '';
+        $not_interested_reason = '';
+        $referral_status = 'No';
+        $referral_date = '';
+        $no_referral_reason = '';
+        $invalid_contact = '';
+        $company_name = '';
+        $company_address = '';
+        $job_title = '';
+        $application_status = '';
+        $not_proceed_reason = '';
+        $employment_status = '';
+        $hired_date = '';
+        $submitted_documents_date = '';
+        $interview_date = '';
+        $not_hired_reason = '';
+        $remarks = "";
         $count = 1;
         $no_of_graduates = 1;
         $no_of_employed = "";
         $verification = "";
         $job_vacancies = "No";
-        $remarks = "";
 
         Graduate::create([
             'district' => $district,
@@ -201,31 +209,42 @@ class EtrakController extends Controller
             'email' => $email,
             'address' => $address,
             'scholarship_type' => $scholarship_type,
-            'allocation' => $allocation,
             'training_status' => $training_status,
             'assessment_result' => $assessment_result,
             'employment_before_training' => $employment_before_training,
             'occupation' => $occupation,
             'employer_name' => $employer_name,
+            'employer_address' => $employer_address,
             'employment_type' => $employment_type,
-            'work_address' => $work_address,
             'date_hired' => $date_hired,
+            'allocation' => $allocation,
             'verification_means' => $verification_means,
             'verification_date' => $verification_date,
             'verification_status' => $verification_status,
             'follow_up_date_1' => $follow_up_date_1,
+            'follow_up_date_2' => $follow_up_date_2,
+            'follow_up_remarks' => $follow_up_remarks,
             'response_status' => $response_status,
             'not_interested_reason' => $not_interested_reason,
             'referral_status' => $referral_status,
+            'referral_date' => $referral_date,
+            'no_referral_reason' => $no_referral_reason,
+            'invalid_contact' => $invalid_contact,
             'company_name' => $company_name,
             'company_address' => $company_address,
             'job_title' => $job_title,
             'application_status' => $application_status,
+            'not_proceed_reason' => $not_proceed_reason,
             'employment_status' => $employment_status,
             'hired_date' => $hired_date,
+            'submitted_documents_date' => $submitted_documents_date,
+            'interview_date' => $interview_date,
             'not_hired_reason' => $not_hired_reason,
+            'remarks' => $remarks,
             'count' => $count,
             'no_of_graduates' => $no_of_graduates,
+            'no_of_employed' => $no_of_employed,
+            'verification' => $verification,
             'job_vacancies' => $job_vacancies,
         ]);
 
@@ -248,6 +267,7 @@ class EtrakController extends Controller
             'verification_status' => ['nullable', 'string', 'max:50'],
             'follow_up_date_1' => ['nullable', 'string', 'max:50'],
             'follow_up_date_2' => ['nullable', 'string', 'max:50'],
+            'follow_up_remarks' => ['nullable', 'string', 'max:255'],
             'response_status' => ['nullable', 'string', 'max:50'],
             'not_interested_reason' => ['nullable', 'string', 'max:255'],
             'referral_status' => ['nullable', 'string', 'max:10'],
@@ -271,6 +291,7 @@ class EtrakController extends Controller
         }
 
         $verification_status = isset($validated['verification_status']) == true ? $validated['verification_status'] : '';
+        $follow_up_remarks = isset($validated['follow_up_remarks']) == true ? $validated['follow_up_remarks'] : '';
         $response_status = isset($validated['response_status']) == true ? $validated['response_status'] : '';
         $not_interested_reason = isset($validated['not_interested_reason']) == true ? $validated['not_interested_reason'] : '';
         $referral_status = isset($validated['referral_status']) == true ? $validated['referral_status'] : 'No';
@@ -295,6 +316,7 @@ class EtrakController extends Controller
             'verification_status' => $verification_status,
             'follow_up_date_1' => $validated['follow_up_date_1'],
             'follow_up_date_2' => $validated['follow_up_date_2'],
+            'follow_up_remarks' => $follow_up_remarks,
             'response_status' => $response_status,
             'not_interested_reason' => $not_interested_reason,
             'referral_status' => $referral_status,
@@ -546,30 +568,38 @@ class EtrakController extends Controller
                     $row->employment_before_training,
                     $row->occupation,
                     $row->employer_name,
+                    $row->employer_address,
                     $row->employment_type,
-                    $row->work_address,
                     $row->date_hired,
                     $row->allocation,
                     $row->verification_means,
                     $row->verification_date,
                     $row->verification_status,
                     $row->follow_up_date_1,
+                    $row->follow_up_date_2,
+                    $row->follow_up_remarks,
                     $row->response_status,
                     $row->not_interested_reason,
                     $row->referral_status,
+                    $row->referral_date,
+                    $row->no_referral_reason,
+                    $row->invalid_contact,
                     $row->company_name,
                     $row->company_address,
                     $row->job_title,
+                    $row->application_status,
+                    $row->not_proceed_reason,
                     $row->employment_status,
                     $row->hired_date,
+                    $row->submitted_documents_date,
+                    $row->interview_date,
                     $row->not_hired_reason,
+                    $row->remarks,
                     $row->count,
                     $row->no_of_graduates,
                     $row->no_of_employed,
                     $row->verification,
                     $row->job_vacancies,
-                    $row->remarks,
-                    $row->application_status,
                 ];
             }
             

@@ -1,3 +1,4 @@
+//#region VARIABLES
 var verificationTab = document.getElementById("verificationTab");
 
 var noVerifStatusBtn = document.getElementById("noVerifStatusBtn");
@@ -17,11 +18,15 @@ var noReferralReason = document.getElementById("noReferralReason");
 
 var notInterestedReason = document.getElementById("notInterestedReason");
 
+var invalidContact = document.getElementById("invalidContact");
+
 var proceedBtn = document.getElementById("proceedBtn");
 var notProceedBtn = document.getElementById("notProceedBtn");
 var proceed = document.getElementById("proceed");
 var not_proceed = document.getElementById("not_proceed");
+//#endregion
 
+//#region INITIALISATION
 document.getElementById("detailsTab").onclick = function () {
     openTab(0, "details");
 }
@@ -75,6 +80,10 @@ referNoBtn.onclick = function () {
     referralStatus(false);
 }
 
+invalidContact.onclick = function () {
+    invalidContactValue(invalidContact.checked);
+}
+
 proceedBtn.onclick = function () {
     applicationStatusValue(true);
 }
@@ -109,10 +118,12 @@ document.getElementById("toggleUpdate2").onclick = function () {
 document.getElementById("dismissUpdate").onclick = function () {
     document.getElementById("confirmationModal").classList.add('hidden');
 }
+//#endregion
 
 verificationTab.click();
 dateFormatRead();
 
+//#region FUNCTIONS
 function openTab(index, tabName) {
     document.querySelectorAll(".tab-content").forEach((tab, i) => {
         tab.classList.toggle("hidden", i !== index);
@@ -157,7 +168,6 @@ function respondedStatus() {
     resetDate(document.getElementById("followup1"));
     resetDate(document.getElementById("followup2"));
 
-    let invalidContact = document.getElementById("invalidContact");
     invalidContact.checked = false;
     invalidContact.value = "";
 }
@@ -200,7 +210,6 @@ function noVerificationStatus() {
     resetDate(document.getElementById("followup1"));
     resetDate(document.getElementById("followup2"));
 
-    let invalidContact = document.getElementById("invalidContact");
     invalidContact.checked = false;
     invalidContact.value = "";
 }
@@ -215,6 +224,15 @@ function referralStatus(refer) {
         noReferralReason.disabled = false;
         referralDate.disabled = true;
         resetDate(referralDate);
+    }
+}
+
+function invalidContactValue(isChecked) {
+    if (isChecked) {
+        invalidContact.value = "Yes";
+    }
+    else {
+        invalidContact.value = "";
     }
 }
 
@@ -449,3 +467,4 @@ function refreshVerification() {
         referNoBtn.click();
     }
 }
+//#endregion

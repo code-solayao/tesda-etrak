@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('graduates', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('district', 50)->nullable();
             $table->string('city', 50)->nullable();
             $table->string('tvi')->nullable();
@@ -67,9 +66,10 @@ return new class extends Migration
             $table->char('no_of_employed', 10)->nullable();
             $table->string('verification', 50)->nullable();
             $table->char('job_vacancies', 10)->nullable();
+            $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      */
