@@ -1,10 +1,7 @@
 @section('title', 'E-TRAK - Update record')
 
 @section('vite')
-    @vite(['resources/css/app.css', 
-    'resources/js/app.js', 
-    'resources/js/e-trak/update-record.js'
-    ])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/e-trak/update-record.js'])
 @endsection
 
 @section('main', 'Update Record')

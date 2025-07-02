@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Google\Client;
 use Google\Service\Sheets;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class EtrakController extends Controller
@@ -431,7 +432,7 @@ class EtrakController extends Controller
                     'occupation' => trim($data['occupation'] ?? ''),
                     'employer_name' => trim($data['name of employer'] ?? ''),
                     'employment_type' => trim($data['employment type'] ?? ''),
-                    'work_address' => trim($data['address of employer'] ?? ''),
+                    'employer_address' => trim($data['address of employer'] ?? ''),
                     'date_hired' => trim($data['date hired'] ?? ''),
                     'allocation' => trim($data['allocation'] ?? ''),
                     'verification_means' => trim($data['means of verification'] ?? ''),
@@ -446,13 +447,13 @@ class EtrakController extends Controller
                     'job_title' => trim($data['job title'] ?? ''),
                     'employment_status' => trim($data['employment status'] ?? ''),
                     'hired_date' => trim($data['date of hired'] ?? ''),
-                    'not_hired_reason' => trim($data['remarks'] ?? ''),
+                    'remarks' => trim($data['remarks'] ?? ''),
                     'count' => trim($data['count'] ?? ''),
                     'no_of_graduates' => trim($data['no. of graduates'] ?? ''),
                     'no_of_employed' => trim($data['no. of employed'] ?? ''),
                     'verification' => trim($data['verification'] ?? ''),
                     'job_vacancies' => trim($data['job vacancies (verification)'] ?? ''),
-                    'remarks' => trim($data['follow-up remarks'] ?? ''),
+                    'follow_up_remarks' => trim($data['follow-up remarks'] ?? ''),
                     'application_status' => trim($data['application status (proceed or not for job opening)'] ?? ''),
                 ];
 
@@ -483,8 +484,8 @@ class EtrakController extends Controller
                     'employment_before_training' => $sanitized['employment_before_training'],
                     'occupation' => $sanitized['occupation'],
                     'employer_name' => $sanitized['employer_name'],
+                    'employer_address' => $sanitized['employer_address'],
                     'employment_type' => $sanitized['employment_type'],
-                    'work_address' => $sanitized['work_address'],
                     'date_hired' => $sanitized['date_hired'],
                     'allocation' => $sanitized['allocation'],
                     'verification_means' => $sanitized['verification_means'],
@@ -492,6 +493,7 @@ class EtrakController extends Controller
                     'verification_status' => $sanitized['verification_status'],
                     'follow_up_date_1' => $sanitized['follow_up_date_1'],
                     'follow_up_date_2' => null,
+                    'follow_up_remarks' => $sanitized['follow_up_remarks'],
                     'response_status' => $sanitized['response_status'],
                     'not_interested_reason' => $sanitized['not_interested_reason'],
                     'referral_status' => $sanitized['referral_status'],
@@ -502,18 +504,18 @@ class EtrakController extends Controller
                     'company_address' => $sanitized['company_address'],
                     'job_title' => $sanitized['job_title'],
                     'application_status' => $sanitized['application_status'],
-                    'withdrawn_reason' => null,
+                    'no_proceed_reason' => null,
                     'employment_status' => $sanitized['employment_status'],
                     'hired_date' => $sanitized['hired_date'],
                     'submitted_documents_date' => null,
                     'interview_date' => null,
-                    'not_hired_reason' => $sanitized['not_hired_reason'],
+                    'not_hired_reason' => null,
+                    'remarks' => $sanitized['remarks'],
                     'count' => $sanitized['count'],
                     'no_of_graduates' => $sanitized['no_of_graduates'],
                     'no_of_employed' => $sanitized['no_of_employed'],
                     'verification' => $sanitized['verification'],
                     'job_vacancies' => $sanitized['job_vacancies'],
-                    'remarks' => $sanitized['remarks'],
                 ]);
             }
         }
@@ -666,6 +668,31 @@ class EtrakController extends Controller
         
         logger()->info('Local data export complete.');
         return redirect()->route('view.sheets-data')->with('Local data export complete.');
+    }
+
+    public function display_logs() 
+    {
+        $logPath = storage_path('logs/laravel.log');
+
+        if (!File::exists($logPath)) {
+            return response()->json(['log' => 'Log file not found.']);
+        }
+
+        $logs = File::get($logPath);
+
+        return response()->json(['log' => nl2br(e($logs))]);
+    }
+
+    public function clear_logs() 
+    {
+        $logPath = storage_path('logs/laravel.log');
+
+        if (!File::exists($logPath)) {
+            File::put($logPath, '');
+            return response()->json(['status' => 'cleared']);
+        }
+
+        return response()->json(['status' => 'not_found'], 404);
     }
 
     private function full_name_format($last_name, $first_name, $middle_name, $extension_name) 

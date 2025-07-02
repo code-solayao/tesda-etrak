@@ -24,6 +24,7 @@ Route::controller(EtrakController::class)->group(function () {
     Route::get('/view-records/get', 'search_graduates')->name('search-graduates');
     Route::get('/record-details/{graduate}', 'view_details')->name('view.details');
     Route::get('/google-sheets-data', 'view_sheets_data')->name('view.sheets-data');
+    Route::get('/google-sheets-data/logs', 'display_logs')->name('display.log');
 });
 
 Route::middleware('auth', 'role:admin')->controller(EtrakController::class)->group(function () {
@@ -35,4 +36,5 @@ Route::middleware('auth', 'role:admin')->controller(EtrakController::class)->gro
     Route::delete('/view-records', 'delete_all')->name('delete-all');
     Route::get('/google-sheets-data/import-data', 'import_data')->name('import.data');
     Route::get('/google-sheets-data/export-data', 'export_data')->name('export.data');
+    Route::post('/google-sheets-data/logs/clear', 'clear_logs')->name('clear.logs');
 });
