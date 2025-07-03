@@ -521,7 +521,7 @@ class EtrakController extends Controller
         }
 
         logger()->info('Google Sheets data import completed');
-        return redirect()->route('view-records')->with('Google Sheets data import complete.');
+        return redirect()->route('view-records')->with('success', 'Google Sheets data import complete.');
     }
     
     public function export_data() 
@@ -638,24 +638,31 @@ class EtrakController extends Controller
             'Means of Verification',
             'Date of Verification',
             'Status of Verification',
-            'Follow-up Date',
+            'First Follow-up Date',
+            'Second Follow-up Date',
+            'Follow-up Remarks',
             'Status of Responses',
             'Reasons (Not Interested)',
-            'Referal Status',
+            'Referral Status',
+            'Referral Date',
+            'Reasons (No Referral)',
+            'Invalid Contact',
             'Name of Company',
             'Address (City)',
             'Job Title',
+            'Application Status (Proceed or Not for Job Opening)',
+            'Reasons (Did Not Proceed for Job Opening)',
             'Employment Status',
             'Date of Hired',
+            'Date of Submitted Documents',
+            'Date of Interview',
+            'Reasons (Not Hired)',
             'Remarks',
             'Count',
             'No. of Graduates',
             'No. of Employed',
             'Verification',
             'Job Vacancies (Verification)',
-            'Follow-up Remarks',
-            'Application Status (Proceed or Not for Job Opening)',
-
         ]];
         $values = array_merge($headers, $allRows);
 
@@ -666,8 +673,10 @@ class EtrakController extends Controller
         $params = ['valueInputOption' => 'RAW'];
         $service->spreadsheets_values->update($spreadsheetId, $range, $body, $params);
         
+        usleep(200000); // 200ms; Sleep to avoid hitting API rate limit 
+        
         logger()->info('Local data export complete.');
-        return redirect()->route('view.sheets-data')->with('Local data export complete.');
+        return redirect()->route('view.sheets-data')->with('success', 'Local data export complete.');
     }
 
     public function display_logs() 
