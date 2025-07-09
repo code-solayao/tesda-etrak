@@ -673,8 +673,6 @@ class EtrakController extends Controller
         $params = ['valueInputOption' => 'RAW'];
         $service->spreadsheets_values->update($spreadsheetId, $range, $body, $params);
         
-        usleep(200000); // 200ms; Sleep to avoid hitting API rate limit 
-        
         logger()->info('Local data export complete.');
         return redirect()->route('view.sheets-data')->with('success', 'Local data export complete.');
     }

@@ -1,0 +1,2 @@
+- Export data function: add append delay, reduce chunk, try-catch as per ChatGPT
+- Properly structure Google Error 502 page

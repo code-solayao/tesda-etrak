@@ -8,6 +8,10 @@ Route::get('/laravel', function () {
     return view('welcome');
 });
 
+Route::get('/google-error-502', function () {
+    return view('google-error-502');
+});
+
 Route::middleware('guest')->controller(AuthController::class)->group(function () {
     Route::get('/login', 'view_login')->name('view.login');
     Route::get('/signup', 'view_signup')->name('view.signup');

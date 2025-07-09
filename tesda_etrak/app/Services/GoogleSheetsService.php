@@ -16,7 +16,7 @@ class GoogleSheetsService
      */
     public function __construct()
     {
-        $this->spreadsheetId = env('EMPLOYMENT_MONITORING_SYSTEM_ID');
+        $this->spreadsheetId = env('LIST_OF_GRADUATES_ID');
 
         $this->client = new Client();
         $this->client->setAuthConfig(storage_path('app/credentials.json'));
