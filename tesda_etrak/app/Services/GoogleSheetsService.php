@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Google\Client;
 use Google\Service\Sheets;
+use Google\Service\Sheets\Sheet;
 
 class GoogleSheetsService
 {
@@ -27,7 +28,13 @@ class GoogleSheetsService
 
     public function updateRows($range, array $values) 
     {
-        
+        $body = new Sheets\ValueRange([
+            'values' => $values
+        ]);
+
+        $params = ['valueInputOption' => 'RAW'];
+
+        return $this->service->spreadsheets_values->update($this->spreadsheetId, $range, $body, $params);
     }
 
     public function appendRows($range, array $values) 
@@ -39,5 +46,9 @@ class GoogleSheetsService
         $params = ['valueInputOption' => 'RAW'];
 
         return $this->service->spreadsheets_values->append($this->spreadsheetId, $range, $body, $params);
+    }
+
+    public function clearSheet($sheetName) {
+        $this->service->spreadsheets_values->clear($this->spreadsheetId, $sheetName, new Sheets\ClearValuesRequest());
     }
 }

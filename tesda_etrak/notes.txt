@@ -1,2 +1,294 @@
 - Export data function: add append delay, reduce chunk, try-catch as per ChatGPT
 - Properly structure Google Error 502 page
+
+public function export_data(GoogleSheetsService $service) 
+{
+    logger()->info('Initialising local data export.');
+
+    // Clear old data
+    $service->clearSheet('List of Graduates');
+
+    // Add header row
+    $headers = [[
+        'District',
+        'City',
+        'Name of TVI',
+        'Qualification Title',
+        'Sector',
+        'LN',
+        'FN',
+        'MI',
+        'Ext',
+        'Name',
+        'Sex',
+        'Date of Birth',
+        'Contact Number',
+        'Email Address',
+        'Address',
+        'Scholarship Type',
+        'Training Status',
+        'Assessment Result',
+        'Employment Before Training',
+        'Occupation',
+        'Name of Employer',
+        'Employment Type',
+        'Address of Employer',
+        'Date Hired',
+        'Allocation',
+        'Means of Verification',
+        'Date of Verification',
+        'Status of Verification',
+        'First Follow-up Date',
+        'Second Follow-up Date',
+        'Follow-up Remarks',
+        'Status of Responses',
+        'Reasons (Not Interested)',
+        'Referral Status',
+        'Referral Date',
+        'Reasons (No Referral)',
+        'Invalid Contact',
+        'Name of Company',
+        'Address (City)',
+        'Job Title',
+        'Application Status (Proceed or Not for Job Opening)',
+        'Reasons (Did Not Proceed for Job Opening)',
+        'Employment Status',
+        'Date of Hired',
+        'Date of Submitted Documents',
+        'Date of Interview',
+        'Reasons (Not Hired)',
+        'Remarks',
+        'Count',
+        'No. of Graduates',
+        'No. of Employed',
+        'Verification',
+        'Job Vacancies (Verification)',
+    ]];
+    $service->updateRows('List of Graduates!A1', $headers);
+
+    Graduate::chunk(1000, function ($rows) use ($service) {
+        $allRows = [];
+        
+        foreach ($rows as $row) {
+            $allRows[] = [
+                $row->district,
+                $row->city,
+                $row->tvi,
+                $row->qualification_title,
+                $row->sector,
+                $row->last_name,
+                $row->first_name,
+                $row->middle_name,
+                $row->extension_name,
+                $row->full_name,
+                $row->sex,
+                $row->birthdate,
+                $row->contact_number,
+                $row->email,
+                $row->address,
+                $row->scholarship_type,
+                $row->training_status,
+                $row->assessment_result,
+                $row->employment_before_training,
+                $row->occupation,
+                $row->employer_name,
+                $row->employer_address,
+                $row->employment_type,
+                $row->date_hired,
+                $row->allocation,
+                $row->verification_means,
+                $row->verification_date,
+                $row->verification_status,
+                $row->follow_up_date_1,
+                $row->follow_up_date_2,
+                $row->follow_up_remarks,
+                $row->response_status,
+                $row->not_interested_reason,
+                $row->referral_status,
+                $row->referral_date,
+                $row->no_referral_reason,
+                $row->invalid_contact,
+                $row->company_name,
+                $row->company_address,
+                $row->job_title,
+                $row->application_status,
+                $row->not_proceed_reason,
+                $row->employment_status,
+                $row->hired_date,
+                $row->submitted_documents_date,
+                $row->interview_date,
+                $row->not_hired_reason,
+                $row->remarks,
+                $row->count,
+                $row->no_of_graduates,
+                $row->no_of_employed,
+                $row->verification,
+                $row->job_vacancies,
+            ];
+        }
+
+        // Update current chunk to the sheet
+        $service->updateRows('List of Graduates', $allRows);
+
+        // Optional: sleep 1 sec to avoid hitting API rate limit
+        usleep(200000); // 200ms
+        
+        logger()->info(count($allRows) . ' rows appended.');
+    });
+
+    logger()->info('Local data export complete.');
+    return redirect()->route('view.sheets-data')->with('success', 'Local data export complete.');
+}
+
+public function export_data() 
+{
+    logger()->info('Initialising local data export.');
+
+    $client = new Client();
+    $client->setAuthConfig(storage_path('app/credentials.json'));
+    $client->addScope(Sheets::SPREADSHEETS);
+    $service = new Sheets($client);
+
+    // $spreadsheetId = env('EXPORT_SHEET_ID');
+    $spreadsheetId = '1-PlAbP1Y0dgqUEmblx3atGrjkkPWkOxrTE1qglkwfvM';
+    $range = 'List of Graduates';
+
+    // Optional: clear old data
+    $service->spreadsheets_values->clear(
+        $spreadsheetId,
+        $range,
+        new Sheets\ClearValuesRequest()
+    );
+
+    $allRows = [];
+
+    Graduate::chunk(1000, function ($rows) use (&$allRows) {
+        foreach ($rows as $row) {
+            $allRows[] = [
+                $row->district,
+                $row->city,
+                $row->tvi,
+                $row->qualification_title,
+                $row->sector,
+                $row->last_name,
+                $row->first_name,
+                $row->middle_name,
+                $row->extension_name,
+                $row->full_name,
+                $row->sex,
+                $row->birthdate,
+                $row->contact_number,
+                $row->email,
+                $row->address,
+                $row->scholarship_type,
+                $row->training_status,
+                $row->assessment_result,
+                $row->employment_before_training,
+                $row->occupation,
+                $row->employer_name,
+                $row->employer_address,
+                $row->employment_type,
+                $row->date_hired,
+                $row->allocation,
+                $row->verification_means,
+                $row->verification_date,
+                $row->verification_status,
+                $row->follow_up_date_1,
+                $row->follow_up_date_2,
+                $row->follow_up_remarks,
+                $row->response_status,
+                $row->not_interested_reason,
+                $row->referral_status,
+                $row->referral_date,
+                $row->no_referral_reason,
+                $row->invalid_contact,
+                $row->company_name,
+                $row->company_address,
+                $row->job_title,
+                $row->application_status,
+                $row->not_proceed_reason,
+                $row->employment_status,
+                $row->hired_date,
+                $row->submitted_documents_date,
+                $row->interview_date,
+                $row->not_hired_reason,
+                $row->remarks,
+                $row->count,
+                $row->no_of_graduates,
+                $row->no_of_employed,
+                $row->verification,
+                $row->job_vacancies,
+            ];
+        }
+        
+        logger()->info(count($allRows) . ' rows appended.');
+    });
+
+    // Optional: add headers
+    $headers = [[
+        'District',
+        'City',
+        'Name of TVI',
+        'Qualification Title',
+        'Sector',
+        'LN',
+        'FN',
+        'MI',
+        'Ext',
+        'Name',
+        'Sex',
+        'Date of Birth',
+        'Contact Number',
+        'Email Address',
+        'Address',
+        'Scholarship Type',
+        'Training Status',
+        'Assessment Result',
+        'Employment Before Training',
+        'Occupation',
+        'Name of Employer',
+        'Employment Type',
+        'Address of Employer',
+        'Date Hired',
+        'Allocation',
+        'Means of Verification',
+        'Date of Verification',
+        'Status of Verification',
+        'First Follow-up Date',
+        'Second Follow-up Date',
+        'Follow-up Remarks',
+        'Status of Responses',
+        'Reasons (Not Interested)',
+        'Referral Status',
+        'Referral Date',
+        'Reasons (No Referral)',
+        'Invalid Contact',
+        'Name of Company',
+        'Address (City)',
+        'Job Title',
+        'Application Status (Proceed or Not for Job Opening)',
+        'Reasons (Did Not Proceed for Job Opening)',
+        'Employment Status',
+        'Date of Hired',
+        'Date of Submitted Documents',
+        'Date of Interview',
+        'Reasons (Not Hired)',
+        'Remarks',
+        'Count',
+        'No. of Graduates',
+        'No. of Employed',
+        'Verification',
+        'Job Vacancies (Verification)',
+    ]];
+    $values = array_merge($headers, $allRows);
+
+    // Update rows
+    $body = new Sheets\ValueRange([
+        'values' => $values
+    ]);
+    $params = ['valueInputOption' => 'RAW'];
+    $service->spreadsheets_values->update($spreadsheetId, $range, $body, $params);
+    
+    logger()->info('Local data export complete.');
+    return redirect()->route('view.sheets-data')->with('success', 'Local data export complete.');
+}
