@@ -17,7 +17,7 @@ class GoogleSheetsService
      */
     public function __construct()
     {
-        $this->spreadsheetId = env('LIST_OF_GRADUATES_ID');
+        $this->spreadsheetId = env('EXPORT_SHEET_ID');
 
         $this->client = new Client();
         $this->client->setAuthConfig(storage_path('app/credentials.json'));
