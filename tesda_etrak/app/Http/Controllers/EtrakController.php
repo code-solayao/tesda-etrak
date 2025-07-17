@@ -546,7 +546,7 @@ class EtrakController extends Controller
 
         $allRows = [];
 
-        Graduate::chunk(500, function ($rows) use (&$allRows) {
+        Graduate::chunk(1000, function ($rows) use (&$allRows) {
             foreach ($rows as $row) {
                 $allRows[] = [
                     $row->district,
@@ -604,8 +604,18 @@ class EtrakController extends Controller
                     $row->job_vacancies,
                 ];
             }
+
+            // Optional: sleep 1 sec to avoid hitting API rate limit
+            usleep(500000); // 500ms
             
             logger()->info(count($allRows) . ' rows appended.');
+
+            if (count($allRows) == 1000) {
+                return false;
+            }
+            else {
+                return true;
+            }
         });
 
         // Optional: add headers
