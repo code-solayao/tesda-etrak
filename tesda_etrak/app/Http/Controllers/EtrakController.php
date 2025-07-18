@@ -530,8 +530,11 @@ class EtrakController extends Controller
         logger()->info('Initialising local data export.');
 
         $client = new Client();
+        $client->setApplicationName('Laravel Google Sheets Export');
         $client->setAuthConfig(storage_path('app/credentials.json'));
-        $client->addScope(Sheets::SPREADSHEETS);
+        $client->setScopes(Sheets::SPREADSHEETS);
+        $client->setAccessType('offline');
+        $client->setPrompt('select_account consent');
         $service = new Sheets($client);
 
         $spreadsheetId = '1-PlAbP1Y0dgqUEmblx3atGrjkkPWkOxrTE1qglkwfvM';

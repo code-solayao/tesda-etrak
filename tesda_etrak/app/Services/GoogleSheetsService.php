@@ -20,8 +20,11 @@ class GoogleSheetsService
         $this->spreadsheetId = env('EXPORT_SHEET_ID');
 
         $this->client = new Client();
+        $this->client->setApplicationName('Laravel Google Sheets Export');
         $this->client->setAuthConfig(storage_path('app/credentials.json'));
-        $this->client->addScope(Sheets::SPREADSHEETS);
+        $this->client->setScopes(Sheets::SPREADSHEETS);
+        $this->client->setAccessType('offline');
+        $this->client->setPrompt('select_account consent');
 
         $this->service = new Sheets($this->client);
     }
