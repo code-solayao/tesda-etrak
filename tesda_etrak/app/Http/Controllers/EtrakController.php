@@ -280,7 +280,7 @@ class EtrakController extends Controller
             'company_address' => ['nullable', 'string', 'max:255'],
             'job_title' => ['nullable', 'string', 'max:255'],
             'application_status' => ['nullable', 'string', 'max:255'],
-            'withdrawn_reason' => ['nullable', 'string', 'max:255'],
+            'not_proceed_reason' => ['nullable', 'string', 'max:255'],
             'employment_status' => ['nullable', 'string', 'max:255'],
             'hired_date' => ['nullable', 'string', 'max:50'],
             'submitted_documents_date' => ['nullable', 'string', 'max:50'],
@@ -305,12 +305,25 @@ class EtrakController extends Controller
         $company_address = isset($validated['company_address']) == true ? $validated['company_address'] : '';
         $job_title = isset($validated['job_title']) == true ? $validated['job_title'] : '';
         $application_status = isset($validated['application_status']) == true ? $validated['application_status'] : '';
-        $withdrawn_reason = isset($validated['withdrawn_reason']) == true ? $validated['withdrawn_reason'] : ''; 
+        $not_proceed_reason = isset($validated['not_proceed_reason']) == true ? $validated['not_proceed_reason'] : ''; 
         $employment_status = isset($validated['employment_status']) == true ? $validated['employment_status'] : '';
         $hired_date = isset($validated['hired_date']) == true ? $validated['hired_date'] : '';
         $submitted_documents_date = isset($validated['submitted_documents_date']) == true ? $validated['submitted_documents_date'] : '';
         $interview_date = isset($validated['interview_date']) == true ? $validated['interview_date'] : '';
         $not_hired_reason = isset($validated['not_hired_reason']) == true ? $validated['not_hired_reason'] : '';
+
+        // if ($referral_status != 'Yes') {
+        //     $company_name = '';
+        //     $company_address = '';
+        //     $job_title = '';
+        //     $application_status = '';
+        //     $not_proceed_reason = '';
+        //     $employment_status = '';
+        //     $hired_date = '';
+        //     $submitted_documents_date = '';
+        //     $interview_date = '';
+        //     $not_hired_reason = '';
+        // }
 
         $graduate->update([
             'verification_means' => $validated['verification_means'],
@@ -329,7 +342,7 @@ class EtrakController extends Controller
             'company_address' => $company_address,
             'job_title' => $job_title,
             'application_status' => $application_status,
-            'withdrawn_reason' => $withdrawn_reason,
+            'not_proceed_reason' => $not_proceed_reason,
             'employment_status' => $employment_status,
             'hired_date' => $hired_date,
             'submitted_documents_date' => $submitted_documents_date,
@@ -612,13 +625,6 @@ class EtrakController extends Controller
             usleep(500000); // 500ms
             
             logger()->info(count($allRows) . ' rows appended.');
-
-            if (count($allRows) == 1000) {
-                return false;
-            }
-            else {
-                return true;
-            }
         });
 
         // Optional: add headers

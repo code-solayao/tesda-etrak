@@ -199,7 +199,7 @@
                                 </label>
                             </div>
                             <div class="mb-4 ml-[30px] mt-6">
-                                <textarea name="follow_up_remarks" id="follow_up_remarks" rows="3" placeholder="Remarks" class="form-input">{{ old('follow_up_remarks', $graduate->follow_up_remarks) }}</textarea>
+                                <textarea name="follow_up_remarks" id="followUpRemarks" rows="3" placeholder="Remarks" class="form-input">{{ old('follow_up_remarks', $graduate->follow_up_remarks) }}</textarea>
                             </div>
                         </div>
                     </div>

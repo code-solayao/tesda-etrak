@@ -19,6 +19,7 @@ var noReferralReason = document.getElementById("noReferralReason");
 var notInterestedReason = document.getElementById("notInterestedReason");
 
 var invalidContact = document.getElementById("invalidContact");
+var followUpRemarks = document.getElementById("followUpRemarks");
 
 var proceedBtn = document.getElementById("proceedBtn");
 var notProceedBtn = document.getElementById("notProceedBtn");
@@ -170,6 +171,7 @@ function respondedStatus() {
 
     invalidContact.checked = false;
     invalidContact.value = "";
+    followUpRemarks.value = "";
 }
 
 function noResponseStatus() {
