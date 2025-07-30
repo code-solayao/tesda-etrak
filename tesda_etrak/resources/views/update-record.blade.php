@@ -272,9 +272,9 @@
                                 <textarea name="remarks" id="remarks" rows="3" class="form-input my-5" placeholder="Remarks" disabled>{{ old('remarks', $graduate->remarks) }}</textarea>
                             </div>
                             {{-- application_status : Don't Proceed --}}
-                            <div class="mb-5" id="not_proceed">
-                                <label for="not_proceed_reason" class="form-label">Reason</label>
-                                <textarea name="not_proceed_reason" id="not_proceed_reason" rows="3" class="form-input">{{ old('not_proceed_reason', $graduate->not_proceed_reason) }}</textarea>
+                            <div class="mb-5" id="notProceed">
+                                <label for="notProceedReason" class="form-label">Reason</label>
+                                <textarea name="not_proceed_reason" id="notProceedReason" rows="3" class="form-input">{{ old('not_proceed_reason', $graduate->not_proceed_reason) }}</textarea>
                             </div>
                         </fieldset>
                     </div>

@@ -104,6 +104,7 @@
                                     @break
         
                                 @default
+                                    {{-- response_status: "Interested" --}}
                                     <dt>Refer to Company? </dt>
                                     <dd>{{ $graduate->referral_status }}</dd>
         
@@ -114,18 +115,21 @@
                                         <dt>Reason (No Referral): </dt>
                                         <dd>{{ $graduate->no_referral_reason }}</dd>
                                     @else
+                                        {{-- referral_status: "Yes" --}}
                                         <dt>Date of Referral: </dt>
                                         <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
+                                        {{-- referral_status: "No" --}}
                                         <dt>Reason (No Referral): </dt>
                                         <dd>{{ $graduate->no_referral_reason }}</dd>
                                     @endif
 
+                                    {{-- response_status: "Not Interested" --}}
                                     <dt>Reason (Not Interested): </dt>
                                     <dd>{{ $graduate->not_interested_reason }}</dd>
                             @endswitch
                             @break
         
-                        @case("No Response")
+                        @case("No Response (For Follow-up)")
                             <dt>First Follow-up Date: </dt>
                             <dd class="dateFormat">{{ $graduate->follow_up_date_1 }}</dd>
                             <dt>Second Follow-up Date: </dt>
@@ -138,6 +142,7 @@
                             @break
         
                         @default
+                            {{-- verification_status: "Responded" --}}
                             <dt>Status of Response: </dt>
                             <dd>{{ $graduate->response_status }}</dd>
         
@@ -166,6 +171,7 @@
                                     @break
         
                                 @default
+                                    {{-- response_status: "Interested" --}}
                                     <dt>Refer to Company? </dt>
                                     <dd id="referralStatus">{{ $graduate->referral_status }}</dd>
         
@@ -176,16 +182,20 @@
                                         <dt>Reason (No Referral): </dt>
                                         <dd>{{ $graduate->no_referral_reason }}</dd>
                                     @else
+                                        {{-- referral_status: "Yes" --}}
                                         <dt>Date of Referral: </dt>
                                         <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
+                                        {{-- referral_status: "No" --}}
                                         <dt>Reason (No Referral): </dt>
                                         <dd>{{ $graduate->no_referral_reason }}</dd>
                                     @endif
         
+                                    {{-- response_status: "Not Interested" --}}
                                     <dt>Reason (Not Interested): </dt>
                                     <dd>{{ $graduate->not_interested_reason }}</dd>
                             @endswitch
         
+                            {{-- verification_status: "No Response (For Follow-up)" --}}
                             <dt>First Follow-up Date: </dt>
                             <dd class="dateFormat">{{ $graduate->follow_up_date_1 }}</dd>
                             <dt>Second Follow-up Date: </dt>
@@ -210,7 +220,7 @@
                     <dt>Application Status: </dt>
                     <dd>{{ $graduate->application_status }}</dd>
                     @switch($graduate->application_status)
-                        @case("Continued")
+                        @case("Proceed")
                             <dt>Status of Employment: </dt>
                             <dd>{{ $graduate->employment_status }}</dd>
                             @switch($graduate->employment_status)
@@ -229,8 +239,6 @@
                                 @case("Not Hired")
                                     <dt>Reason (Not Hired): </dt>
                                     <dd>{{ $graduate->not_hired_reason }}</dd>
-                                    <dt>Remarks: </dt>
-                                    <dd>{{ $graduate->remarks }}</dd>
                                     @break
                                 @default
                                     <dt class="ms-[30px]">Date Hired: </dt>
@@ -241,17 +249,19 @@
                                     <dd class="ms-[30px] dateFormat">{{ $graduate->interview_date }}</dd>
                                     <dt class="ms-[30px]">Reason (Not Hired): </dt>
                                     <dd class="ms-[30px]">{{ $graduate->not_hired_reason }}</dd>
-                                    <dt class="ms-[30px]">Remarks: </dt>
-                                    <dd class="ms-[30px]">{{ $graduate->remarks }}</dd>
                             @endswitch
+
+                            <dt>Remarks: </dt>
+                            <dd>{{ $graduate->remarks }}</dd>
                             @break
         
-                        @case("Withdrawn")
+                        @case("Don't Proceed")
                             <dt>Reason (Withdrawn): </dt>
-                            <dd>{{ $graduate->withdrawn_reason }}</dd>
+                            <dd>{{ $graduate->not_proceed_reason }}</dd>
                             @break
         
                         @default
+                            {{-- application_status: "Proceed" --}}
                             <dt>Status of Employment: </dt>
                             <dd>{{ $graduate->employment_status }}</dd>
                             @switch($graduate->employment_status)
@@ -270,8 +280,6 @@
                                 @case("Not Hired")
                                     <dt>Reason (Not Hired): </dt>
                                     <dd>{{ $graduate->not_hired_reason }}</dd>
-                                    <dt>Remarks: </dt>
-                                    <dd>{{ $graduate->remarks }}</dd>
                                     @break
                                 @default
                                     <dt class="ms-[30px]">Date Hired: </dt>
@@ -282,11 +290,14 @@
                                     <dd class="ms-[30px] dateFormat">{{ $graduate->interview_date }}</dd>
                                     <dt class="ms-[30px]">Reason (Not Hired): </dt>
                                     <dd class="ms-[30px]">{{ $graduate->not_hired_reason }}</dd>
-                                    <dt class="ms-[30px]">Remarks: </dt>
-                                    <dd class="ms-[30px]">{{ $graduate->remarks }}</dd>
                             @endswitch
+                            
+                            <dt>Remarks: </dt>
+                            <dd>{{ $graduate->remarks }}</dd>
+
+                            {{-- application_status: "Don't Proceed" --}}
                             <dt>Reason (Withdrawn): </dt>
-                            <dd>{{ $graduate->withdrawn_reason }}</dd>
+                            <dd>{{ $graduate->not_proceed_reason }}</dd>
                     @endswitch
                 </dl>
             </div>

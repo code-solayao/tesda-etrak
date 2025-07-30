@@ -286,6 +286,7 @@ class EtrakController extends Controller
             'submitted_documents_date' => ['nullable', 'string', 'max:50'],
             'interview_date' => ['nullable', 'string', 'max:50'],
             'not_hired_reason' => ['nullable', 'string', 'max:50'],
+            'remarks' => ['nullable', 'string', 'max:255'],
         ]);
         
         foreach ($validated as $key => $value) {
@@ -311,6 +312,7 @@ class EtrakController extends Controller
         $submitted_documents_date = isset($validated['submitted_documents_date']) == true ? $validated['submitted_documents_date'] : '';
         $interview_date = isset($validated['interview_date']) == true ? $validated['interview_date'] : '';
         $not_hired_reason = isset($validated['not_hired_reason']) == true ? $validated['not_hired_reason'] : '';
+        $remarks = isset($validated['remarks']) == true ? $validated['remarks'] : '';
 
         // if ($referral_status != 'Yes') {
         //     $company_name = '';
@@ -348,6 +350,7 @@ class EtrakController extends Controller
             'submitted_documents_date' => $submitted_documents_date,
             'interview_date' => $interview_date,
             'not_hired_reason' => $not_hired_reason,
+            'remarks' => $remarks,
         ]);
 
         return redirect()->route('view.details', $graduate->id)->with('success', 'Updated record successfully!');

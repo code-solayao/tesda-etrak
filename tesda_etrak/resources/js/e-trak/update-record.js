@@ -24,7 +24,8 @@ var followUpRemarks = document.getElementById("followUpRemarks");
 var proceedBtn = document.getElementById("proceedBtn");
 var notProceedBtn = document.getElementById("notProceedBtn");
 var proceed = document.getElementById("proceed");
-var not_proceed = document.getElementById("not_proceed");
+var notProceed = document.getElementById("notProceed");
+var notProceedReason = document.getElementById("notProceedReason");
 //#endregion
 
 //#region INITIALISATION
@@ -108,7 +109,7 @@ document.getElementById("notHired").onclick = function () {
 document.getElementById("responded").style.display = "none";
 document.getElementById("noResponse").style.display = "none";
 proceed.style.display = "none";
-not_proceed.style.display = "none";
+notProceed.style.display = "none";
 
 document.getElementById("toggleUpdate1").onclick = function () {
     document.getElementById("confirmationModal").classList.remove('hidden');
@@ -136,12 +137,6 @@ function openTab(index, tabName) {
     });
 
     if (tabName !== "employment") return;
-    if (referYesBtn.checked == true) {
-        employmentField(false);
-    }
-    else {
-        employmentField(true);
-    }
 }
 
 function verificationStatusValue(response) {
@@ -190,6 +185,8 @@ function noResponseStatus() {
     notInterestedBtn.checked = false;
     notInterestedReason.disabled = true;
     notInterestedReason.value = "";
+
+    employmentField(true);
 }
 
 function noVerificationStatus() {
@@ -214,6 +211,8 @@ function noVerificationStatus() {
 
     invalidContact.checked = false;
     invalidContact.value = "";
+
+    employmentField(true);
 }
 
 function referralStatus(refer) {
@@ -221,11 +220,13 @@ function referralStatus(refer) {
         referralDate.disabled = false;
         noReferralReason.disabled = true;
         noReferralReason.value = "";
+        employmentField(false);
     }
     else {
         noReferralReason.disabled = false;
         referralDate.disabled = true;
         resetDate(referralDate);
+        employmentField(true);
     }
 }
 
@@ -243,7 +244,7 @@ function employmentField(isDisabled) {
     let submitDocsDate = document.getElementById("submitDocsDate");
     let interviewDate = document.getElementById("interviewDate");
     let notHiredReason = document.getElementById("notHiredReason");
-    let not_proceed_reason = document.getElementById("not_proceed_reason");
+    let notProceedReason = document.getElementById("notProceedReason");
     let remarks = document.getElementById("remarks");
 
     document.getElementById("employmentField").disabled = isDisabled;
@@ -272,34 +273,33 @@ function employmentField(isDisabled) {
         remarks.disabled = true;
         remarks.value = "";
 
-        not_proceed_reason.disabled = true;
-        not_proceed_reason.value = "";
+        notProceedReason.disabled = true;
+        notProceedReason.value = "";
     }
 }
 
 function applicationStatusValue(canProceed) {
     if (canProceed == true) {
         proceed.style.display = "block";
-        not_proceed.style.display = "none";
+        notProceed.style.display = "none";
         proceedStatus();
     }
     else {
-        not_proceed.style.display = "block";
+        notProceed.style.display = "block";
         proceed.style.display = "none";
-        not_proceedStatus();
+        notProceedStatus();
     }
 }
 
 function proceedStatus() {
-    let not_proceed_reason = document.getElementById("not_proceed_reason");
-    not_proceed_reason.disabled = true;
-    not_proceed_reason.value = "";
+    notProceedReason.disabled = true;
+    notProceedReason.value = "";
 
     remarks.disabled = false;
 }
 
-function not_proceedStatus() {
-    not_proceed_reason.disabled = false;
+function notProceedStatus() {
+    notProceedReason.disabled = false;
 
     document.getElementById("hired").checked = false;
     document.getElementById("submitDocs").checked = false;
