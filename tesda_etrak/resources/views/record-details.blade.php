@@ -139,6 +139,9 @@
                                 <dt>Invalid Contact? </dt>
                                 <dd>{{ $graduate->invalid_contact }}</dd>
                             @endif
+
+                            <dt>Remarks: </dt>
+                            <dd>{{ $graduate->follow_up_remarks }}</dd>
                             @break
         
                         @default

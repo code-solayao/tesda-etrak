@@ -16,6 +16,7 @@
 @endphp
 
 <x-layout>
+    <span class="text-4xl font-bold border-b-4 pt-5">{{ $graduate->full_name }} ({{ $graduate->allocation }})</span>
     <div class="mx-auto bg-white px-8 pb-8 pt-5 rounded-lg shadow-md">
         @if ($errors->any())
             <ul class="px-3 py-2 bg-red-400 rounded-md mb-5">
@@ -174,9 +175,7 @@
                                 {{-- response_status : Not Interested --}}
                                 <div id="notInterested">
                                     <label for="notInterestedReason" class="form-label">Reason</label>
-                                    <textarea name="not_interested_reason" id="notInterestedReason" rows="3" class="form-input" disabled>
-                                        {{ old('not_interested_reason', $graduate->not_interested_reason) }}
-                                    </textarea>
+                                    <textarea name="not_interested_reason" id="notInterestedReason" rows="3" class="form-input" disabled>{{ old('not_interested_reason', $graduate->not_interested_reason) }}</textarea>
                                 </div>
                             </div>
                         </div>

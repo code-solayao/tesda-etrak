@@ -1,5 +1,4 @@
-- Export data function: add append delay, reduce chunk, try-catch as per ChatGPT
-- Properly structure Google Error 502 page
+- Ituloy ayusin ang Export data function
 
 public function export_data(GoogleSheetsService $service) 
 {
