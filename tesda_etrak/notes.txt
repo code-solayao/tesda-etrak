@@ -144,11 +144,13 @@ public function export_data()
     logger()->info('Initialising local data export.');
 
     $client = new Client();
+    $client->setApplicationName('Laravel Google Sheets Export');
     $client->setAuthConfig(storage_path('app/credentials.json'));
-    $client->addScope(Sheets::SPREADSHEETS);
+    $client->setScopes(Sheets::SPREADSHEETS);
+    $client->setAccessType('offline');
+    $client->setPrompt('select_account consent');
     $service = new Sheets($client);
 
-    // $spreadsheetId = env('EXPORT_SHEET_ID');
     $spreadsheetId = '1-PlAbP1Y0dgqUEmblx3atGrjkkPWkOxrTE1qglkwfvM';
     $range = 'List of Graduates';
 
@@ -219,6 +221,9 @@ public function export_data()
                 $row->job_vacancies,
             ];
         }
+
+        // Optional: sleep 1 sec to avoid hitting API rate limit
+        usleep(500000); // 500ms
         
         logger()->info(count($allRows) . ' rows appended.');
     });
@@ -289,5 +294,37 @@ public function export_data()
     $service->spreadsheets_values->update($spreadsheetId, $range, $body, $params);
     
     logger()->info('Local data export complete.');
-    return redirect()->route('view.sheets-data')->with('success', 'Local data export complete.');
+    return redirect()->route('view.sheets-data')->with('Local data export complete.');
+}
+
+public function exportToGoogleSheets(GoogleSheetsService $sheetsService)
+{
+    // Optional: clear existing data before export
+    $sheetsService->clearSheet('Sheet1');
+
+    // Optional: add header row
+    $headers = [['ID', 'Name', 'Email']];
+    $sheetsService->appendRows('Sheet1!A1', $headers);
+
+    // Now process and append in chunks
+    YourModel::chunk(1000, function ($rows) use ($sheetsService) {
+        $data = [];
+
+        foreach ($rows as $row) {
+            $data[] = [
+                $row->id,
+                $row->name,
+                $row->email,
+                // Add more fields here
+            ];
+        }
+
+        // Append current chunk to the sheet
+        $sheetsService->appendRows('Sheet1', $data);
+
+        // Optional: sleep 1 sec to avoid hitting API rate limit
+        usleep(200000); // 200ms
+    });
+
+    return back()->with('success', 'Google Sheet updated in batches successfully!');
 }

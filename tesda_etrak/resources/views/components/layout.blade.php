@@ -50,7 +50,9 @@
                 <ul class="space-y-4 tab">
                     <li><a href="{{ route('dashboard') }}" class="tablinks">Dashboard</a></li>
                     <li><a href="{{ route('view-records') }}" class="tablinks">View records</a></li>
-                    <li><a href="{{ route('view.create') }}" class="tablinks">Create a record</a></li>
+                    @auth
+                        <li><a href="{{ route('view.create') }}" class="tablinks">Create a record</a></li>
+                    @endauth
                     <li><a href="{{ route('view.sheets-data') }}" class="tablinks">Google Sheets Data</a></li>
                     <li>
                         <a href="http://www.tesda.gov.ph" target="_blank" rel="noopener noreferrer" class="tablinks">
