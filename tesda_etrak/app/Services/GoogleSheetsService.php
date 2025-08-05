@@ -17,7 +17,7 @@ class GoogleSheetsService
      */
     public function __construct()
     {
-        $this->spreadsheetId = env('EXPORT_SHEET_ID');
+        $this->spreadsheetId = '1-PlAbP1Y0dgqUEmblx3atGrjkkPWkOxrTE1qglkwfvM';
 
         $this->client = new Client();
         $this->client->setApplicationName('Laravel Google Sheets Export');

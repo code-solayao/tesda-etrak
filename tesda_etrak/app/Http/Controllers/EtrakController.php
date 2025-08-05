@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ExportChunkToSheets;
 use App\Models\Graduate;
 use App\Services\GoogleSheetsService;
 use Carbon\Carbon;
@@ -549,89 +550,19 @@ class EtrakController extends Controller
     {
         logger()->info('Initialising local data export.');
 
-        $client = new Client();
-        $client->setApplicationName('Laravel Google Sheets Export');
-        $client->setAuthConfig(storage_path('app/credentials.json'));
-        $client->setScopes(Sheets::SPREADSHEETS);
-        $client->setAccessType('offline');
-        $client->setPrompt('select_account consent');
-        $service = new Sheets($client);
+        $this->client = new Client();
+        $this->client->setApplicationName('Laravel Google Sheets Export');
+        $this->client->setAuthConfig(storage_path('app/credentials.json'));
+        $this->client->setScopes(Sheets::SPREADSHEETS);
+        $this->client->setAccessType('offline');
+        $this->client->setPrompt('select_account consent');
+        $this->service = new Sheets($this->client);
 
-        $spreadsheetId = '1-PlAbP1Y0dgqUEmblx3atGrjkkPWkOxrTE1qglkwfvM';
+        $this->spreadsheetId = '1-PlAbP1Y0dgqUEmblx3atGrjkkPWkOxrTE1qglkwfvM';
         $range = 'List of Graduates';
 
         // Clear old data
-        $service->spreadsheets_values->clear(
-            $spreadsheetId,
-            $range,
-            new Sheets\ClearValuesRequest()
-        );
-
-        $allRows = [];
-        Graduate::chunk(1000, function ($rows) use (&$allRows) {
-            foreach ($rows as $row) {
-                $allRows[] = [
-                    $row->district,
-                    $row->city,
-                    $row->tvi,
-                    $row->qualification_title,
-                    $row->sector,
-                    $row->last_name,
-                    $row->first_name,
-                    $row->middle_name,
-                    $row->extension_name,
-                    $row->full_name,
-                    $row->sex,
-                    $row->birthdate,
-                    $row->contact_number,
-                    $row->email,
-                    $row->address,
-                    $row->scholarship_type,
-                    $row->training_status,
-                    $row->assessment_result,
-                    $row->employment_before_training,
-                    $row->occupation,
-                    $row->employer_name,
-                    $row->employer_address,
-                    $row->employment_type,
-                    $row->date_hired,
-                    $row->allocation,
-                    $row->verification_means,
-                    $row->verification_date,
-                    $row->verification_status,
-                    $row->follow_up_date_1,
-                    $row->follow_up_date_2,
-                    $row->follow_up_remarks,
-                    $row->response_status,
-                    $row->not_interested_reason,
-                    $row->referral_status,
-                    $row->referral_date,
-                    $row->no_referral_reason,
-                    $row->invalid_contact,
-                    $row->company_name,
-                    $row->company_address,
-                    $row->job_title,
-                    $row->application_status,
-                    $row->not_proceed_reason,
-                    $row->employment_status,
-                    $row->hired_date,
-                    $row->submitted_documents_date,
-                    $row->interview_date,
-                    $row->not_hired_reason,
-                    $row->remarks,
-                    $row->count,
-                    $row->no_of_graduates,
-                    $row->no_of_employed,
-                    $row->verification,
-                    $row->job_vacancies,
-                ];
-            }
-
-            // Optional: sleep 1 sec to avoid hitting API rate limit
-            usleep(500000); // 500ms
-            
-            logger()->info(count($allRows) . ' rows appended.');
-        });
+        $this->clearSheet($range);
 
         // Add headers
         $headers = [[
@@ -689,17 +620,76 @@ class EtrakController extends Controller
             'Verification',
             'Job Vacancies (Verification)',
         ]];
-        $values = array_merge($headers, $allRows);
+        $this->updateRows('List of Graduates!A1', $headers);
 
-        // Update rows
-        $body = new Sheets\ValueRange([
-            'values' => $values
-        ]);
-        $params = ['valueInputOption' => 'RAW'];
-        $service->spreadsheets_values->update($spreadsheetId, $range, $body, $params);
+        Graduate::chunk(1000, function ($chunk) {
+            $rows = $chunk->map(function ($row) {
+                return [
+                    $row->district,
+                    $row->city,
+                    $row->tvi,
+                    $row->qualification_title,
+                    $row->sector,
+                    $row->last_name,
+                    $row->first_name,
+                    $row->middle_name,
+                    $row->extension_name,
+                    $row->full_name,
+                    $row->sex,
+                    $row->birthdate,
+                    $row->contact_number,
+                    $row->email,
+                    $row->address,
+                    $row->scholarship_type,
+                    $row->training_status,
+                    $row->assessment_result,
+                    $row->employment_before_training,
+                    $row->occupation,
+                    $row->employer_name,
+                    $row->employer_address,
+                    $row->employment_type,
+                    $row->date_hired,
+                    $row->allocation,
+                    $row->verification_means,
+                    $row->verification_date,
+                    $row->verification_status,
+                    $row->follow_up_date_1,
+                    $row->follow_up_date_2,
+                    $row->follow_up_remarks,
+                    $row->response_status,
+                    $row->not_interested_reason,
+                    $row->referral_status,
+                    $row->referral_date,
+                    $row->no_referral_reason,
+                    $row->invalid_contact,
+                    $row->company_name,
+                    $row->company_address,
+                    $row->job_title,
+                    $row->application_status,
+                    $row->not_proceed_reason,
+                    $row->employment_status,
+                    $row->hired_date,
+                    $row->submitted_documents_date,
+                    $row->interview_date,
+                    $row->not_hired_reason,
+                    $row->remarks,
+                    $row->count,
+                    $row->no_of_graduates,
+                    $row->no_of_employed,
+                    $row->verification,
+                    $row->job_vacancies,
+                ];
+            })->toArray();
+
+            ExportChunkToSheets::dispatch($rows);
+
+            // Optional: sleep 1 sec to avoid hitting API rate limit
+            usleep(500000); // 500ms
+        });
         
         logger()->info('Local data export complete.');
-        return redirect()->route('view.sheets-data')->with('success', 'Local data export complete.');
+        // return redirect()->route('view.sheets-data')->with('success', 'Local data export complete.');
+        return response()->json(['status' => 'Export started and queued.']);
     }
 
     public function display_logs() 
