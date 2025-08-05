@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Validator;
 
 class EtrakController extends Controller
 {
+    protected $client;
+    protected $service;
+    protected $spreadsheetId;
+
     public function index() {
         return view('index');
     }
@@ -541,7 +545,7 @@ class EtrakController extends Controller
         return redirect()->route('view-records')->with('success', 'Google Sheets data import complete.');
     }
     
-    public function export_data(GoogleSheetsService $service) 
+    public function export_data() 
     {
         logger()->info('Initialising local data export.');
 
@@ -556,70 +560,14 @@ class EtrakController extends Controller
         $spreadsheetId = '1-PlAbP1Y0dgqUEmblx3atGrjkkPWkOxrTE1qglkwfvM';
         $range = 'List of Graduates';
 
-        // Optional: clear old data
+        // Clear old data
         $service->spreadsheets_values->clear(
             $spreadsheetId,
             $range,
             new Sheets\ClearValuesRequest()
         );
 
-        // Optional: add headers
-        $headers = [[
-            'District',
-            'City',
-            'Name of TVI',
-            'Qualification Title',
-            'Sector',
-            'LN',
-            'FN',
-            'MI',
-            'Ext',
-            'Name',
-            'Sex',
-            'Date of Birth',
-            'Contact Number',
-            'Email Address',
-            'Address',
-            'Scholarship Type',
-            'Training Status',
-            'Assessment Result',
-            'Employment Before Training',
-            'Occupation',
-            'Name of Employer',
-            'Employment Type',
-            'Address of Employer',
-            'Date Hired',
-            'Allocation',
-            'Means of Verification',
-            'Date of Verification',
-            'Status of Verification',
-            'First Follow-up Date',
-            'Second Follow-up Date',
-            'Follow-up Remarks',
-            'Status of Responses',
-            'Reasons (Not Interested)',
-            'Referral Status',
-            'Referral Date',
-            'Reasons (No Referral)',
-            'Invalid Contact',
-            'Name of Company',
-            'Address (City)',
-            'Job Title',
-            'Application Status (Proceed or Not for Job Opening)',
-            'Reasons (Did Not Proceed for Job Opening)',
-            'Employment Status',
-            'Date of Hired',
-            'Date of Submitted Documents',
-            'Date of Interview',
-            'Reasons (Not Hired)',
-            'Remarks',
-            'Count',
-            'No. of Graduates',
-            'No. of Employed',
-            'Verification',
-            'Job Vacancies (Verification)',
-        ]];
-
+        $allRows = [];
         Graduate::chunk(1000, function ($rows) use (&$allRows) {
             foreach ($rows as $row) {
                 $allRows[] = [
@@ -685,6 +633,62 @@ class EtrakController extends Controller
             logger()->info(count($allRows) . ' rows appended.');
         });
 
+        // Add headers
+        $headers = [[
+            'District',
+            'City',
+            'Name of TVI',
+            'Qualification Title',
+            'Sector',
+            'LN',
+            'FN',
+            'MI',
+            'Ext',
+            'Name',
+            'Sex',
+            'Date of Birth',
+            'Contact Number',
+            'Email Address',
+            'Address',
+            'Scholarship Type',
+            'Training Status',
+            'Assessment Result',
+            'Employment Before Training',
+            'Occupation',
+            'Name of Employer',
+            'Employment Type',
+            'Address of Employer',
+            'Date Hired',
+            'Allocation',
+            'Means of Verification',
+            'Date of Verification',
+            'Status of Verification',
+            'First Follow-up Date',
+            'Second Follow-up Date',
+            'Follow-up Remarks',
+            'Status of Responses',
+            'Reasons (Not Interested)',
+            'Referral Status',
+            'Referral Date',
+            'Reasons (No Referral)',
+            'Invalid Contact',
+            'Name of Company',
+            'Address (City)',
+            'Job Title',
+            'Application Status (Proceed or Not for Job Opening)',
+            'Reasons (Did Not Proceed for Job Opening)',
+            'Employment Status',
+            'Date of Hired',
+            'Date of Submitted Documents',
+            'Date of Interview',
+            'Reasons (Not Hired)',
+            'Remarks',
+            'Count',
+            'No. of Graduates',
+            'No. of Employed',
+            'Verification',
+            'Job Vacancies (Verification)',
+        ]];
         $values = array_merge($headers, $allRows);
 
         // Update rows
@@ -695,7 +699,7 @@ class EtrakController extends Controller
         $service->spreadsheets_values->update($spreadsheetId, $range, $body, $params);
         
         logger()->info('Local data export complete.');
-        return redirect()->route('view.sheets-data')->with('Local data export complete.');
+        return redirect()->route('view.sheets-data')->with('success', 'Local data export complete.');
     }
 
     public function display_logs() 
@@ -741,6 +745,21 @@ class EtrakController extends Controller
         }
 
         return $format;
+    }
+
+    public function updateRows($range, array $values) 
+    {
+        $body = new Sheets\ValueRange([
+            'values' => $values
+        ]);
+
+        $params = ['valueInputOption' => 'RAW'];
+
+        return $this->service->spreadsheets_values->update($this->spreadsheetId, $range, $body, $params);
+    }
+
+    public function clearSheet($sheetName) {
+        $this->service->spreadsheets_values->clear($this->spreadsheetId, $sheetName, new Sheets\ClearValuesRequest());
     }
 
     // Format: 08/05/1930
