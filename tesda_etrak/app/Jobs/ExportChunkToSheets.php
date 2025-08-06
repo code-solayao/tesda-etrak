@@ -12,14 +12,19 @@ use Illuminate\Queue\SerializesModels;
 class ExportChunkToSheets implements ShouldQueue
 {
     use Queueable, InteractsWithQueue, SerializesModels;
+
     protected $rows;
+    protected $spreadsheetId;
+    protected $range;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(array $rows)
+    public function __construct(array $rows, string $spreadsheetId, string $range)
     {
         $this->rows = $rows;
+        $this->spreadsheetId = $spreadsheetId;
+        $this->range = $range;
     }
 
     /**
@@ -27,7 +32,12 @@ class ExportChunkToSheets implements ShouldQueue
      */
     public function handle(GoogleSheetsService $service): void
     {
-        $service->appendRows('List of Graduates', $this->rows);
+        $maxPerRequest = 500;
+        $batches = array_chunk($this->rows, $maxPerRequest);
+        foreach ($batches as $batch) {
+            $service->appendRows($this->spreadsheetId, $this->rows, $batch);
+            sleep(5); // sleep for 1 sec to prevent API quota issues
+        }
     }
 
     public function middleware()

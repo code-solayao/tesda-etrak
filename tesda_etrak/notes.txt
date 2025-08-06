@@ -1,3 +1,4 @@
+- Ayusin ang "invalid JSON payload"
 - Ituloy ayusin ang Export data function
 
 public function export_data() 

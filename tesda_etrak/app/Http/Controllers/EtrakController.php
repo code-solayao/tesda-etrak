@@ -17,6 +17,7 @@ class EtrakController extends Controller
     protected $client;
     protected $service;
     protected $spreadsheetId;
+    protected $sheet;
 
     public function index() {
         return view('index');
@@ -384,16 +385,15 @@ class EtrakController extends Controller
         $client->setScopes([Sheets::SPREADSHEETS_READONLY]);
         $service = new Sheets($client);
 
-        // $spreadsheetId = '100jOk-835-aRxURFWkON1026rLkBKH8Rrwtdy8ojv6Q';
         $spreadsheetId = '10LX-Ov_XGg984cGkGsAVoLF1S-CSfNz4DWhSaL44XJM';
-        $range = 'List of Graduates';
+        $this->sheet = 'List of Graduates';
 
         if (empty($spreadsheetId)) {
             logger()->error('Google Sheets data import failed: Spreadsheet ID is missing.');
             return 'Spreadsheet ID is not configured.';
         }
 
-        $response = $service->spreadsheets_values->get($spreadsheetId, $range);
+        $response = $service->spreadsheets_values->get($spreadsheetId, $this->sheet);
         $values = $response->getValues();
         logger()->info("Rows found: " . count($values));
 
@@ -559,10 +559,10 @@ class EtrakController extends Controller
         $this->service = new Sheets($this->client);
 
         $this->spreadsheetId = '1-PlAbP1Y0dgqUEmblx3atGrjkkPWkOxrTE1qglkwfvM';
-        $range = 'List of Graduates';
+        $this->sheet = 'List of Graduates';
 
         // Clear old data
-        $this->clearSheet($range);
+        $this->clearSheet($this->sheet);
 
         // Add headers
         $headers = [[
@@ -622,9 +622,10 @@ class EtrakController extends Controller
         ]];
         $this->updateRows('List of Graduates!A1', $headers);
 
-        Graduate::chunk(1000, function ($chunk) {
-            $rows = $chunk->map(function ($row) {
-                return [
+        Graduate::chunk(1000, function ($rows) {
+            $data = [];
+            foreach ($rows as $row) {
+                $data[] = [
                     $row->district,
                     $row->city,
                     $row->tvi,
@@ -679,17 +680,15 @@ class EtrakController extends Controller
                     $row->verification,
                     $row->job_vacancies,
                 ];
-            })->toArray();
+            }
 
-            ExportChunkToSheets::dispatch($rows);
+            ExportChunkToSheets::dispatch($data, $this->spreadsheetId, $this->sheet);
 
-            // Optional: sleep 1 sec to avoid hitting API rate limit
-            usleep(500000); // 500ms
+            logger()->info(count($data) . ' rows appended.');
         });
         
         logger()->info('Local data export complete.');
-        // return redirect()->route('view.sheets-data')->with('success', 'Local data export complete.');
-        return response()->json(['status' => 'Export started and queued.']);
+        return redirect()->route('view.sheets-data')->with('success', 'Local data export complete.');
     }
 
     public function display_logs() 
