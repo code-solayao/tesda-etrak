@@ -50,7 +50,7 @@ class GoogleSheetsService
             'insertDataOption' => 'INSERT_ROWS',
         ];
 
-        return $this->service->spreadsheets_values->append($this->spreadsheetId, $range, $body, $params);
+        return $this->service->spreadsheets_values->append($spreadsheetId, $range, $body, $params);
     }
 
     public function clearSheet($sheet) {

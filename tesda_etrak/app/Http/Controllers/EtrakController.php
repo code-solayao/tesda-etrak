@@ -16,8 +16,6 @@ class EtrakController extends Controller
 {
     protected $client;
     protected $service;
-    protected $spreadsheetId;
-    protected $sheet;
 
     public function index() {
         return view('index');
@@ -386,14 +384,14 @@ class EtrakController extends Controller
         $service = new Sheets($client);
 
         $spreadsheetId = '10LX-Ov_XGg984cGkGsAVoLF1S-CSfNz4DWhSaL44XJM';
-        $this->sheet = 'List of Graduates';
+        $sheet = 'List of Graduates';
 
         if (empty($spreadsheetId)) {
             logger()->error('Google Sheets data import failed: Spreadsheet ID is missing.');
             return 'Spreadsheet ID is not configured.';
         }
 
-        $response = $service->spreadsheets_values->get($spreadsheetId, $this->sheet);
+        $response = $service->spreadsheets_values->get($spreadsheetId, $sheet);
         $values = $response->getValues();
         logger()->info("Rows found: " . count($values));
 
@@ -558,11 +556,11 @@ class EtrakController extends Controller
         $this->client->setPrompt('select_account consent');
         $this->service = new Sheets($this->client);
 
-        $this->spreadsheetId = '1-PlAbP1Y0dgqUEmblx3atGrjkkPWkOxrTE1qglkwfvM';
-        $this->sheet = 'List of Graduates';
+        $spreadsheetId = '1-PlAbP1Y0dgqUEmblx3atGrjkkPWkOxrTE1qglkwfvM';
+        $sheet = 'List of Graduates';
 
         // Clear old data
-        $this->clearSheet($this->sheet);
+        $this->clearSheet($sheet, $spreadsheetId);
 
         // Add headers
         $headers = [[
@@ -620,7 +618,7 @@ class EtrakController extends Controller
             'Verification',
             'Job Vacancies (Verification)',
         ]];
-        $this->updateRows('List of Graduates!A1', $headers);
+        $this->updateRows('List of Graduates!A1', $headers, $spreadsheetId);
 
         Graduate::chunk(1000, function ($rows) {
             $data = [];
@@ -682,7 +680,7 @@ class EtrakController extends Controller
                 ];
             }
 
-            ExportChunkToSheets::dispatch($data, $this->spreadsheetId, $this->sheet);
+            //
 
             logger()->info(count($data) . ' rows appended.');
         });
@@ -736,7 +734,7 @@ class EtrakController extends Controller
         return $format;
     }
 
-    public function updateRows($range, array $values) 
+    public function updateRows($range, array $values, $spreadsheetId) 
     {
         $body = new Sheets\ValueRange([
             'values' => $values
@@ -744,11 +742,11 @@ class EtrakController extends Controller
 
         $params = ['valueInputOption' => 'RAW'];
 
-        return $this->service->spreadsheets_values->update($this->spreadsheetId, $range, $body, $params);
+        return $this->service->spreadsheets_values->update($spreadsheetId, $range, $body, $params);
     }
 
-    public function clearSheet($sheetName) {
-        $this->service->spreadsheets_values->clear($this->spreadsheetId, $sheetName, new Sheets\ClearValuesRequest());
+    public function clearSheet($sheet, $spreadsheetId) {
+        $this->service->spreadsheets_values->clear($spreadsheetId, $sheet, new Sheets\ClearValuesRequest());
     }
 
     // Format: 08/05/1930
