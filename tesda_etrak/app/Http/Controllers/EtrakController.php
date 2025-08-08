@@ -318,19 +318,6 @@ class EtrakController extends Controller
         $not_hired_reason = isset($validated['not_hired_reason']) == true ? $validated['not_hired_reason'] : '';
         $remarks = isset($validated['remarks']) == true ? $validated['remarks'] : '';
 
-        // if ($referral_status != 'Yes') {
-        //     $company_name = '';
-        //     $company_address = '';
-        //     $job_title = '';
-        //     $application_status = '';
-        //     $not_proceed_reason = '';
-        //     $employment_status = '';
-        //     $hired_date = '';
-        //     $submitted_documents_date = '';
-        //     $interview_date = '';
-        //     $not_hired_reason = '';
-        // }
-
         $graduate->update([
             'verification_means' => $validated['verification_means'],
             'verification_date' => $validated['verification_date'],
@@ -620,8 +607,8 @@ class EtrakController extends Controller
         ]];
         $this->updateRows('List of Graduates!A1', $headers, $spreadsheetId);
 
-        Graduate::chunk(1000, function ($rows) {
-            $data = [];
+        $data = [];
+        Graduate::chunk(1000, function ($rows) use (&$data) {
             foreach ($rows as $row) {
                 $data[] = [
                     $row->district,
@@ -680,10 +667,12 @@ class EtrakController extends Controller
                 ];
             }
 
-            //
+            sleep(1); // Prevent API quota issues
 
             logger()->info(count($data) . ' rows appended.');
         });
+
+        $this->updateRows($sheet, $data, $spreadsheetId);
         
         logger()->info('Local data export complete.');
         return redirect()->route('view.sheets-data')->with('success', 'Local data export complete.');
