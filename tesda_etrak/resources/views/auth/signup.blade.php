@@ -44,8 +44,7 @@
             </form>
             <div>
                 <p class="text-sm text-center text-gray-700">
-                    Return to  
-                    <a href="{{ route('view.login') }}" class="text-blue-700 hover:underline">login</a>.
+                    Return to <a href="{{ route('view.login') }}" class="text-blue-700 hover:underline">login</a>.
                 </p>
             </div>
         </div>

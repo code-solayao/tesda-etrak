@@ -8,10 +8,10 @@ document.getElementById("employmentTab").onclick = function () {
     openTab(2);
 }
 
-document.getElementById("toggleCreate").onclick = function () {
+document.getElementById("toggleDelete").onclick = function () {
     document.getElementById("confirmationModal").classList.remove('hidden');
 }
-document.getElementById("dismissCreate").onclick = function () {
+document.getElementById("dismissDelete").onclick = function () {
     document.getElementById("confirmationModal").classList.add('hidden');
 }
 
@@ -34,14 +34,16 @@ function blankedDefinitions() {
     let blanks = 0;
 
     for (let i = 0; i < definitions.length; i++) {
-        if (definitions[i].innerHTML === "") 
+        if (definitions[i].innerHTML === "") {
             definitions[i].innerHTML = "N/A";
+            blanks++;
+        }
         else 
             continue;
     }
 
     if (blanks > 0) 
-        console.log(blanks);
+        console.log(`Blanked definitions: ${blanks}`);
 }
 
 function dateFormatRead() {

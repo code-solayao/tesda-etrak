@@ -6,12 +6,16 @@
     <title>@yield('title', 'E-TRAK')</title>
     @yield('vite')
 </head>
+@php
+    $authViews = ['view.login', 'view.signup', 'view.signup-admin'];
+    $mainOnly = ['index', 'view.login', 'view.signup', 'view.signup-admin'];
+@endphp
 <body id="body">
     <header class="bg-blue-400 shadow-md fixed top-0 left-0 w-full z-10">
         <nav class="container mx-auto p-4 flex justify-between items-center">
             <a href="{{ url('/') }}" class="font-[Fremont,Verdana] font-bold text-3xl text-white">E-TRAK</a>
             <div class="flex items-center space-x-4">
-                @if (Route::currentRouteName() != 'view.login' && Route::currentRouteName() != 'view.signup')
+                @if (!in_array(Route::currentRouteName(), $authViews))
                     @guest
                         <div class="flex flex-row-reverse">
                             <a href="{{ route('view.login') }}" class="btn btn-secondary bg-blue-100 hover:bg-blue-200 text-blue-700 ml-5">Log In</a>
@@ -31,9 +35,6 @@
             </div>
         </nav>
     </header>
-    @php
-        $mainOnly = ['index', 'view.login', 'view.signup'];
-    @endphp
     <div class="flex flex-1 pt-16">
         @if (in_array(Route::currentRouteName(), $mainOnly))
             <main class="flex-1 px-24 py-6">
@@ -45,7 +46,7 @@
                 {{ $slot }}
             </main>
         @else
-            {{-- Sidebar --}}
+            <!-- Sidebar -->
             <aside class="w-64 bg-sky-50 shadow-md p-6 hidden md:block fixed left-0 top-16 h-[calc(100vh-4rem)]">
                 <ul class="space-y-4 tab">
                     <li><a href="{{ route('dashboard') }}" class="tablinks">Dashboard</a></li>
@@ -61,7 +62,7 @@
                     </li>
                 </ul>
             </aside>
-            {{-- Main --}}
+            <!-- Main -->
             <main class="flex-1 overflow-y-auto p-6 ml-64 h-[calc(100vh-4rem)]">
                 <header class="mb-10">
                     @if (session('success'))

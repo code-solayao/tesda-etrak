@@ -15,8 +15,10 @@ Route::get('/google-error-502', function () {
 Route::middleware('guest')->controller(AuthController::class)->group(function () {
     Route::get('/login', 'view_login')->name('view.login');
     Route::get('/signup', 'view_signup')->name('view.signup');
+    Route::get('/signup-admin', 'view_signup_admin')->name('view.signup-admin');
     Route::post('/login', 'login')->name('login');
     Route::post('/signup', 'signup')->name('signup');
+    Route::post('/signup-admin', 'signup_admin')->name('signup.admin');
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');

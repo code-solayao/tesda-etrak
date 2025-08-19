@@ -38,7 +38,6 @@
                 @method('PUT')
                 <div class="tab-content" id="details">
                     <fieldset disabled>
-                        {{-- FULL NAME --}}
                         <div class="mb-5">
                             <label for="last_name" class="form-label">Last Name</label>
                             <input type="text" name="last_name" id="last_name" class="form-input bg-gray-200" value="{{ $graduate->last_name }}" />
@@ -55,7 +54,6 @@
                             <label for="extension_name" class="form-label">Extension Name</label>
                             <input type="text" name="extension_name" id="extension_name" class="form-input bg-gray-200" value="{{ $graduate->extension_name }}" />
                         </div>
-                        {{-- INITIAL DATA --}}
                         <div class="mb-5">
                             <label for="sex" class="form-label">Sex</label>
                             <input type="text" name="sex" id="sex" class="form-input bg-gray-200" value="{{ $graduate->sex }}" />
@@ -225,12 +223,12 @@
                             <div class="mt-2 space-y-2">
                                 <label class="form-label">Application Status</label>
                                 <label for="proceedBtn" class="flex items-center">
-                                    <input type="radio" name="application_status" id="proceedBtn" class="form-radio" value="Proceed" {{ old('application_status', $graduate->application_status) == 'Proceed' ? 'checked' : '' }} />
+                                    <input type="radio" name="application_status" id="proceedBtn" class="form-radio" value="Proceeded" {{ old('application_status', $graduate->application_status) == 'Proceed' ? 'checked' : '' }} />
                                     <span class="ml-2 text-gray-700">Proceed</span>
                                 </label>
                                 <label for="notProceedBtn" class="flex items-center">
-                                    <input type="radio" name="application_status" id="notProceedBtn" class="form-radio" value="Don't Proceed" {{ old('application_status', $graduate->application_status) == 'Don\'t Proceed' ? 'checked' : '' }} />
-                                    <span class="ml-2 text-gray-700">Don't Proceed</span>
+                                    <input type="radio" name="application_status" id="notProceedBtn" class="form-radio" value="Did Not Proceed" {{ old('application_status', $graduate->application_status) == 'Don\'t Proceed' ? 'checked' : '' }} />
+                                    <span class="ml-2 text-gray-700">Will Not Proceed</span>
                                 </label>
                             </div>
                             <hr class="my-4">

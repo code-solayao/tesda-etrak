@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -15,6 +16,10 @@ class AuthController extends Controller
 
     public function view_signup() {
         return view('auth.signup');
+    }
+
+    public function view_signup_admin() {
+        return view('auth.signup-admin');
     }
 
     public function login(Request $request) {
@@ -43,6 +48,28 @@ class AuthController extends Controller
         ]);
 
         $user = User::create($validated);
+        Auth::login($user);
+
+        return redirect()->route('index')->with('success', 'Account created successfully!');
+    }
+
+    public function signup_admin(Request $request) {
+        $validated = $request->validate([
+            'name' => 'required|string|min:2|max:100', 
+            'email' => 'required|email|unique:users', 
+            'password' => 'required|string|min:2|max:100|confirmed'
+        ]);
+
+        $validated['role'] = 'admin';
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'email_verified_at' => Carbon::now(),
+            'role' => 'admin',
+            'password' => $validated['password'],
+            'remember_token' => null,
+        ]);
         Auth::login($user);
 
         return redirect()->route('index')->with('success', 'Account created successfully!');
