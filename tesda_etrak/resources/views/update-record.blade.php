@@ -16,7 +16,7 @@
 @endphp
 
 <x-layout>
-    <span class="text-4xl font-bold border-b-4 pt-5">{{ $graduate->full_name }} ({{ $graduate->allocation }})</span>
+    <span class="text-4xl font-bold border-b-4 pt-5">{{ $graduate->full_name }}</span>
     <div class="mx-auto bg-white px-8 pb-8 pt-5 rounded-lg shadow-md">
         @if ($errors->any())
             <ul class="px-3 py-2 bg-red-400 rounded-md mb-5">
@@ -277,7 +277,7 @@
                     </div>
                     <div class="flex items-center justify-baseline">
                         <button type="button" class="btn btn-primary rounded-lg mr-2" id="toggleUpdate2">Update</button>
-                        <a href="{{ route('view.details', $graduate->id) }}" class="btn btn-secondary rounded-lg">Cancel</a>
+                        <a href="{{ route('admin.view-details', $graduate->id) }}" class="btn btn-secondary rounded-lg">Cancel</a>
                     </div>
                 </div>
                 {{-- Modal --}}

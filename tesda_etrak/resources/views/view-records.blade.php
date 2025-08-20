@@ -25,25 +25,37 @@
 
 <x-layout>
     <div>
-        <form action="{{ route('search-graduates') }}" method="GET">
-            <div class="mb-4 flex justify-baseline items-center">
-                <input type="text" class="border bg-white px-2 py-1 rounded w-1/3" name="search" value="{{ $search }}" placeholder="Search record..." />
-                <select name="search_category" class="border bg-gray-300 px-2 py-1 ml-1 rounded w-lg inline">
-                    <option value="">-- Select a category --</option>
-                    @foreach ($categories as $category)
-                        <option class="bg-gray-50" value="{{ $category }}" {{ $search_category == $category ? 'selected' : '' }}>{{ $category }}</option>
-                    @endforeach
-                </select>
-                @auth
+        @auth
+            <form action="{{ route('admin.search-graduates') }}" method="GET">
+                <div class="mb-4 flex justify-baseline items-center">
+                    <input type="text" class="border bg-white px-2 py-1 rounded w-1/3" name="search" value="{{ $search }}" placeholder="Search record..." />
+                    <select name="search_category" class="border bg-gray-300 px-2 py-1 ml-1 rounded w-lg inline">
+                        <option value="">-- Select a category --</option>
+                        @foreach ($categories as $category)
+                            <option class="bg-gray-50" value="{{ $category }}" {{ $search_category == $category ? 'selected' : '' }}>{{ $category }}</option>
+                        @endforeach
+                    </select>
                     <button type="button" class="btn btn-danger ml-auto" id="toggleDeleteAll">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 inline-block mb-0.5">
                             <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
-                        </svg>
-                        Clear All Records
+                        </svg> Clear All Records
                     </button>
-                @endauth
-            </div>
-        </form>
+                </div>
+            </form>
+        @endauth
+        @guest
+            <form action="{{ route('search-graduates') }}" method="GET">
+                <div class="mb-4 flex justify-baseline items-center">
+                    <input type="text" class="border bg-white px-2 py-1 rounded w-1/3" name="search" value="{{ $search }}" placeholder="Search record..." />
+                    <select name="search_category" class="border bg-gray-300 px-2 py-1 ml-1 rounded w-lg inline">
+                        <option value="">-- Select a category --</option>
+                        @foreach ($categories as $category)
+                            <option class="bg-gray-50" value="{{ $category }}" {{ $search_category == $category ? 'selected' : '' }}>{{ $category }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </form>
+        @endguest
         <div class="overflow-x-auto bg-white shadow-md rounded-lg mb-4">
             <table class="w-full border-collapse">
                 <thead>
@@ -72,10 +84,13 @@
                             <td class="px-6 py-3">{{ $graduate->qualification_title }}</td>
                             <td class="px-6 py-3 text-center">
                                 <div class="flex justify-center space-x-2">
-                                    <a href="{{ route('view.details', $graduate->id) }}" class="btn-sm btn-secondary font-normal">View</a>
                                     @auth
+                                        <a href="{{ route('admin.view-details', $graduate->id) }}" class="btn-sm btn-secondary font-normal">View</a>
                                         <button type="button" class="btn-sm btn-danger font-normal delete-buttons" data-value="{{ $graduate->id }}">Delete</button>
                                     @endauth
+                                    @guest
+                                        <a href="{{ route('view.details', $graduate->id) }}" class="btn-sm btn-secondary font-normal">View</a>
+                                    @endguest
                                 </div>
                             </td>
                         </tr>
@@ -85,7 +100,7 @@
         </div>
         <div>{{ $graduates->withQueryString()->links('pagination::tailwind') }}</div>
     </div>
-    {{-- Modal --}}
+    <!-- Modal -->
     <div class="relative z-10 hidden" id="deleteModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
         <div class="fixed inset-0 z-10 w-screen overflow-y-auto">

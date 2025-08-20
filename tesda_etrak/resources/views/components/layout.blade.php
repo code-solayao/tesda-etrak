@@ -8,12 +8,17 @@
 </head>
 @php
     $authViews = ['view.login', 'view.signup', 'view.signup-admin'];
-    $mainOnly = ['index', 'view.login', 'view.signup', 'view.signup-admin'];
+    $mainOnly = ['index', 'admin.index', 'view.login', 'view.signup', 'view.signup-admin'];
 @endphp
 <body id="body">
     <header class="bg-blue-400 shadow-md fixed top-0 left-0 w-full z-10">
         <nav class="container mx-auto p-4 flex justify-between items-center">
-            <a href="{{ url('/') }}" class="font-[Fremont,Verdana] font-bold text-3xl text-white">E-TRAK</a>
+            @auth
+                <a href="{{ route('admin.index') }}" class="font-[Fremont,Verdana] font-bold text-3xl text-white">E-TRAK</a>
+            @endauth
+            @guest
+                <a href="{{ url('/') }}" class="font-[Fremont,Verdana] font-bold text-3xl text-white">E-TRAK</a>
+            @endguest
             <div class="flex items-center space-x-4">
                 @if (!in_array(Route::currentRouteName(), $authViews))
                     @guest
@@ -49,12 +54,16 @@
             <!-- Sidebar -->
             <aside class="w-64 bg-sky-50 shadow-md p-6 hidden md:block fixed left-0 top-16 h-[calc(100vh-4rem)]">
                 <ul class="space-y-4 tab">
-                    <li><a href="{{ route('dashboard') }}" class="tablinks">Dashboard</a></li>
-                    <li><a href="{{ route('view-records') }}" class="tablinks">View records</a></li>
                     @auth
-                        <li><a href="{{ route('view.create') }}" class="tablinks">Create a record</a></li>
+                        <li><a href="{{ route('admin.dashboard') }}" class="tablinks">Dashboard</a></li>
+                        <li><a href="{{ route('admin.view-records') }}" class="tablinks">View records</a></li>
+                        <li><a href="{{ route('admin.view-create') }}" class="tablinks">Create a record</a></li>
+                        <li><a href="{{ route('admin.view-sheets-data') }}" class="tablinks">Google Sheets Data</a></li>
                     @endauth
-                    <li><a href="{{ route('view.sheets-data') }}" class="tablinks">Google Sheets Data</a></li>
+                    @guest
+                        <li><a href="{{ route('dashboard') }}" class="tablinks">Dashboard</a></li>
+                        <li><a href="{{ route('view-records') }}" class="tablinks">View records</a></li>
+                    @endguest
                     <li>
                         <a href="http://www.tesda.gov.ph" target="_blank" rel="noopener noreferrer" class="tablinks">
                             Visit <b class="font-[Fremont,Verdana]">TESDA</b> website

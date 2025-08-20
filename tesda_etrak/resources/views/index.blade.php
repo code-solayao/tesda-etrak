@@ -9,7 +9,13 @@
         <p>This is a project of the <strong>Employment Monitoring System</strong></p>
     </div>
     <div class="text-center">
-        <a href="{{ route('dashboard') }}" class="btn btn-primary inline-block">Dashboard</a>
-        <a href="{{ route('view-records') }}" class="btn btn-primary inline-block">View Records</a>
+        @auth
+            <a href="{{ route('admin.dashboard') }}" class="btn btn-primary inline-block">Dashboard</a>
+            <a href="{{ route('admin.view-records') }}" class="btn btn-primary inline-block">View Records</a>
+        @endauth
+        @guest
+            <a href="{{ route('dashboard') }}" class="btn btn-primary inline-block">Dashboard</a>
+            <a href="{{ route('view-records') }}" class="btn btn-primary inline-block">View Records</a>
+        @endguest
     </div>
 </x-layout>

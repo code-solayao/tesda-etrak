@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'ADMIN',
+            'name' => 'NCR-ROD',
             'email' => 'admin@email.com',
             'password' => 'admin',
-            'role' => 'admin',
+            'role' => 'super-admin',
         ]);
 
         User::factory()->create([

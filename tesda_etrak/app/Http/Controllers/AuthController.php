@@ -18,7 +18,7 @@ class AuthController extends Controller
         return view('auth.signup');
     }
 
-    public function view_signup_admin() {
+    public function view_admin_signup() {
         return view('auth.signup-admin');
     }
 
@@ -53,23 +53,23 @@ class AuthController extends Controller
         return redirect()->route('index')->with('success', 'Account created successfully!');
     }
 
-    public function signup_admin(Request $request) {
+    public function admin_signup(Request $request) {
         $validated = $request->validate([
             'name' => 'required|string|min:2|max:100', 
             'email' => 'required|email|unique:users', 
-            'password' => 'required|string|min:2|max:100|confirmed'
+            'password' => 'required|string|min:2|max:100|confirmed',
+            'role' => 'required|in:user,admin',
         ]);
-
-        $validated['role'] = 'admin';
 
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'email_verified_at' => Carbon::now(),
-            'role' => 'admin',
+            'role' => $validated['role'],
             'password' => $validated['password'],
             'remember_token' => null,
         ]);
+
         Auth::login($user);
 
         return redirect()->route('index')->with('success', 'Account created successfully!');

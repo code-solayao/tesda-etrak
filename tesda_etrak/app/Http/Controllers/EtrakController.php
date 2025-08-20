@@ -254,7 +254,7 @@ class EtrakController extends Controller
             'job_vacancies' => $job_vacancies,
         ]);
 
-        return redirect()->route('view-records')->with('success', 'Created record successfully!');
+        return redirect()->route('admin.view-records')->with('success', 'Created record successfully!');
     }
 
     public function view_details(Graduate $graduate) {
@@ -344,17 +344,17 @@ class EtrakController extends Controller
             'remarks' => $remarks,
         ]);
 
-        return redirect()->route('view.details', $graduate->id)->with('success', 'Updated record successfully!');
+        return redirect()->route('admin.view-details', $graduate->id)->with('success', 'Updated record successfully!');
     }
 
     public function delete(Graduate $graduate) {
         $graduate->delete();
-        return redirect()->route('view-records')->with('success', 'Deleted record successfully!');
+        return redirect()->route('admin.view-records')->with('success', 'Deleted record successfully!');
     }
 
     public function delete_all() {
         Graduate::truncate();
-        return redirect()->route('view-records')->with('success', 'Cleared all records successfully!');
+        return redirect()->route('admin.view-records')->with('success', 'Cleared all records successfully!');
     }
 
     public function view_sheets_data() {
@@ -528,7 +528,7 @@ class EtrakController extends Controller
         }
 
         logger()->info('Google Sheets data import completed');
-        return redirect()->route('view-records')->with('success', 'Google Sheets data import complete.');
+        return redirect()->route('admin.view-records')->with('success', 'Google Sheets data import complete.');
     }
     
     public function export_data() 
@@ -675,7 +675,7 @@ class EtrakController extends Controller
         $this->updateRows($sheet, $data, $spreadsheetId);
         
         logger()->info('Local data export complete.');
-        return redirect()->route('view.sheets-data')->with('success', 'Local data export complete.');
+        return redirect()->route('admin.view-sheets-data')->with('success', 'Local data export complete.');
     }
 
     public function display_logs() 
