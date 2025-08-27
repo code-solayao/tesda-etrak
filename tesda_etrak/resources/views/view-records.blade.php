@@ -25,7 +25,7 @@
 
 <x-layout>
     <div>
-        @auth
+        @admin
             <form action="{{ route('admin.search-graduates') }}" method="GET">
                 <div class="mb-4 flex justify-baseline items-center">
                     <input type="text" class="border bg-white px-2 py-1 rounded w-1/3" name="search" value="{{ $search }}" placeholder="Search record..." />
@@ -42,7 +42,20 @@
                     </button>
                 </div>
             </form>
-        @endauth
+        @endadmin
+        @user
+            <form action="{{ route('search-graduates') }}" method="GET">
+                <div class="mb-4 flex justify-baseline items-center">
+                    <input type="text" class="border bg-white px-2 py-1 rounded w-1/3" name="search" value="{{ $search }}" placeholder="Search record..." />
+                    <select name="search_category" class="border bg-gray-300 px-2 py-1 ml-1 rounded w-lg inline">
+                        <option value="">-- Select a category --</option>
+                        @foreach ($categories as $category)
+                            <option class="bg-gray-50" value="{{ $category }}" {{ $search_category == $category ? 'selected' : '' }}>{{ $category }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </form>
+        @enduser
         @guest
             <form action="{{ route('search-graduates') }}" method="GET">
                 <div class="mb-4 flex justify-baseline items-center">
@@ -84,10 +97,13 @@
                             <td class="px-6 py-3">{{ $graduate->qualification_title }}</td>
                             <td class="px-6 py-3 text-center">
                                 <div class="flex justify-center space-x-2">
-                                    @auth
+                                    @admin
                                         <a href="{{ route('admin.view-details', $graduate->id) }}" class="btn-sm btn-secondary font-normal">View</a>
                                         <button type="button" class="btn-sm btn-danger font-normal delete-buttons" data-value="{{ $graduate->id }}">Delete</button>
-                                    @endauth
+                                    @endadmin
+                                    @user
+                                        <a href="{{ route('view.details', $graduate->id) }}" class="btn-sm btn-secondary font-normal">View</a>
+                                    @enduser
                                     @guest
                                         <a href="{{ route('view.details', $graduate->id) }}" class="btn-sm btn-secondary font-normal">View</a>
                                     @endguest

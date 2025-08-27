@@ -13,9 +13,12 @@
 <body id="body">
     <header class="bg-blue-400 shadow-md fixed top-0 left-0 w-full z-10">
         <nav class="container mx-auto p-4 flex justify-between items-center">
-            @auth
+            @admin
                 <a href="{{ route('admin.index') }}" class="font-[Fremont,Verdana] font-bold text-3xl text-white">E-TRAK</a>
-            @endauth
+            @endadmin
+            @user
+                <a href="{{ url('/') }}" class="font-[Fremont,Verdana] font-bold text-3xl text-white">E-TRAK</a>
+            @enduser
             @guest
                 <a href="{{ url('/') }}" class="font-[Fremont,Verdana] font-bold text-3xl text-white">E-TRAK</a>
             @endguest
@@ -54,12 +57,16 @@
             <!-- Sidebar -->
             <aside class="w-64 bg-sky-50 shadow-md p-6 hidden md:block fixed left-0 top-16 h-[calc(100vh-4rem)]">
                 <ul class="space-y-4 tab">
-                    @auth
+                    @admin
                         <li><a href="{{ route('admin.dashboard') }}" class="tablinks">Dashboard</a></li>
                         <li><a href="{{ route('admin.view-records') }}" class="tablinks">View records</a></li>
                         <li><a href="{{ route('admin.view-create') }}" class="tablinks">Create a record</a></li>
                         <li><a href="{{ route('admin.view-sheets-data') }}" class="tablinks">Google Sheets Data</a></li>
-                    @endauth
+                    @endadmin
+                    @user
+                        <li><a href="{{ route('dashboard') }}" class="tablinks">Dashboard</a></li>
+                        <li><a href="{{ route('view-records') }}" class="tablinks">View records</a></li>
+                    @enduser
                     @guest
                         <li><a href="{{ route('dashboard') }}" class="tablinks">Dashboard</a></li>
                         <li><a href="{{ route('view-records') }}" class="tablinks">View records</a></li>

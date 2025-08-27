@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'NCR-ROD',
             'email' => 'admin@email.com',
             'password' => 'admin',
-            'role' => 'super-admin',
+            'role' => 'admin',
         ]);
 
         User::factory()->create([
