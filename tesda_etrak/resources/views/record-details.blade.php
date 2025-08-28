@@ -10,7 +10,7 @@
 @section('main', 'Record Details')
 
 <x-layout>
-    <span class="text-4xl font-bold border-b-4 pt-5">{{ $graduate->full_name }}</span>
+    <span class="text-4xl font-bold border-b-4 pt-5">{{ $graduate->full_name }} - {{ $graduate->qualification_title }}</span>
     @admin
         <div class="mt-8 mb-2">
             <a href="{{ route('admin.view-update', $graduate->id) }}" class="btn btn-primary mr-1">
@@ -38,6 +38,20 @@
                     <dl>
                         <dt>Name: </dt>
                         <dd>{{ $graduate->full_name }}</dd>
+                        <dt>District: </dt>
+                        <dd>{{ $graduate->district }}</dd>
+                        <dt>City: </dt>
+                        <dd>{{ $graduate->city }}</dd>
+                        <dt>Type of Scholarship: </dt>
+                        <dd>{{ $graduate->scholarship_type }}</dd>
+                        <dt>Name of TVI: </dt>
+                        <dd>{{ $graduate->tvi }}</dd>
+                        <dt>Qualification Title: </dt>
+                        <dd>{{ $graduate->qualification_title }}</dd>
+                        <dt>Sector: </dt>
+                        <dd>{{ $graduate->sector }}</dd>
+                        <dt>Year of Graduation: </dt>
+                        <dd>{{ $graduate->allocation }}</dd>
                         <dt>Sex: </dt>
                         <dd>{{ $graduate->sex }}</dd>
                         <dt>Date of Birth: </dt>
@@ -48,20 +62,6 @@
                         <dd>{{ $graduate->email }}</dd>
                         <dt>Address: </dt>
                         <dd>{{ $graduate->address }}</dd>
-                        <dt>Sector: </dt>
-                        <dd>{{ $graduate->sector }}</dd>
-                        <dt>Qualification Title: </dt>
-                        <dd>{{ $graduate->qualification_title }}</dd>
-                        <dt>District: </dt>
-                        <dd>{{ $graduate->district }}</dd>
-                        <dt>City: </dt>
-                        <dd>{{ $graduate->city }}</dd>
-                        <dt>Type of Scholarship: </dt>
-                        <dd>{{ $graduate->scholarship_type }}</dd>
-                        <dt>Name of TVI: </dt>
-                        <dd>{{ $graduate->tvi }}</dd>
-                        <dt>Year of Graduation: </dt>
-                        <dd>{{ $graduate->allocation }}</dd>
                     </dl>
                 </div>
                 <div class="tab-content hidden">
@@ -370,6 +370,8 @@
                         <dd>{{ $graduate->full_name }}</dd>
                         <dt>Qualification Title: </dt>
                         <dd>{{ $graduate->qualification_title }}</dd>
+                        <dt>Year of Graduation: </dt>
+                        <dd>{{ $graduate->allocation }}</dd>
                         <dt>Status of Employment: </dt>
                         <dd>{{ $graduate->employment_status }}</dd>
                         @switch($graduate->employment_status)

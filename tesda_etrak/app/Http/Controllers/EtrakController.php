@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\ExportChunkToSheets;
 use App\Models\Graduate;
-use App\Services\GoogleSheetsService;
 use Carbon\Carbon;
 use Google\Client;
 use Google\Service\Sheets;
