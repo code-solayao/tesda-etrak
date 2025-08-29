@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EtrakController;
+use App\Http\Controllers\JobVacanciesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/laravel', function () {
@@ -54,4 +55,10 @@ Route::middleware(['auth', 'role:admin,super-admin'])->controller(EtrakControlle
     Route::get('/admin/google-sheets-data/export-data', 'export_data')->name('export.data');
     Route::get('/admin/google-sheets-data/logs', 'display_logs')->name('display.log');
     Route::post('/admin/google-sheets-data/logs/clear', 'clear_logs')->name('clear.logs');
+});
+
+Route::middleware(['auth', 'role:admin'])->controller(JobVacanciesController::class)->group(function () {
+    Route::get('/admin/job-vacancies', 'index')->name('admin.view-vacancies');
+    Route::get('/admin/job-vacancies/get', 'search_vacancies')->name('admin.search-vacancies');
+    Route::get('/admin/job-vacancies/import-data', 'import_data')->name('import.vacancies.data');
 });

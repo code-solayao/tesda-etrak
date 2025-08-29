@@ -62,6 +62,7 @@
                         <li><a href="{{ route('admin.view-records') }}" class="tablinks">View records</a></li>
                         <li><a href="{{ route('admin.view-create') }}" class="tablinks">Create a record</a></li>
                         <li><a href="{{ route('admin.view-sheets-data') }}" class="tablinks">Google Sheets Data</a></li>
+                        <li><a href="{{ route('admin.view-vacancies') }}" class="tablinks">Job Vacancies</a></li>
                     @endadmin
                     @user
                         <li><a href="{{ route('dashboard') }}" class="tablinks">Dashboard</a></li>

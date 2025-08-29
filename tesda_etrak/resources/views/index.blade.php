@@ -12,6 +12,7 @@
         @admin
             <a href="{{ route('admin.dashboard') }}" class="btn btn-primary inline-block">Dashboard</a>
             <a href="{{ route('admin.view-records') }}" class="btn btn-primary inline-block">View Records</a>
+            <a href="{{ route('admin.view-vacancies') }}" class="btn btn-primary inline-block">View Job Vacancies</a>
         @endadmin
         @user
             <a href="{{ route('dashboard') }}" class="btn btn-primary inline-block">Dashboard</a>
