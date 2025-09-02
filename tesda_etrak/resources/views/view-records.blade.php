@@ -7,7 +7,7 @@
     ])
 @endsection
 
-@section('main', 'Data Records')
+@section('main', 'Table of Graduates')
 
 @php
     $categories = [

@@ -38,6 +38,11 @@ Route::controller(EtrakController::class)->group(function () {
     Route::get('/record-details/{graduate}', 'view_details')->name('view.details');
 });
 
+Route::controller(JobVacanciesController::class)->group(function () {
+    Route::get('/job-vacancies', 'index')->name('view.vacancies');
+    Route::get('/job-vacancies/get', 'search_vacancies')->name('search-vacancies');
+});
+
 Route::middleware(['auth', 'role:admin,super-admin'])->controller(EtrakController::class)->group(function () {
     Route::get('/admin', 'index')->name('admin.index');
     Route::get('/admin/dashboard', 'dashboard')->name('admin.dashboard');

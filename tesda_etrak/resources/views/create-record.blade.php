@@ -4,7 +4,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/e-trak/create-record.js'])
 @endsection
 
-@section('main', 'Create a Record')
+@section('main', 'Create Graduate Record')
 
 @php
     $extension_names = ["Sr.", "Jr.", "III"];
