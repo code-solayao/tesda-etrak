@@ -29,7 +29,10 @@
 @endphp
 
 <x-layout>
-    <div class="mx-auto bg-white p-8 rounded-lg shadow-md">
+    <div class="mb-5">
+        <a href="{{ route('admin.table-of-graduates') }}" class="btn btn-secondary">Go Back</a>
+    </div>
+    <div class="bg-white border border-gray-300 mx-auto p-8 rounded-lg shadow-md">
         @if ($errors->any())
             <ul class="px-3 py-2 bg-red-400 rounded-md mb-5">
                 @foreach ($errors->all() as $error)
@@ -37,7 +40,7 @@
                 @endforeach
             </ul>
         @endif
-        <form action="{{ route('create') }}" method="POST" class="space-y-6">
+        <form action="{{ route('admin.create-record') }}" method="POST" class="space-y-6">
             @csrf
             {{-- FULL NAME --}}
             <div>

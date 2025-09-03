@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="p-4">
-            <form action="{{ route('update', $graduate->id) }}" method="POST">
+            <form action="{{ route('admin.update-record', $graduate->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="tab-content" id="details">
@@ -202,7 +202,7 @@
                     </div>
                     <div class="flex items-center justify-baseline">
                         <button type="button" class="btn btn-primary rounded-lg mr-2" id="toggleUpdate1">Update</button>
-                        <a href="{{ route('view.details', $graduate->id) }}" class="btn btn-secondary rounded-lg">Cancel</a>
+                        <a href="{{ route('admin.record-details', $graduate->id) }}" class="btn btn-secondary rounded-lg">Cancel</a>
                     </div>
                 </div>
                 <div class="tab-content hidden" id="employment">
@@ -277,7 +277,7 @@
                     </div>
                     <div class="flex items-center justify-baseline">
                         <button type="button" class="btn btn-primary rounded-lg mr-2" id="toggleUpdate2">Update</button>
-                        <a href="{{ route('admin.view-details', $graduate->id) }}" class="btn btn-secondary rounded-lg">Cancel</a>
+                        <a href="{{ route('admin.record-details', $graduate->id) }}" class="btn btn-secondary rounded-lg">Cancel</a>
                     </div>
                 </div>
                 {{-- Modal --}}

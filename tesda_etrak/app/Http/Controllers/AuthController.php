@@ -29,10 +29,10 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             if (Auth::user()->role === 'admin') {
-                return redirect()->route('admin.index');
+                return redirect()->route('admin.home');
             }
 
-            return redirect()->route('index');
+            return redirect()->route('home');
         }
 
         throw ValidationException::withMessages([
@@ -50,7 +50,7 @@ class AuthController extends Controller
         $user = User::create($validated);
         Auth::login($user);
 
-        return redirect()->route('index')->with('success', 'Account created successfully!');
+        return redirect()->route('home')->with('success', 'Account created successfully!');
     }
 
     public function logout(Request $request) {

@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     buttons.forEach(function (button) {
         button.addEventListener("click", function (event) {
             const value = event.currentTarget.getAttribute("data-value");
-            form.action = `/admin/record-details/${value}`;
+            form.action = `/admin/table-of-graduates/record-details/${value}`;
             document.getElementById("deleteModal").classList.remove('hidden');
         });
     });

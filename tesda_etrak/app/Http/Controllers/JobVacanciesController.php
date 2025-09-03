@@ -16,7 +16,7 @@ class JobVacanciesController extends Controller
         $search = $request->input('search');
         $search_category = $request->input('search_category');
 
-        return view('job_vacancies', compact('vacancies', 'search', 'search_category'));
+        return view('job-vacancies.index', compact('vacancies', 'search', 'search_category'));
     }
 
     public function search_vacancies(Request $request) 
@@ -27,7 +27,7 @@ class JobVacanciesController extends Controller
 
         if (empty($request)) {
             $vacancies = JobVacancy::select()->orderBy('id', 'desc')->paginate(10);
-            return view('job_vacancies', compact('vacancies', 'search', 'search_category'));
+            return view('job-vacancies.index', compact('vacancies', 'search', 'search_category'));
         }
 
         $search = $request->input('search');
@@ -69,7 +69,7 @@ class JobVacanciesController extends Controller
                 }
         }
 
-        return view('job_vacancies', compact('vacancies', 'search', 'search_category'));
+        return view('job-vacancies.index', compact('vacancies', 'search', 'search_category'));
     }
 
     public function import_data() 

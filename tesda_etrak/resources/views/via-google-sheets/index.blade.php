@@ -9,7 +9,7 @@
 
 <x-layout>
     <div class="mb-4">
-        <form action="{{ route('import.data') }}" method="GET" class="inline-block">
+        <form action="{{ route('admin.import-graduate') }}" method="GET" class="inline-block">
             <input type="submit" value="Import Data" class="btn btn-primary" />
         </form>
         @auth
@@ -22,7 +22,7 @@
         @endauth
     </div>
     <div class="mb-4">
-        <form action="{{ route('export.data') }}" method="GET" class="inline-block">
+        <form action="{{ route('admin.export-graduate') }}" method="GET" class="inline-block">
             <input type="submit" value="Export Data" class="btn btn-secondary" />
         </form>
         @auth
