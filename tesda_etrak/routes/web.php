@@ -35,7 +35,7 @@ Route::controller(HomeController::class)->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin'])->controller(JobVacanciesController::class)->group(function () {
-    Route::get('/admin/job-vacancies', 'index')->name('admin.view-vacancies');
+    Route::get('/admin/job-vacancies', 'index')->name('admin.job-vacancies');
     Route::get('/admin/job-vacancies/get', 'search_vacancies')->name('admin.search-vacancies');
     Route::get('/admin/job-vacancies/import-data', 'import_data')->name('import.vacancies.data');
 });

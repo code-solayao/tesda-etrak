@@ -1,7 +1,11 @@
 @import 'tailwindcss';
 
 .sidebar-link {
-    @apply text-gray-700 hover:text-blue-500 flex items-center py-1 space-x-3;
+    @apply text-gray-700 hover:text-white hover:bg-sky-400 flex items-center p-2 rounded-md space-x-3;
+}
+
+.sidebar-link-mobile {
+    @apply text-gray-700 hover:text-white hover:bg-sky-400 flex items-center p-2 rounded-md space-x-3;
 }
 
 /* Style the tab */
