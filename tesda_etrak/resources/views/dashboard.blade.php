@@ -17,10 +17,16 @@
             </a>
         @endadmin
     </div>
-    <div class="max-w-full mx-auto p-4 sm:px-4 lg:px-8">
+    <div class="lg:hidden">
+        <iframe src="https://lookerstudio.google.com/embed/reporting/9d6c7c0a-dcfb-4dda-ba67-589c230b57bd/page/GzuKE" 
+        frameborder="0" class="w-[900px] h-[600px] border-0" allowfullscreen 
+        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+        </iframe>
+    </div>
+    <div class="lg:block hidden max-w-full mx-auto py-4 px-8">
         <div class="rounded-xl shadow-md overflow-hidden border border-black">
             <iframe src="https://lookerstudio.google.com/embed/reporting/9d6c7c0a-dcfb-4dda-ba67-589c230b57bd/page/GzuKE" 
-            frameborder="0" class="w-full h-dvw lg:h-dvh" allowfullscreen 
+            frameborder="0" class="w-full h-dvw" allowfullscreen 
             sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
             </iframe>
         </div>
