@@ -329,8 +329,12 @@ class TableOfGraduatesController extends Controller
     }
 
     public function delete(Graduate $graduate) {
+        $full_name = $graduate->full_name;
+        $qualification_title = $graduate->qualification_title;
+        $success_message = 'Deleted successfully: ' . $full_name . ' - ' . $qualification_title;
+
         $graduate->delete();
-        return redirect()->route('admin.table-of-graduates')->with('success', 'Deleted record successfully!');
+        return redirect()->route('admin.table-of-graduates')->with('success', $success_message);
     }
 
     public function truncate() {

@@ -1,9 +1,8 @@
 @section('title', 'E-TRAK - View records')
 
 @section('vite')
-    @vite(['resources/css/app.css', 
-    'resources/js/app.js', 
-    'resources/js/e-trak/view-records.js'
+    @vite(['resources/css/app.css', 'resources/js/app.js', 
+        'resources/js/e-trak/view-records.js'
     ])
 @endsection
 
@@ -11,7 +10,6 @@
 
 @php
     $categories = [
-        "Record number", 
         "Full Name", 
         "Last Name", 
         "First Name", 
@@ -24,18 +22,18 @@
 @endphp
 
 <x-layout>
-    <div>
-        @admin
-            <div class="flex items-center justify-baseline mb-4">
-                <form action="{{ route('admin.search-graduates') }}" method="GET" class="flex justify-baseline w-1/2">
-                    <input type="text" class="bg-white border px-2 py-1 rounded w-1/2" name="search" value="{{ $search }}" placeholder="Search record..." />
-                    <select name="search_category" class="bg-gray-300 border ml-1 px-2 py-1 rounded w-1/2">
-                        <option value="">-- Select a category --</option>
-                        @foreach ($categories as $category)
-                            <option class="bg-gray-50" value="{{ $category }}" {{ $search_category == $category ? 'selected' : '' }}>{{ $category }}</option>
-                        @endforeach
-                    </select>
-                </form>
+    @auth
+        <div class="flex items-center justify-baseline mb-4">
+            <form action="{{ route('admin.search-graduates') }}" method="GET" class="flex justify-baseline w-1/2">
+                <input type="text" class="bg-white border px-2 py-1 rounded w-1/2" name="search" value="{{ $search }}" placeholder="Search record..." />
+                <select name="search_category" class="bg-gray-300 border ml-1 px-2 py-1 rounded w-1/2">
+                    <option value="">-- Select a category --</option>
+                    @foreach ($categories as $category)
+                        <option class="bg-gray-50" value="{{ $category }}" {{ $search_category == $category ? 'selected' : '' }}>{{ $category }}</option>
+                    @endforeach
+                </select>
+            </form>
+            @admin
                 <div class="ml-auto">
                     <a href="{{ route('admin.create-record.view') }}" class="btn btn-primary mr-1.5 pb-3.5 px-3">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block mb-0.5 size-6">
@@ -48,26 +46,12 @@
                         </svg> Clear All Records
                     </button>
                 </div>
-            </div>
-        @endadmin
-        @user
-            <form action="{{ route('search-graduates') }}" method="GET">
-                <div class="mb-4 flex justify-baseline items-center">
-                    <input type="text" class="border bg-white px-2 py-1 rounded w-1/3" name="search" value="{{ $search }}" placeholder="Search record..." />
-                    <select name="search_category" class="border bg-gray-300 px-2 py-1 ml-1 rounded w-lg inline">
-                        <option value="">-- Select a category --</option>
-                        @foreach ($categories as $category)
-                            <option class="bg-gray-50" value="{{ $category }}" {{ $search_category == $category ? 'selected' : '' }}>{{ $category }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </form>
-        @enduser
+            @endadmin
+        </div>
         <div class="overflow-x-auto bg-white shadow-md rounded-lg mb-4">
             <table class="w-full border-collapse">
                 <thead>
                     <tr class="bg-gray-400 text-white uppercase text-sm leading-normal">
-                        <th class="px-6 py-3 text-left">No.</th>
                         <th class="px-6 py-3 text-left">Last Name</th>
                         <th class="px-6 py-3 text-left">First Name</th>
                         <th class="px-6 py-3 text-left">Middle Name</th>
@@ -75,38 +59,85 @@
                         <th class="px-6 py-3 text-left">Status of Employment</th>
                         <th class="px-6 py-3 text-left">Year of Graduation</th>
                         <th class="px-6 py-3 text-left">Qualification Title</th>
-                        <th class="px-6 py-3 text-left">Actions</th>
+                        <th class="px-6 py-3 text-left"></th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 font-sans">
                     @foreach ($graduates as $graduate)
-                        <tr class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="px-6 py-3">{{ $graduate->id }}</td>
-                            <td class="px-6 py-3">{{ $graduate->last_name }}</td>
-                            <td class="px-6 py-3">{{ $graduate->first_name }}</td>
-                            <td class="px-6 py-3">{{ $graduate->middle_name }}</td>
-                            <td class="px-6 py-3">{{ $graduate->extension_name }}</td>
-                            <td class="px-6 py-3">{{ $graduate->employment_status }}</td>
-                            <td class="px-6 py-3">{{ $graduate->allocation }}</td>
-                            <td class="px-6 py-3">{{ $graduate->qualification_title }}</td>
-                            <td class="px-6 py-3 text-center">
-                                <div class="flex justify-start space-x-2">
-                                    @admin
-                                        <a href="{{ route('admin.record-details', $graduate->id) }}" class="btn-sm btn-secondary font-normal">View</a>
-                                        <button type="button" class="btn-sm btn-danger font-normal delete-buttons" data-value="{{ $graduate->id }}">Delete</button>
-                                    @endadmin
-                                    @user
+                        @if (Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin')
+                            <tr data-url="{{ route('admin.record-details', $graduate->id) }}" class="body-row border-b border-gray-200 hover:bg-gray-100">
+                                <td class="px-6 py-3">{{ $graduate->last_name }}</td>
+                                <td class="px-6 py-3">{{ $graduate->first_name }}</td>
+                                <td class="px-6 py-3">{{ $graduate->middle_name }}</td>
+                                <td class="px-6 py-3">{{ $graduate->extension_name }}</td>
+                                <td class="px-6 py-3">{{ $graduate->employment_status }}</td>
+                                <td class="px-6 py-3">{{ $graduate->allocation }}</td>
+                                <td class="px-6 py-3">{{ $graduate->qualification_title }}</td>
+                                <td class="px-6 py-3 text-center">
+                                    <div class="flex justify-start space-x-2">
+                                        <select class="action-select bg-gray-500 text-white hover:bg-gray-600 border font-semibold px-2 py-1 rounded-md" data-id="{{ $graduate->id }}">
+                                            <option value="" class="bg-gray-300 text-black">Actions</option>
+                                            <option value="view" data-url="{{ route('admin.record-details', $graduate->id) }}" class="bg-gray-50 text-black">View</option>
+                                            <option value="update" data-url="{{ route('admin.update-record.view', $graduate->id) }}" class="bg-gray-50 text-black">Update</option>
+                                            <option value="delete" data-value="{{ $graduate->id }}" class="delete-button bg-red-200 text-red-600">Delete</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                        @else
+                            <tr data-url="{{ route('record-details', $graduate->id) }}" class="body-row border-b border-gray-200 hover:bg-gray-100">
+                                <td class="px-6 py-3">{{ $graduate->last_name }}</td>
+                                <td class="px-6 py-3">{{ $graduate->first_name }}</td>
+                                <td class="px-6 py-3">{{ $graduate->middle_name }}</td>
+                                <td class="px-6 py-3">{{ $graduate->extension_name }}</td>
+                                <td class="px-6 py-3">{{ $graduate->employment_status }}</td>
+                                <td class="px-6 py-3">{{ $graduate->allocation }}</td>
+                                <td class="px-6 py-3">{{ $graduate->qualification_title }}</td>
+                                <td class="px-6 py-3 text-center">
+                                    <div class="flex justify-start space-x-2">
                                         <a href="{{ route('record-details', $graduate->id) }}" class="btn-sm btn-secondary font-normal">View</a>
-                                    @enduser
-                                </div>
-                            </td>
-                        </tr>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <div>{{ $graduates->withQueryString()->links('pagination::tailwind') }}</div>
-    </div>
+    @endauth
+    @guest
+        <div class="overflow-x-auto bg-white shadow-md rounded-lg mb-4">
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="bg-gray-400 text-white uppercase text-sm leading-normal">
+                        <th class="px-6 py-3 text-left">Last Name</th>
+                        <th class="px-6 py-3 text-left">First Name</th>
+                        <th class="px-6 py-3 text-left">Middle Name</th>
+                        <th class="px-6 py-3 text-left">Ext.</th>
+                        <th class="px-6 py-3 text-left">Status of Employment</th>
+                        <th class="px-6 py-3 text-left">Year of Graduation</th>
+                        <th class="px-6 py-3 text-left">Qualification Title</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 font-sans">
+                    @auth
+                        @foreach ($graduates as $graduate)
+                            <tr class="body-row border-b border-gray-200 hover:bg-gray-100">
+                                <td class="px-6 py-3">{{ $graduate->last_name }}</td>
+                                <td class="px-6 py-3">{{ $graduate->first_name }}</td>
+                                <td class="px-6 py-3">{{ $graduate->middle_name }}</td>
+                                <td class="px-6 py-3">{{ $graduate->extension_name }}</td>
+                                <td class="px-6 py-3">{{ $graduate->employment_status }}</td>
+                                <td class="px-6 py-3">{{ $graduate->allocation }}</td>
+                                <td class="px-6 py-3">{{ $graduate->qualification_title }}</td>
+                            </tr>
+                        @endforeach
+                    @endauth
+                </tbody>
+            </table>
+        </div>
+    @endguest
+    <div>{{ $graduates->withQueryString()->links('pagination::tailwind') }}</div>
     <!-- Modal -->
     <div class="relative z-10 hidden" id="deleteModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>

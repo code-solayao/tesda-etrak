@@ -12,7 +12,7 @@ Route::get('/laravel', function () {
 });
 
 Route::get('/google-error-502', function () {
-    return view('google-error-502');
+    return view('via-google-sheets.google-error-502');
 });
 
 Route::middleware('guest')->controller(AuthController::class)->group(function () {

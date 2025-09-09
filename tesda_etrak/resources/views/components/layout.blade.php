@@ -449,7 +449,7 @@
         <main class="flex-1 overflow-y-auto p-6 lg:ml-20 transition-all duration-300">
             <header class="mb-10">
                 @if (session('success'))
-                    <div class="p-3 mb-3 text-center bg-green-200 text-green-600 font-semibold text-lg block rounded border drop-shadow">
+                    <div class="bg-green-200 text-green-600 border drop-shadow font-semibold p-3 mb-3 rounded text-center text-lg">
                         {{ session('success') }}
                     </div>
                 @endif

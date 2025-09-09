@@ -17,16 +17,23 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'NCR-ROD',
+            'name' => 'ROD-NCR',
+            'email' => 'superadmin@email.com',
+            'password' => 'superadmin',
+            'role' => 'superadmin',
+        ]);
+
+        User::factory()->create([
+            'name' => 'ROD-NCR',
             'email' => 'admin@email.com',
             'password' => 'admin',
             'role' => 'admin',
         ]);
 
         User::factory()->create([
-            'name' => 'GUEST',
-            'email' => 'guest@email.com',
-            'password' => 'guest',
+            'name' => 'ROD-NCR',
+            'email' => 'user@email.com',
+            'password' => 'user',
         ]);
     }
 }
