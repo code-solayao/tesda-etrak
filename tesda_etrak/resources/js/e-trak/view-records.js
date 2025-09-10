@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     let bodyRows = document.querySelectorAll(".body-row");
-    let deleteBtns = document.querySelectorAll(".delete-button");
     let form = document.getElementById("deleteForm");
 
     bodyRows.forEach(function (row) {
@@ -28,22 +27,23 @@ document.addEventListener("DOMContentLoaded", function () {
             select.value = "";
         });
     });
-    // deleteBtns.forEach(function (button) {
-    //     button.addEventListener("click", function (event) {
-    //         const value = event.currentTarget.getAttribute("data-value");
-    //         form.action = `/admin/table-of-graduates/record-details/${value}`;
-    //         document.getElementById("deleteModal").classList.remove('hidden');
-    //     });
-    // });
 });
 
-document.getElementById("dismissDelete").onclick = function () {
-    document.getElementById("deleteModal").classList.add('hidden');
+var dismissDelete = document.getElementById("dismissDelete");
+if (dismissDelete) {
+    dismissDelete.onclick = function () {
+        document.getElementById("deleteModal").classList.add('hidden');
+    }
 }
 
-document.getElementById("toggleDeleteAll").onclick = function () {
-    document.getElementById("deleteAllModal").classList.remove('hidden');
+var toggleDeleteAll = document.getElementById("toggleDeleteAll");
+if (toggleDeleteAll) {
+    toggleDeleteAll.onclick = function () {
+        document.getElementById("deleteAllModal").classList.remove('hidden');
+    }
 }
-document.getElementById("dismissDeleteAll").onclick = function () {
+
+var dismissDeleteAll = document.getElementById("dismissDeleteAll");
+dismissDeleteAll.onclick = function () {
     document.getElementById("deleteAllModal").classList.add('hidden');
 }

@@ -1,4 +1,4 @@
-- Simulan gawin ang listahan ng job openings: Name of Company, Contact Details, No. of Vacancies, Deployment Location
+- Baguhin ang hitsura ng view ng Job Vacancies
 - Gawin ang mga logo: Kayang-Kaya, Bagong Pilipinas
 - Dagdagan ang Data Privacy Act
 - Optional: E-TRAK video in the background

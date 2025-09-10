@@ -31,7 +31,7 @@
                     </a>
                 @endif
                 <div class="text-white absolute font-[Fremont,Verdana] font-bold left-1/2 text-3xl transform -translate-x-1/2">
-                    @admin
+                    @alladmin
                         <a href="{{ route('admin.home') }}">E-TRAK</a>
                     @endadmin
                     @user
@@ -55,9 +55,9 @@
         <nav class="hidden lg:flex container mx-auto p-4 justify-between items-center">
             <div class="flex items-center space-x-4">
                 <div class="font-[Fremont,Verdana] font-bold text-3xl text-white">
-                    @admin
+                    @alladmin
                         <a href="{{ route('admin.home') }}">E-TRAK</a>
-                    @endadmin
+                    @endalladmin
                     @user
                         <a href="{{ route('home') }}">E-TRAK</a>
                     @enduser
@@ -74,15 +74,20 @@
                             <a href="{{ route('view.signup') }}" class="btn btn-secondary bg-indigo-500 hover:bg-indigo-400">Sign Up</a>
                         </div>
                     @endguest
-                    @admin
-                        <span class="text-white border-r-2 pr-2 text-lg">
-                            [Admin] <b>{{ Auth::user()->name }}</b>
-                        </span>
-                    @endadmin
-                    @user
-                        <span class="text-white font-semibold border-r-2 pr-2 text-lg">{{ Auth::user()->name }}</span>
-                    @enduser
                     @auth
+                        @superadmin
+                            <span class="text-white border-r-2 pr-2 text-lg">
+                                [Super Admin] <b>{{ Auth::user()->name }}</b>
+                            </span>
+                        @endsuperadmin
+                        @admin
+                            <span class="text-white border-r-2 pr-2 text-lg">
+                                [Admin] <b>{{ Auth::user()->name }}</b>
+                            </span>
+                        @endadmin
+                        @user
+                            <span class="text-white font-semibold border-r-2 pr-2 text-lg">{{ Auth::user()->name }}</span>
+                        @enduser
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
                             <input type="submit" class="btn btn-secondary bg-blue-100 hover:bg-blue-200 text-blue-700" role="button" name="logout" value="Log Out" />
@@ -124,7 +129,7 @@
                 </div>
                 <!-- Links -->
                 <ul class="flex-1 overflow-y-auto space-y-4 pr-4 py-4">
-                    @admin
+                    @alladmin
                         <li>
                             <a href="{{ route('admin.home') }}" class="sidebar-link-mobile">
                                 <!-- Icon -->
@@ -146,6 +151,16 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ route('admin.table-of-graduates') }}" class="sidebar-link-mobile">
+                                <!-- Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                                </svg>
+                                <!-- Label -->
+                                <span>List of Graduates</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('admin.job-vacancies') }}" class="sidebar-link-mobile">
                                 <!-- Icon -->
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
@@ -153,16 +168,6 @@
                                 </svg>
                                 <!-- Label -->
                                 <span>Job Vacancies</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.table-of-graduates') }}" class="sidebar-link-mobile">
-                                <!-- Icon -->
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-                                </svg>
-                                <!-- Label -->
-                                <span>Table of Graduates</span>
                             </a>
                         </li>
                         <li>
@@ -175,7 +180,7 @@
                                 <span>Via Google Sheets</span>
                             </a>
                         </li>
-                    @endadmin
+                    @endalladmin
                     @user
                         <li>
                             <a href="{{ route('home') }}" class="sidebar-link-mobile">
@@ -198,6 +203,16 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ route('table-of-graduates') }}" class="sidebar-link-mobile">
+                                <!-- Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                                </svg>
+                                <!-- Label -->
+                                <span>List of Graduates</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('job-vacancies') }}" class="sidebar-link-mobile">
                                 <!-- Icon -->
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
@@ -205,16 +220,6 @@
                                 </svg>
                                 <!-- Label -->
                                 <span>Job Vacancies</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('table-of-graduates') }}" class="sidebar-link-mobile">
-                                <!-- Icon -->
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-                                </svg>
-                                <!-- Label -->
-                                <span>Table of Graduates</span>
                             </a>
                         </li>
                     @enduser
@@ -240,6 +245,16 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ route('table-of-graduates') }}" class="sidebar-link-mobile">
+                                <!-- Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                                </svg>
+                                <!-- Label -->
+                                <span>List of Graduates</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('job-vacancies') }}" class="sidebar-link-mobile">
                                 <!-- Icon -->
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
@@ -247,16 +262,6 @@
                                 </svg>
                                 <!-- Label -->
                                 <span>Job Vacancies</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('table-of-graduates') }}" class="sidebar-link-mobile">
-                                <!-- Icon -->
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-                                </svg>
-                                <!-- Label -->
-                                <span>Table of Graduates</span>
                             </a>
                         </li>
                     @endguest
@@ -274,6 +279,9 @@
                 <!-- Bottom Section -->
                 <div class="border-t border-blue-500 flex flex-col pt-3 text-center space-y-2">
                     @auth
+                        @superadmin
+                            <span class="bg-blue-500 text-white font-semibold py-2 rounded-md">[Super Admin] {{ Auth::user()->name }}</span>
+                        @endsuperadmin
                         @admin
                             <span class="bg-blue-500 text-white font-semibold py-2 rounded-md">[Admin] {{ Auth::user()->name }}</span>
                         @endadmin
@@ -294,7 +302,7 @@
             <!-- Sidebar (Desktop) -->
             <aside class="bg-sky-100 hover:w-64 lg:flex fixed flex-col group h-[calc(100vh-4rem)] hidden left-0 shadow-md top-[4rem] w-20 z-10 transition-all duration-300">
                 <ul class="space-y-4 pt-10 pb-4 px-4">
-                    @admin
+                    @alladmin
                         <li>
                             <a href="{{ route('admin.home') }}" class="sidebar-link">
                                 <!-- Icon -->
@@ -316,6 +324,16 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ route('admin.table-of-graduates') }}" class="sidebar-link">
+                                <!-- Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                                </svg>
+                                <!-- Label -->
+                                <span class="hidden group-hover:inline-block transition-opacity duration-200">List of Graduates</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('admin.job-vacancies') }}" class="sidebar-link">
                                 <!-- Icon -->
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
@@ -323,16 +341,6 @@
                                 </svg>
                                 <!-- Label -->
                                 <span class="hidden group-hover:inline-block transition-opacity duration-200">Job Vacancies</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.table-of-graduates') }}" class="sidebar-link">
-                                <!-- Icon -->
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-                                </svg>
-                                <!-- Label -->
-                                <span class="hidden group-hover:inline-block transition-opacity duration-200">Table of Graduates</span>
                             </a>
                         </li>
                         <li>
@@ -345,7 +353,7 @@
                                 <span class="hidden group-hover:inline-block transition-opacity duration-200">Via Google Sheets</span>
                             </a>
                         </li>
-                    @endadmin
+                    @endalladmin
                     @user
                         <li>
                             <a href="{{ route('home') }}" class="sidebar-link">
@@ -368,6 +376,16 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ route('table-of-graduates') }}" class="sidebar-link">
+                                <!-- Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                                </svg>
+                                <!-- Label -->
+                                <span class="hidden group-hover:inline-block transition-opacity duration-200">List of Graduates</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('job-vacancies') }}" class="sidebar-link">
                                 <!-- Icon -->
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
@@ -375,16 +393,6 @@
                                 </svg>
                                 <!-- Label -->
                                 <span class="hidden group-hover:inline-block transition-opacity duration-200">Job Vacancies</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('table-of-graduates') }}" class="sidebar-link">
-                                <!-- Icon -->
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-                                </svg>
-                                <!-- Label -->
-                                <span class="hidden group-hover:inline-block transition-opacity duration-200">Table of Graduates</span>
                             </a>
                         </li>
                     @enduser
@@ -410,6 +418,16 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ route('table-of-graduates') }}" class="sidebar-link">
+                                <!-- Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                                </svg>
+                                <!-- Label -->
+                                <span class="hidden group-hover:inline-block transition-opacity duration-200">List of Graduates</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('job-vacancies') }}" class="sidebar-link">
                                 <!-- Icon -->
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
@@ -417,16 +435,6 @@
                                 </svg>
                                 <!-- Label -->
                                 <span class="hidden group-hover:inline-block transition-opacity duration-200">Job Vacancies</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('table-of-graduates') }}" class="sidebar-link">
-                                <!-- Icon -->
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flex-shrink-0">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-                                </svg>
-                                <!-- Label -->
-                                <span class="hidden group-hover:inline-block transition-opacity duration-200">Table of Graduates</span>
                             </a>
                         </li>
                     @endguest

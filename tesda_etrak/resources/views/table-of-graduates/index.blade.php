@@ -6,7 +6,7 @@
     ])
 @endsection
 
-@section('main', 'Table of Graduates')
+@section('main', 'List of Graduates')
 
 @php
     $categories = [
@@ -22,8 +22,8 @@
 @endphp
 
 <x-layout>
-    @auth
-        <div class="flex items-center justify-baseline mb-4">
+    <div class="flex items-center justify-baseline mb-4">
+        @alladmin
             <form action="{{ route('admin.search-graduates') }}" method="GET" class="flex justify-baseline w-1/2">
                 <input type="text" class="bg-white border px-2 py-1 rounded w-1/2" name="search" value="{{ $search }}" placeholder="Search record..." />
                 <select name="search_category" class="bg-gray-300 border ml-1 px-2 py-1 rounded w-1/2">
@@ -33,110 +33,107 @@
                     @endforeach
                 </select>
             </form>
-            @admin
-                <div class="ml-auto">
-                    <a href="{{ route('admin.create-record.view') }}" class="btn btn-primary mr-1.5 pb-3.5 px-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block mb-0.5 size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                        </svg> Create Record
-                    </a>
-                    <button type="button" class="btn btn-danger" id="toggleDeleteAll">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="inline-block mb-0.5 size-6">
-                            <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
-                        </svg> Clear All Records
-                    </button>
-                </div>
-            @endadmin
-        </div>
-        <div class="overflow-x-auto bg-white shadow-md rounded-lg mb-4">
-            <table class="w-full border-collapse">
-                <thead>
-                    <tr class="bg-gray-400 text-white uppercase text-sm leading-normal">
-                        <th class="px-6 py-3 text-left">Last Name</th>
-                        <th class="px-6 py-3 text-left">First Name</th>
-                        <th class="px-6 py-3 text-left">Middle Name</th>
-                        <th class="px-6 py-3 text-left">Ext.</th>
-                        <th class="px-6 py-3 text-left">Status of Employment</th>
-                        <th class="px-6 py-3 text-left">Year of Graduation</th>
-                        <th class="px-6 py-3 text-left">Qualification Title</th>
-                        <th class="px-6 py-3 text-left"></th>
-                    </tr>
-                </thead>
-                <tbody class="text-gray-600 font-sans">
-                    @foreach ($graduates as $graduate)
-                        @if (Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin')
-                            <tr data-url="{{ route('admin.record-details', $graduate->id) }}" class="body-row border-b border-gray-200 hover:bg-gray-100">
-                                <td class="px-6 py-3">{{ $graduate->last_name }}</td>
-                                <td class="px-6 py-3">{{ $graduate->first_name }}</td>
-                                <td class="px-6 py-3">{{ $graduate->middle_name }}</td>
-                                <td class="px-6 py-3">{{ $graduate->extension_name }}</td>
-                                <td class="px-6 py-3">{{ $graduate->employment_status }}</td>
-                                <td class="px-6 py-3">{{ $graduate->allocation }}</td>
-                                <td class="px-6 py-3">{{ $graduate->qualification_title }}</td>
-                                <td class="px-6 py-3 text-center">
-                                    <div class="flex justify-start space-x-2">
-                                        <select class="action-select bg-gray-500 text-white hover:bg-gray-600 border font-semibold px-2 py-1 rounded-md" data-id="{{ $graduate->id }}">
-                                            <option value="" class="bg-gray-300 text-black">Actions</option>
-                                            <option value="view" data-url="{{ route('admin.record-details', $graduate->id) }}" class="bg-gray-50 text-black">View</option>
-                                            <option value="update" data-url="{{ route('admin.update-record.view', $graduate->id) }}" class="bg-gray-50 text-black">Update</option>
-                                            <option value="delete" data-value="{{ $graduate->id }}" class="delete-button bg-red-200 text-red-600">Delete</option>
-                                        </select>
-                                    </div>
-                                </td>
-                            </tr>
-                        @else
-                            <tr data-url="{{ route('record-details', $graduate->id) }}" class="body-row border-b border-gray-200 hover:bg-gray-100">
-                                <td class="px-6 py-3">{{ $graduate->last_name }}</td>
-                                <td class="px-6 py-3">{{ $graduate->first_name }}</td>
-                                <td class="px-6 py-3">{{ $graduate->middle_name }}</td>
-                                <td class="px-6 py-3">{{ $graduate->extension_name }}</td>
-                                <td class="px-6 py-3">{{ $graduate->employment_status }}</td>
-                                <td class="px-6 py-3">{{ $graduate->allocation }}</td>
-                                <td class="px-6 py-3">{{ $graduate->qualification_title }}</td>
-                                <td class="px-6 py-3 text-center">
-                                    <div class="flex justify-start space-x-2">
-                                        <a href="{{ route('record-details', $graduate->id) }}" class="btn-sm btn-secondary font-normal">View</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endif
+            <div class="ml-auto">
+                <a href="{{ route('admin.create-record.view') }}" class="btn btn-primary mr-1.5 pb-3.5 px-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block mb-0.5 size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                    </svg> Create Record
+                </a>
+                <button type="button" class="btn btn-danger" id="toggleDeleteAll">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="inline-block mb-0.5 size-6">
+                        <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
+                    </svg> Clear All Records
+                </button>
+            </div>
+        @endalladmin
+        @user
+            <form action="{{ route('search-graduates') }}" method="GET" class="flex justify-baseline w-1/2">
+                <input type="text" class="bg-white border px-2 py-1 rounded w-1/2" name="search" value="{{ $search }}" placeholder="Search record..." />
+                <select name="search_category" class="bg-gray-300 border ml-1 px-2 py-1 rounded w-1/2">
+                    <option value="">-- Select a category --</option>
+                    @foreach ($categories as $category)
+                        <option class="bg-gray-50" value="{{ $category }}" {{ $search_category == $category ? 'selected' : '' }}>{{ $category }}</option>
                     @endforeach
-                </tbody>
-            </table>
-        </div>
-    @endauth
-    @guest
-        <div class="overflow-x-auto bg-white shadow-md rounded-lg mb-4">
-            <table class="w-full border-collapse">
-                <thead>
-                    <tr class="bg-gray-400 text-white uppercase text-sm leading-normal">
-                        <th class="px-6 py-3 text-left">Last Name</th>
-                        <th class="px-6 py-3 text-left">First Name</th>
-                        <th class="px-6 py-3 text-left">Middle Name</th>
-                        <th class="px-6 py-3 text-left">Ext.</th>
-                        <th class="px-6 py-3 text-left">Status of Employment</th>
-                        <th class="px-6 py-3 text-left">Year of Graduation</th>
-                        <th class="px-6 py-3 text-left">Qualification Title</th>
-                    </tr>
-                </thead>
-                <tbody class="text-gray-600 font-sans">
-                    @auth
-                        @foreach ($graduates as $graduate)
-                            <tr class="body-row border-b border-gray-200 hover:bg-gray-100">
-                                <td class="px-6 py-3">{{ $graduate->last_name }}</td>
-                                <td class="px-6 py-3">{{ $graduate->first_name }}</td>
-                                <td class="px-6 py-3">{{ $graduate->middle_name }}</td>
-                                <td class="px-6 py-3">{{ $graduate->extension_name }}</td>
-                                <td class="px-6 py-3">{{ $graduate->employment_status }}</td>
-                                <td class="px-6 py-3">{{ $graduate->allocation }}</td>
-                                <td class="px-6 py-3">{{ $graduate->qualification_title }}</td>
-                            </tr>
-                        @endforeach
-                    @endauth
-                </tbody>
-            </table>
-        </div>
-    @endguest
+                </select>
+            </form>
+        @enduser
+        @guest
+            <form action="{{ route('search-graduates') }}" method="GET" class="flex justify-baseline w-1/2">
+                <input type="text" class="bg-white border px-2 py-1 rounded w-1/2" name="search" value="{{ $search }}" placeholder="Search record..." />
+                <select name="search_category" class="bg-gray-300 border ml-1 px-2 py-1 rounded w-1/2">
+                    <option value="">-- Select a category --</option>
+                    @foreach ($categories as $category)
+                        <option class="bg-gray-50" value="{{ $category }}" {{ $search_category == $category ? 'selected' : '' }}>{{ $category }}</option>
+                    @endforeach
+                </select>
+            </form>
+        @endguest
+    </div>
+    <div class="mb-4 overflow-x-auto rounded-lg shadow-md">
+        <table class="border-collapse w-full">
+            <thead class="leading-normal text-center text-sm uppercase">
+                <tr class="bg-gray-400 text-white">
+                    <th class="px-6 py-3 border-r">Last Name</th>
+                    <th class="px-6 py-3 border-r">First Name</th>
+                    <th class="px-6 py-3 border-r">Middle Name</th>
+                    <th class="px-6 py-3 border-r">Ext.</th>
+                    <th class="px-6 py-3 border-r">Status of Employment</th>
+                    <th class="px-6 py-3 border-r">Year of Graduation</th>
+                    <th class="px-6 py-3 border-r">Qualification Title</th>
+                    @alladmin
+                        <th class="px-6 py-3 border-r"></th>
+                    @endalladmin
+                </tr>
+            </thead>
+            <tbody class="leading-normal text-center text-md">
+                @foreach ($graduates as $graduate)
+                    @alladmin
+                        <tr data-url="{{ route('admin.record-details', $graduate->id) }}" class="body-row border-b border-gray-300 hover:bg-gray-100">
+                            <td class="px-6 py-3">{{ $graduate->last_name }}</td>
+                            <td class="px-6 py-3">{{ $graduate->first_name }}</td>
+                            <td class="px-6 py-3">{{ $graduate->middle_name }}</td>
+                            <td class="px-6 py-3">{{ $graduate->extension_name }}</td>
+                            <td class="px-6 py-3">{{ $graduate->employment_status }}</td>
+                            <td class="px-6 py-3">{{ $graduate->allocation }}</td>
+                            <td class="px-6 py-3">{{ $graduate->qualification_title }}</td>
+                            <td class="px-6 py-3">
+                                <div class="flex justify-center space-x-2">
+                                    <select class="action-select bg-gray-500 text-white hover:bg-gray-600 border font-semibold px-2 py-1 rounded-md" data-id="{{ $graduate->id }}">
+                                        <option value="" class="bg-gray-300 text-black">Actions</option>
+                                        <option value="view" data-url="{{ route('admin.record-details', $graduate->id) }}" class="bg-gray-50 text-black">View</option>
+                                        <option value="update" data-url="{{ route('admin.update-record.view', $graduate->id) }}" class="bg-gray-50 text-black">Update</option>
+                                        <option value="delete" data-value="{{ $graduate->id }}" class="delete-button bg-red-200 text-red-600">Delete</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    @endalladmin
+                    @user
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="px-6 py-4">{{ $graduate->last_name }}</td>
+                            <td class="px-6 py-4">{{ $graduate->first_name }}</td>
+                            <td class="px-6 py-4">{{ $graduate->middle_name }}</td>
+                            <td class="px-6 py-4">{{ $graduate->extension_name }}</td>
+                            <td class="px-6 py-4">{{ $graduate->employment_status }}</td>
+                            <td class="px-6 py-4">{{ $graduate->allocation }}</td>
+                            <td class="px-6 py-4">{{ $graduate->qualification_title }}</td>
+                        </tr>
+                    @enduser
+                    @guest
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="px-6 py-4">{{ $graduate->last_name }}</td>
+                            <td class="px-6 py-4">{{ $graduate->first_name }}</td>
+                            <td class="px-6 py-4">{{ $graduate->middle_name }}</td>
+                            <td class="px-6 py-4">{{ $graduate->extension_name }}</td>
+                            <td class="px-6 py-4">{{ $graduate->employment_status }}</td>
+                            <td class="px-6 py-4">{{ $graduate->allocation }}</td>
+                            <td class="px-6 py-4">{{ $graduate->qualification_title }}</td>
+                        </tr>
+                    @endguest
+                @endforeach
+            </tbody>
+        </table>
+    </div>
     <div>{{ $graduates->withQueryString()->links('pagination::tailwind') }}</div>
     <!-- Modal -->
     <div class="relative z-10 hidden" id="deleteModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">

@@ -172,12 +172,12 @@ class TableOfGraduatesController extends Controller
         $submitted_documents_date = '';
         $interview_date = '';
         $not_hired_reason = '';
-        $remarks = "";
+        $remarks = '';
         $count = 1;
         $no_of_graduates = 1;
-        $no_of_employed = "";
-        $verification = "";
-        $job_vacancies = "No";
+        $no_of_employed = '';
+        $verification = '';
+        $job_vacancies = 'No';
 
         Graduate::create([
             'district' => $district,
@@ -235,7 +235,8 @@ class TableOfGraduatesController extends Controller
             'job_vacancies' => $job_vacancies,
         ]);
 
-        return redirect()->route('admin.table-of-graduates')->with('success', 'Created record successfully!');
+        $success_message = 'Created successfully: ' . $full_name . ' - ' . $qualification_title;
+        return redirect()->route('admin.table-of-graduates')->with('success', $success_message);
     }
 
     public function read(Graduate $graduate) {

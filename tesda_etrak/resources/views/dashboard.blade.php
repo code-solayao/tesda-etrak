@@ -4,10 +4,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 @endsection
 
-@section('main', 'Dashboard')
-
 <x-layout>
-    @admin
+    @alladmin
         <div class="mb-4">
             <a href="https://lookerstudio.google.com/u/0/reporting/9d6c7c0a-dcfb-4dda-ba67-589c230b57bd/page/GzuKE" 
             target="_blank" rel="noopener noreferrer" class="btn btn-primary" role="button">
@@ -16,7 +14,7 @@
                 </svg> View in Google Looker Studio
             </a>
         </div>
-    @endadmin
+    @endalladmin
     <div class="lg:hidden border border-black w-[1140px] h-dvh overflow-hidden rounded-xl shadow-md">
         <iframe src="https://lookerstudio.google.com/embed/reporting/9d6c7c0a-dcfb-4dda-ba67-589c230b57bd/page/GzuKE" 
         frameborder="0" class="w-full h-full" allowfullscreen 

@@ -29,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
             return Auth::check() && Auth::user()->role === 'admin';
         });
 
+        Blade::if('alladmin', function () {
+            return Auth::check() && (Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin');
+        });
+
         Blade::if('user', function () {
             return Auth::check() && Auth::user()->role === 'user';
         });

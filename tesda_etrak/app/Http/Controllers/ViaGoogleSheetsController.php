@@ -38,7 +38,7 @@ class ViaGoogleSheetsController extends Controller
 
         $response = $service->spreadsheets_values->get($spreadsheetId, $sheet);
         $values = $response->getValues();
-        logger()->info("Rows found: " . count($values));
+        logger()->info(count($values) . " rows found");
 
         if (empty($values)) {
             logger()->warning('Sheet is empty');
@@ -52,6 +52,7 @@ class ViaGoogleSheetsController extends Controller
         // Chunk rows
         $chunks = array_chunk($rows, 1000);
 
+        $chunkedRows = 0;
         $errorNum = 1;
         foreach ($chunks as $chunk) {
             logger()->info('Processing chunk...');
@@ -182,11 +183,14 @@ class ViaGoogleSheetsController extends Controller
                     'verification' => $sanitized['verification'],
                     'job_vacancies' => $sanitized['job_vacancies'],
                 ]);
+
+                $chunkedRows++;
             }
         }
 
-        logger()->info('Google Sheets data import completed');
-        return redirect()->route('admin.table-of-graduates')->with('success', 'Google Sheets data import complete.');
+        $success_message = $chunkedRows . ' rows from Google Sheets imported successfully!';
+        logger()->info($success_message);
+        return redirect()->route('admin.table-of-graduates')->with('success', $success_message);
     }
     
     public function export_data() 

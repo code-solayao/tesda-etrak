@@ -24,7 +24,7 @@ Route::middleware('guest')->controller(AuthController::class)->group(function ()
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
-Route::middleware(['auth', 'role:admin'])->controller(HomeController::class)->group(function () {
+Route::middleware(['auth', 'role:admin,superadmin'])->controller(HomeController::class)->group(function () {
     Route::get('/admin', 'index')->name('admin.home');
     Route::get('/admin/dashboard', 'dashboard')->name('admin.dashboard');
 });
@@ -32,9 +32,28 @@ Route::middleware(['auth', 'role:admin'])->controller(HomeController::class)->gr
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('/dashboard', 'dashboard')->name('dashboard');
+
+Route::middleware(['auth', 'role:admin,superadmin'])->controller(TableOfGraduatesController::class)->group(function () {
+    Route::get('/admin/list-of-graduates', 'index')->name('admin.table-of-graduates');
+    Route::get('/admin/list-of-graduates/search', 'search_graduates')->name('admin.search-graduates');
+    Route::get('/admin/list-of-graduates/create-record', 'create_view')->name('admin.create-record.view');
+    Route::get('/admin/list-of-graduates/record-details/{graduate}', 'read')->name('admin.record-details');
+    Route::get('/admin/list-of-graduates/update-record/{graduate}', 'update_view')->name('admin.update-record.view');
+    Route::post('/admin/list-of-graduates/create-record', 'create')->name('admin.create-record');
+    Route::put('/admin/list-of-graduates/update-record/{graduate}', 'update')->name('admin.update-record');
+    Route::delete('/admin/list-of-graduates/record-details/{graduate}', 'delete')->name('admin.delete-record');
+    Route::delete('/admin/list-of-graduates', 'truncate')->name('admin.truncate-graduates');
 });
 
-Route::middleware(['auth', 'role:admin'])->controller(JobVacanciesController::class)->group(function () {
+Route::get('/list-of-graduates', [TableOfGraduatesController::class, 'index'])->name('table-of-graduates');
+
+Route::middleware(['auth', 'role:user'])->controller(TableOfGraduatesController::class)->group(function () {
+    Route::get('/list-of-graduates/search', 'search_graduates')->name('search-graduates');
+    Route::get('/list-of-graduates/record-details/{graduate}', 'read')->name('record-details');
+});
+});
+
+Route::middleware(['auth', 'role:admin,superadmin'])->controller(JobVacanciesController::class)->group(function () {
     Route::get('/admin/job-vacancies', 'index')->name('admin.job-vacancies');
     Route::get('/admin/job-vacancies/get', 'search_vacancies')->name('admin.search-vacancies');
     Route::get('/admin/job-vacancies/import-data', 'import_data')->name('import.vacancies.data');
@@ -44,26 +63,7 @@ Route::get('/job-vacancies', [JobVacanciesController::class, 'index'])->name('jo
 
 Route::get('/job-vacancies/search', [JobVacanciesController::class, 'search_vacancies'])->name('search-vacancies')->middleware('auth', 'role:user');
 
-Route::middleware(['auth', 'role:admin'])->controller(TableOfGraduatesController::class)->group(function () {
-    Route::get('/admin/table-of-graduates', 'index')->name('admin.table-of-graduates');
-    Route::get('/admin/table-of-graduates/search', 'search_graduates')->name('admin.search-graduates');
-    Route::get('/admin/table-of-graduates/create-record', 'create_view')->name('admin.create-record.view');
-    Route::get('/admin/table-of-graduates/record-details/{graduate}', 'read')->name('admin.record-details');
-    Route::get('/admin/table-of-graduates/update-record/{graduate}', 'update_view')->name('admin.update-record.view');
-    Route::post('/admin/table-of-graduates/create-record', 'create')->name('admin.create-record');
-    Route::put('/admin/table-of-graduates/update-record/{graduate}', 'update')->name('admin.update-record');
-    Route::delete('/admin/table-of-graduates/record-details/{graduate}', 'delete')->name('admin.delete-record');
-    Route::delete('/admin/table-of-graduates', 'truncate')->name('admin.truncate-graduates');
-});
-
-Route::get('/table-of-graduates', [TableOfGraduatesController::class, 'index'])->name('table-of-graduates');
-
-Route::middleware(['auth', 'role:user'])->controller(TableOfGraduatesController::class)->group(function () {
-    Route::get('/table-of-graduates/search', 'search_graduates')->name('search-graduates');
-    Route::get('/table-of-graduates/record-details/{graduate}', 'read')->name('record-details');
-});
-
-Route::middleware(['auth', 'role:admin'])->controller(ViaGoogleSheetsController::class)->group(function () {
+Route::middleware(['auth', 'role:admin,superadmin'])->controller(ViaGoogleSheetsController::class)->group(function () {
     Route::get('/admin/via-google-sheets', 'index')->name('admin.via-google-sheets');
     Route::get('/admin/via-google-sheets/import-graduate-sheet', 'import_sheet')->name('admin.import-graduate');
     Route::get('/admin/via-google-sheets/export-graduate-data', 'export_data')->name('admin.export-graduate');
