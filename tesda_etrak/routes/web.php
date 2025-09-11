@@ -32,6 +32,7 @@ Route::middleware(['auth', 'role:admin,superadmin'])->controller(HomeController:
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('/dashboard', 'dashboard')->name('dashboard');
+});
 
 Route::middleware(['auth', 'role:admin,superadmin'])->controller(TableOfGraduatesController::class)->group(function () {
     Route::get('/admin/list-of-graduates', 'index')->name('admin.table-of-graduates');
@@ -45,12 +46,9 @@ Route::middleware(['auth', 'role:admin,superadmin'])->controller(TableOfGraduate
     Route::delete('/admin/list-of-graduates', 'truncate')->name('admin.truncate-graduates');
 });
 
-Route::get('/list-of-graduates', [TableOfGraduatesController::class, 'index'])->name('table-of-graduates');
-
-Route::middleware(['auth', 'role:user'])->controller(TableOfGraduatesController::class)->group(function () {
+Route::controller(TableOfGraduatesController::class)->group(function () {
+    Route::get('/list-of-graduates', 'index')->name('table-of-graduates');
     Route::get('/list-of-graduates/search', 'search_graduates')->name('search-graduates');
-    Route::get('/list-of-graduates/record-details/{graduate}', 'read')->name('record-details');
-});
 });
 
 Route::middleware(['auth', 'role:admin,superadmin'])->controller(JobVacanciesController::class)->group(function () {

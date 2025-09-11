@@ -1,19 +1,19 @@
-document.getElementById("detailsTab").onclick = function () {
+document.getElementById("detailsTab")?.addEventListener('click', function () {
     openTab(0);
-}
-document.getElementById("verificationTab").onclick = function () {
+});
+document.getElementById("verificationTab")?.addEventListener('click', function () {
     openTab(1);
-}
-document.getElementById("employmentTab").onclick = function () {
+});
+document.getElementById("employmentTab")?.addEventListener('click', function () {
     openTab(2);
-}
+});
 
-document.getElementById("toggleDelete").onclick = function () {
+document.getElementById("toggleDelete")?.addEventListener('click', function () {
     document.getElementById("confirmationModal").classList.remove('hidden');
-}
-document.getElementById("dismissDelete").onclick = function () {
+});
+document.getElementById("dismissDelete")?.addEventListener('click', function () {
     document.getElementById("confirmationModal").classList.add('hidden');
-}
+});
 
 blankedDefinitions();
 dateFormatRead();

@@ -1,14 +1,24 @@
 import '../bootstrap';
 
-document.getElementById("selectDistrict").onchange = function () {
-    districtToCitySelection(this.value);
+var selectDistrict = document.getElementById("selectDistrict");
+if (selectDistrict) {
+    selectDistrict.onchange = function () {
+        districtToCitySelection(this.value);
+    }
 }
 
-document.getElementById("toggleCreate").onclick = function () {
-    document.getElementById("confirmationModal").classList.remove('hidden');
+var toggleCreate = document.getElementById("toggleCreate");
+if (toggleCreate) {
+    toggleCreate.onclick = function () {
+        document.getElementById("confirmationModal").classList.remove('hidden');
+    }
 }
-document.getElementById("dismissCreate").onclick = function () {
-    document.getElementById("confirmationModal").classList.add('hidden');
+
+var dismissCreate = document.getElementById("dismissCreate");
+if (dismissCreate) {
+    dismissCreate.onclick = function () {
+        document.getElementById("confirmationModal").classList.add('hidden');
+    }
 }
 
 function districtToCitySelection(optionValue) {

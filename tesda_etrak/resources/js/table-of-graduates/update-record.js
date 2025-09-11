@@ -29,39 +29,39 @@ var notProceedReason = document.getElementById("notProceedReason");
 //#endregion
 
 //#region INITIALISATION
-document.getElementById("detailsTab").onclick = function () {
+document.getElementById("detailsTab")?.addEventListener('click', function () {
     openTab(0, "details");
-}
-verificationTab.onclick = function () {
+});
+verificationTab?.addEventListener('click', function () {
     openTab(1, "verification");
 
     interested.style.display = "none";
     notInterested.style.display = "none";
     refreshVerification();
-}
-document.getElementById("employmentTab").onclick = function () {
+});
+document.getElementById("employmentTab")?.addEventListener('click', function () {
     openTab(2, "employment");
-}
+});
 
-noVerifStatusBtn.onclick = function () {
+noVerifStatusBtn?.addEventListener('click', function () {
     verificationStatusValue("");
-}
-respondedBtn.onclick = function () {
+});
+respondedBtn?.addEventListener('click', function () {
     verificationStatusValue("responded");
-}
-noResponseBtn.onclick = function () {
+});
+noResponseBtn?.addEventListener('click', function () {
     verificationStatusValue("no response");
-}
+});
 
-interestedBtn.onclick = function () {
+interestedBtn?.addEventListener('click', function () {
     interested.style.display = "block";
     notInterested.style.display = "none";
 
     referralStatusForm.disabled = false;
     notInterestedReason.disabled = true;
     notInterestedReason.value = "";
-}
-notInterestedBtn.onclick = function () {
+});
+notInterestedBtn?.addEventListener('click', function () {
     notInterested.style.display = "block";
     interested.style.display = "none";
 
@@ -73,53 +73,53 @@ notInterestedBtn.onclick = function () {
     resetDate(referralDate);
     noReferralReason.disabled = true;
     noReferralReason.value = "";
-}
+});
 
-referYesBtn.onclick = function () {
+referYesBtn?.addEventListener('click', function () {
     referralStatus(true);
-}
-referNoBtn.onclick = function () {
+});
+referNoBtn?.addEventListener('click', function () {
     referralStatus(false);
-}
+});
 
-invalidContact.onclick = function () {
+invalidContact?.addEventListener('click', function () {
     invalidContactValue(invalidContact.checked);
-}
+});
 
-proceedBtn.onclick = function () {
+proceedBtn?.addEventListener('click', function () {
     applicationStatusValue(true);
-}
-notProceedBtn.onclick = function () {
+});
+notProceedBtn?.addEventListener('click', function () {
     applicationStatusValue(false);
-}
+});
 
-document.getElementById("hired").onclick = function () {
+document.getElementById("hired")?.addEventListener('click', function () {
     employmentStatusValue(this.id);
-}
-document.getElementById("submitDocs").onclick = function () {
+});
+document.getElementById("submitDocs")?.addEventListener('click', function () {
     employmentStatusValue(this.id);
-}
-document.getElementById("forInterview").onclick = function () {
+});
+document.getElementById("forInterview")?.addEventListener('click', function () {
     employmentStatusValue(this.id);
-}
-document.getElementById("notHired").onclick = function () {
+});
+document.getElementById("notHired")?.addEventListener('click', function () {
     employmentStatusValue(this.id);
-}
+});
 
 document.getElementById("responded").style.display = "none";
 document.getElementById("noResponse").style.display = "none";
 proceed.style.display = "none";
 notProceed.style.display = "none";
 
-document.getElementById("toggleUpdate1").onclick = function () {
+document.getElementById("toggleUpdate1")?.addEventListener('click', function () {
     document.getElementById("confirmationModal").classList.remove('hidden');
-}
-document.getElementById("toggleUpdate2").onclick = function () {
+});
+document.getElementById("toggleUpdate2")?.addEventListener('click', function () {
     document.getElementById("confirmationModal").classList.remove('hidden');
-}
-document.getElementById("dismissUpdate").onclick = function () {
+});
+document.getElementById("dismissUpdate")?.addEventListener('click', function () {
     document.getElementById("confirmationModal").classList.add('hidden');
-}
+});
 //#endregion
 
 verificationTab.click();

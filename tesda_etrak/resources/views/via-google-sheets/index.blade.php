@@ -1,7 +1,8 @@
 @section('title', 'E-TRAK - Google Sheets Data')
 
 @section('vite')
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/e-trak/google-sheets-data.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 
+        'resources/js/via-google-sheets/index.js'])
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 @endsection
 

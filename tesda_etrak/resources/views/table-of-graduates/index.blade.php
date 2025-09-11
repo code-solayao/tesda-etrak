@@ -1,9 +1,8 @@
-@section('title', 'E-TRAK - View records')
+@section('title', 'E-TRAK - List of Graduates')
 
 @section('vite')
     @vite(['resources/css/app.css', 'resources/js/app.js', 
-        'resources/js/e-trak/view-records.js'
-    ])
+        'resources/js/table-of-graduates/index.js'])
 @endsection
 
 @section('main', 'List of Graduates')

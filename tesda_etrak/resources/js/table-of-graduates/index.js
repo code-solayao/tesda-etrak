@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             if (value === "delete") {
-               form.action = `/admin/table-of-graduates/record-details/${id}`; 
+               form.action = `/admin/list-of-graduates/record-details/${id}`; 
                document.getElementById("deleteModal").classList.remove('hidden');
             }
 
@@ -29,21 +29,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-var dismissDelete = document.getElementById("dismissDelete");
-if (dismissDelete) {
-    dismissDelete.onclick = function () {
-        document.getElementById("deleteModal").classList.add('hidden');
-    }
-}
+document.getElementById("dismissDelete").addEventListener('click', function () {
+    document.getElementById("deleteModal").classList.add("hidden");
+});
 
-var toggleDeleteAll = document.getElementById("toggleDeleteAll");
-if (toggleDeleteAll) {
-    toggleDeleteAll.onclick = function () {
-        document.getElementById("deleteAllModal").classList.remove('hidden');
-    }
-}
+document.getElementById("toggleDeleteAll").addEventListener('click', function () {
+    document.getElementById("deleteAllModal").classList.remove("hidden");
+});
 
-var dismissDeleteAll = document.getElementById("dismissDeleteAll");
-dismissDeleteAll.onclick = function () {
-    document.getElementById("deleteAllModal").classList.add('hidden');
-}
+document.getElementById("dismissDeleteAll").addEventListener('click', function () {
+    document.getElementById("deleteAllModal").classList.add("hidden");
+});

@@ -41,7 +41,29 @@
                 </div>
             @endadmin
         </div>
-    @endauth
+    @endauth 
+    <section class="py-12 bg-blue-200 mb-10">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-2 lg:grid-cols-6 gap-6">
+                @for ($i = 0; $i < 10; $i++)
+                    <a href="#" class="group block rounded-2xl bg-white shadow-sm hover:shadow-md transition p-4 text-center border border-gray-100">
+                        
+                        {{-- Company Logo --}}
+                        <div class="flex items-center justify-center h-16 mb-3">
+                            <img src="{{ asset('images/logo.png') }}" alt="Company Logo" class="h-full object-contain max-h-12">
+                        </div>
+
+                        {{-- Company Name --}}
+                        <h3 class="text-sm font-semibold text-gray-800 group-hover:text-blue-600 truncate">Company Name</h3>
+
+                        {{-- Job Count --}}
+                        <p class="text-xs text-gray-500 mt-1">5 jobs</p>
+                    </a>
+                @endfor
+            </div>
+        </div>
+    </section>
+
     <div class="overflow-x-auto bg-white shadow-md rounded-lg mb-4">
             <table class="w-full border-collapse">
                 <thead>

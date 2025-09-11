@@ -1,7 +1,8 @@
-@section('title', 'E-TRAK - Update record')
+@section('title', 'E-TRAK - Update a record')
 
 @section('vite')
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/e-trak/update-record.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 
+        'resources/js/table-of-graduates/update-record.js'])
 @endsection
 
 @section('main', 'Update Record')
@@ -16,7 +17,7 @@
 @endphp
 
 <x-layout>
-    <span class="text-4xl font-bold border-b-4 pt-5">{{ $graduate->full_name }}</span>
+    <span class="text-4xl font-bold border-b-4 pt-5">{{ $graduate->full_name }} - {{ $graduate->qualification_title }}</span>
     <div class="mx-auto bg-white px-8 pb-8 pt-5 rounded-lg shadow-md">
         @if ($errors->any())
             <ul class="px-3 py-2 bg-red-400 rounded-md mb-5">

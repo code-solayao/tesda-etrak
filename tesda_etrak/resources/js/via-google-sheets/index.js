@@ -1,12 +1,19 @@
-document.getElementById("logLevel").onchange = function () {
-    loadLogs();
-}
-document.getElementById("btnClearLogs").onclick = function () {
-    clearLogs();
+var logLevel = document.getElementById("logLevel");
+if (logLevel) {
+    logLevel.onchange = function () {
+        loadLogs();
+    }
 }
 
-loadLogs();
-setInterval(loadLogs, 10000);
+var btnClearLogs = document.getElementById("btnClearLogs");
+if (btnClearLogs) {
+    btnClearLogs.onclick = function () {
+        clearLogs();
+    }
+}
+
+// loadLogs();
+// setInterval(loadLogs, 10000);
 
 async function loadLogs() {
     let logBox = document.getElementById("logBox");
