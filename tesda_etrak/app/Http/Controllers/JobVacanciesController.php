@@ -12,7 +12,7 @@ class JobVacanciesController extends Controller
 {
     public function index(Request $request) {
         $vacancies = JobVacancy::select('company_name', 'contact_details', 'no_of_vacancies', 'deployment_location')
-        ->orderBy('id', 'desc')->paginate(10);
+        ->orderBy('id', 'desc')->get();
         $search = $request->input('search');
         $search_category = $request->input('search_category');
 

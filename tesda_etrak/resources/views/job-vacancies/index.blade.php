@@ -42,69 +42,37 @@
             @endadmin
         </div>
     @endauth 
-    <section class="py-12 bg-blue-200 mb-10">
-        <div class="max-w-7xl mx-auto px-4 lg:px-8">
-            <div class="grid grid-cols-2 lg:grid-cols-6 gap-6">
-                @for ($i = 0; $i < 10; $i++)
-                    <a href="#" class="group block rounded-2xl bg-white shadow-sm hover:shadow-md transition p-4 text-center border border-gray-100">
-                        
-                        {{-- Company Logo --}}
-                        <div class="flex items-center justify-center h-16 mb-3">
-                            <img src="{{ asset('images/logo.png') }}" alt="Company Logo" class="h-full object-contain max-h-12">
-                        </div>
-
-                        {{-- Company Name --}}
-                        <h3 class="text-sm font-semibold text-gray-800 group-hover:text-blue-600 truncate">Company Name</h3>
-
-                        {{-- Job Count --}}
-                        <p class="text-xs text-gray-500 mt-1">5 jobs</p>
-                    </a>
-                @endfor
-            </div>
-        </div>
-    </section>
-
-    <div class="overflow-x-auto bg-white shadow-md rounded-lg mb-4">
-            <table class="w-full border-collapse">
-                <thead>
-                    <tr class="bg-gray-400 text-white uppercase text-sm leading-normal">
-                        <th class="px-6 py-3 text-left">Name of Company</th>
-                        <th class="px-6 py-3 text-left">Contact Details</th>
-                        <th class="px-6 py-3 text-left">No. of Vacancies</th>
-                        <th class="px-6 py-3 text-left">Deployment Location</th>
-                        @auth
-                            <th class="px-6 py-3 text-left">Actions</th>    
-                        @endauth
-                    </tr>
-                </thead>
-                <tbody class="text-gray-600 font-sans">
+    <div class="flex items-center justify-center space-x-2">
+        <section class="bg-gray-300 p-6 lg:p-8 rounded-lg lg:rounded-xl w-full lg:w-full">
+            <div class="max-w-full mx-auto h-[calc(2.9*10rem)] lg:h-[calc(3.8*10rem)] overflow-y-auto pr-2">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
                     @foreach ($vacancies as $vacancy)
-                        <tr class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="px-6 py-3">{{ $vacancy->company_name }}</td>
-                            <td class="px-6 py-3">{{ $vacancy->contact_details }}</td>
-                            <td class="px-6 py-3">{{ $vacancy->no_of_vacancies }}</td>
-                            <td class="px-6 py-3">{{ $vacancy->deployment_location }}</td>
-                            @auth
-                                <td class="px-6 py-3 text-center">
-                                    <div class="flex justify-start space-x-2">
-                                        @admin
-                                            {{-- <a href="{{ route('admin.view-details', $vacancy->id) }}" class="btn-sm btn-secondary font-normal">View</a>
-                                            <button type="button" class="btn-sm btn-danger font-normal delete-buttons" data-value="{{ $graduate->id }}">Delete</button> --}}
-                                            <a href="#" class="btn-sm btn-secondary font-normal">View</a>
-                                            <button type="button" class="btn-sm btn-danger font-normal delete-buttons" data-value="#">Delete</button>
-                                        @endadmin
-                                        @user
-                                            {{-- <a href="{{ route('view.details', $graduate->id) }}" class="btn-sm btn-secondary font-normal">View</a> --}}
-                                            <a href="#" class="btn-sm btn-secondary font-normal">View</a>
-                                        @enduser
-                                    </div>
-                                </td>
-                            @endauth
-                        </tr>
+                        <a href="#" class="group bg-gray-100 hover:bg-white border border-gray-300 p-4 rounded-lg lg:rounded-xl shadow-sm text-center transition">
+                            <!-- Company Logo -->
+                            <div class="flex items-center justify-center mb-4">
+                                <img src="{{ asset('images/logo.png') }}" alt="{{ $vacancy->company_name }}" class="h-full max-h-12 object-contain">
+                            </div>
+                            <!-- Company Name -->
+                            <h3 class="font-semibold text-md text-gray-800 truncate">{{ $vacancy->company_name }}</h3>
+                            <!-- Job Count -->
+                            @if ($vacancy->no_of_vacancies != null)
+                                <span class="text-sm text-gray-500 mt-1">{{ $vacancy->no_of_vacancies }} vacancies</span>
+                            @else
+                                <span class="text-sm text-gray-500 mt-1">Unspecified</span>
+                            @endif
+                        </a>
                     @endforeach
-                </tbody>
-            </table>
-        </div>
-        <div>{{ $vacancies->withQueryString()->links('pagination::tailwind') }}</div>
+                </div>
+            </div>
+        </section>
+        <section class="bg-gray-100 border border-gray-400 hidden lg:block p-8 rounded-xl shadow-md w-full">
+            <div class="h-[calc(3.8*10rem)] max-w-full mx-auto overflow-y-auto">
+                <!-- Company Logo -->
+                <div class="flex items-center justify-start mb-4">
+                    <img src="{{ asset('images/logo.png') }}" alt="Company Logo" class="max-w-24 w-full object-contain">
+                </div>
+                <h2 class="font-semibold text-5xl">Company Name</h2>
+            </div>
+        </section>
     </div>
 </x-layout>
