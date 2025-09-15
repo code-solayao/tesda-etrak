@@ -11,12 +11,16 @@ use Illuminate\Http\Request;
 class JobVacanciesController extends Controller
 {
     public function index(Request $request) {
-        $vacancies = JobVacancy::select('company_name', 'contact_details', 'no_of_vacancies', 'deployment_location')
-        ->orderBy('id', 'desc')->get();
+        $vacancies = JobVacancy::orderBy('id', 'desc')->get();
         $search = $request->input('search');
         $search_category = $request->input('search_category');
 
         return view('job-vacancies.index', compact('vacancies', 'search', 'search_category'));
+    }
+
+    public function apiShow(JobVacancy $vacancy)
+    {
+        return response()->json($vacancy);
     }
 
     public function search_vacancies(Request $request) 

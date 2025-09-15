@@ -61,6 +61,8 @@ Route::get('/job-vacancies', [JobVacanciesController::class, 'index'])->name('jo
 
 Route::get('/job-vacancies/search', [JobVacanciesController::class, 'search_vacancies'])->name('search-vacancies')->middleware('auth', 'role:user');
 
+// Route::get('/job-vacancies/{vacancy}/json', []);
+
 Route::middleware(['auth', 'role:admin,superadmin'])->controller(ViaGoogleSheetsController::class)->group(function () {
     Route::get('/admin/via-google-sheets', 'index')->name('admin.via-google-sheets');
     Route::get('/admin/via-google-sheets/import-graduate-sheet', 'import_sheet')->name('admin.import-graduate');

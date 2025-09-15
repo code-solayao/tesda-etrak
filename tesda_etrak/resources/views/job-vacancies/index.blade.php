@@ -1,7 +1,8 @@
 @section('title', 'E-TRAK - Job Vacancies')
 
 @section('vite')
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 
+        'resources/js/job-vacancies/index.js'])
 @endsection
 
 @section('main', 'Job Vacancies')
@@ -41,13 +42,16 @@
                 </div>
             @endadmin
         </div>
-    @endauth 
-    <div class="flex items-center justify-center space-x-2">
-        <section class="bg-gray-300 p-6 lg:p-8 rounded-lg lg:rounded-xl w-full lg:w-full">
+    @endauth
+    <section class="flex items-center justify-center space-x-2" x-data="{ selectedCompany: null, loading: false }">
+        <!-- Card Grid -->
+        <div class="bg-gray-300 p-6 lg:p-8 rounded-lg lg:rounded-xl w-full lg:w-full">
             <div class="max-w-full mx-auto h-[calc(2.9*10rem)] lg:h-[calc(3.8*10rem)] overflow-y-auto pr-2">
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
                     @foreach ($vacancies as $vacancy)
-                        <a href="#" class="group bg-gray-100 hover:bg-white border border-gray-300 p-4 rounded-lg lg:rounded-xl shadow-sm text-center transition">
+                        <button type="button" class="cards group bg-gray-100 hover:bg-white border border-gray-300 cursor-pointer p-4 rounded-lg lg:rounded-xl shadow-sm text-center transition" 
+                        @click="loading = true; 
+                        fetch('{{ route('', $vacancy->id) }}').then(res => res.json()).then(data => { selectedCompany = data; loading = false; })">
                             <!-- Company Logo -->
                             <div class="flex items-center justify-center mb-4">
                                 <img src="{{ asset('images/logo.png') }}" alt="{{ $vacancy->company_name }}" class="h-full max-h-12 object-contain">
@@ -58,21 +62,62 @@
                             @if ($vacancy->no_of_vacancies != null)
                                 <span class="text-sm text-gray-500 mt-1">{{ $vacancy->no_of_vacancies }} vacancies</span>
                             @else
-                                <span class="text-sm text-gray-500 mt-1">Unspecified</span>
+                                <span class="text-sm text-gray-500 mt-1">Not specified</span>
                             @endif
-                        </a>
+                        </button>
                     @endforeach
                 </div>
             </div>
-        </section>
-        <section class="bg-gray-100 border border-gray-400 hidden lg:block p-8 rounded-xl shadow-md w-full">
+        </div>
+        <!-- Vacancy Details -->
+        <div class="bg-gray-100 border border-gray-400 hidden lg:block p-8 rounded-xl shadow-md w-full">
             <div class="h-[calc(3.8*10rem)] max-w-full mx-auto overflow-y-auto">
-                <!-- Company Logo -->
-                <div class="flex items-center justify-start mb-4">
-                    <img src="{{ asset('images/logo.png') }}" alt="Company Logo" class="max-w-24 w-full object-contain">
-                </div>
-                <h2 class="font-semibold text-5xl">Company Name</h2>
+                {{-- Loading Spinner --}}
+                <template x-if="loading">
+                    <div class="flex items-center justify-center h-64">
+                        <svg class="animate-spin h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                        </svg>
+                    </div>
+                </template>
+                <template x-if="selectedCompany && !loading">
+                    <div>
+                        <!-- Company Logo -->
+                        <div class="flex items-center space-x-4 mb-6">
+                            <img :src="selectedCompany.logo_url || '{{ asset('images/logo.png') }}'" 
+                            :alt="selectedCompany.company_name + ' Logo'" class="max-w-24 w-full object-contain">
+                            <div>
+                                <h3 class="font-semibold text-3xl text-gray-900" x-text="selectedCompany.company_name"></h3>
+                                <span class="text-lg text-gray-500" x-text="selectedCompany.no_of_vacancies + ' vacancies'"></span>
+                            </div>
+                        </div>
+                        <!-- Description -->
+                        <div class="my-4">
+                            <dl>
+                                <dt>Contact Details: </dt>
+                                <dd class="text-gray-600" x-text="selectedCompany.contact_details ?? 'N/A'"></dd>
+                                <dt>Vacancies: </dt>
+                                <dd class="text-gray-600" x-text="selectedCompany.vacancies ?? 'N/A'"></dd>
+                                <dt>Deployment Location</dt>
+                                <dd class="text-gray-600" x-text="selectedCompany.deployment_location ?? 'N/A'"></dd>
+                            </dl>
+                        </div>
+                        <!-- Link to Jobs -->
+                        <div class="mt-6">
+                            <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                                View All Jobs
+                            </a>
+                        </div>
+                    </div>
+                </template>
+                <!-- Placeholder when no company is selected -->
+                <template x-if="!selectedCompany && !loading">
+                    <div class="text-xl text-gray-500">
+                        <p>Select a company to see details</p>
+                    </div>
+                </template>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
 </x-layout>

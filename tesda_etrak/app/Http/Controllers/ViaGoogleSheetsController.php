@@ -16,6 +16,8 @@ class ViaGoogleSheetsController extends Controller
     protected $service;
 
     public function index() {
+        $sheetUrl = 'https://docs.google.com/spreadsheets/d/100jOk-835-aRxURFWkON1026rLkBKH8Rrwtdy8ojv6Q/edit?gid=601902906#gid=601902906';
+        $sheetId = substr($sheetUrl, 39, 44);
         return view('via-google-sheets.index');
     }
 
