@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JobVacancy extends Model
+class Company extends Model
 {
-    /** @use HasFactory<\Database\Factories\JobVacancyFactory> */
+    /** @use HasFactory<\Database\Factories\CompanyFactory> */
     use HasFactory;
     protected $guarded = ['id', 'created_at', 'updated_at'];
-    public function company() {
-        return $this->belongsTo(Company::class);
+    
+    public function jobVacancies() {
+        return $this->hasMany(JobVacancy::class);
     }
 }

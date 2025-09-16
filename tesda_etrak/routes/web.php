@@ -22,7 +22,7 @@ Route::middleware('guest')->controller(AuthController::class)->group(function ()
     Route::post('/signup', 'signup')->name('signup');
 });
 
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+Route::middleware('auth')->post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth', 'role:admin,superadmin'])->controller(HomeController::class)->group(function () {
     Route::get('/admin', 'index')->name('admin.home');
@@ -53,20 +53,21 @@ Route::controller(TableOfGraduatesController::class)->group(function () {
 
 Route::middleware(['auth', 'role:admin,superadmin'])->controller(JobVacanciesController::class)->group(function () {
     Route::get('/admin/job-vacancies', 'index')->name('admin.job-vacancies');
-    Route::get('/admin/job-vacancies/get', 'search_vacancies')->name('admin.search-vacancies');
-    Route::get('/admin/job-vacancies/import-data', 'import_data')->name('import.vacancies.data');
+    Route::get('/admin/job-vacancies/{vacancy}/json', 'apiShow')->name('admin.vacancies.api');
+    Route::get('/admin/job-vacancies/search', 'searchVacancies')->name('admin.search.vacancies');
 });
 
-Route::get('/job-vacancies', [JobVacanciesController::class, 'index'])->name('job-vacancies');
+Route::middleware(['auth', 'role:user'])->get('/job-vacancies/search', [JobVacanciesController::class, 'searchVacancies'])->name('search.vacancies');
 
-Route::get('/job-vacancies/search', [JobVacanciesController::class, 'search_vacancies'])->name('search-vacancies')->middleware('auth', 'role:user');
+Route::controller(JobVacanciesController::class)->group(function () {
+    Route::get('/job-vacancies', 'index')->name('job-vacancies');
+    Route::get('/job-vacancies/{vacancy}/json', 'apiShow')->name('vacancies.api');
+});
 
-// Route::get('/job-vacancies/{vacancy}/json', []);
-
-Route::middleware(['auth', 'role:admin,superadmin'])->controller(ViaGoogleSheetsController::class)->group(function () {
+Route::middleware(['auth', 'role:superadmin'])->controller(ViaGoogleSheetsController::class)->group(function () {
     Route::get('/admin/via-google-sheets', 'index')->name('admin.via-google-sheets');
     Route::get('/admin/via-google-sheets/import-graduate-sheet', 'import_sheet')->name('admin.import-graduate');
     Route::get('/admin/via-google-sheets/export-graduate-data', 'export_data')->name('admin.export-graduate');
-    Route::get('/admin/via-google-sheets/logs', 'display_logs')->name('admin.display.log');
-    Route::post('/admin/google-sheets-data/logs/clear', 'clear_logs')->name('admin.clear.logs');
+    Route::get('/admin/via-google-sheets/import-vacancies', 'importVacancies')->name('import.vacancies');
+    Route::get('/admin/via-google-sheets/import-companies', 'importCompanies')->name('import.companies');
 });
