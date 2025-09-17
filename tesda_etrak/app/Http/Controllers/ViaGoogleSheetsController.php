@@ -9,7 +9,6 @@ use Carbon\Carbon;
 use Google\Client;
 use Google\Service\Sheets;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class ViaGoogleSheetsController extends Controller
@@ -23,7 +22,7 @@ class ViaGoogleSheetsController extends Controller
         return view('via-google-sheets.index');
     }
 
-    public function import_sheet() 
+    public function importGraduates() 
     {
         logger()->info('Initialising Google Sheets data import.');
 
@@ -197,7 +196,7 @@ class ViaGoogleSheetsController extends Controller
         return redirect()->route('admin.table-of-graduates')->with('success', $success_message);
     }
     
-    public function export_data() 
+    public function exportGraduates() 
     {
         logger()->info('Initialising local data export.');
 
@@ -341,7 +340,7 @@ class ViaGoogleSheetsController extends Controller
         $this->updateRows($sheet, $data, $spreadsheetId);
         
         logger()->info('Local data export complete.');
-        return redirect()->route('admin.via-google-sheets')->with('success', 'Local data export complete.');
+        return redirect()->route('via-google-sheets')->with('success', 'Local data export complete.');
     }
 
     public function importVacancies() 
@@ -459,7 +458,7 @@ class ViaGoogleSheetsController extends Controller
 
         if (empty($spreadsheetId)) {
             logger()->error('Google Sheets data import failed: Spreadsheet ID is missing.');
-            return redirect()->route('admin.via-google-sheets')->with('failed', 'Spreadsheet ID is not configured.');
+            return redirect()->route('via-google-sheets')->with('failed', 'Spreadsheet ID is not configured.');
         }
 
         $response = $service->spreadsheets_values->get($spreadsheetId, $sheet);
@@ -468,7 +467,7 @@ class ViaGoogleSheetsController extends Controller
 
         if (empty($values)) {
             logger()->warning('Sheet is empty');
-            return redirect()->route('admin.via-google-sheets')->with('failed', 'No data found.');
+            return redirect()->route('via-google-sheets')->with('failed', 'No data found.');
         }
 
         // First row headers
@@ -518,7 +517,7 @@ class ViaGoogleSheetsController extends Controller
         }
 
         logger()->info('Google Sheets data import completed');
-        return redirect()->route('admin.via-google-sheets')->with('success', 'Google Sheets data import complete.');
+        return redirect()->route('via-google-sheets')->with('success', 'Google Sheets data import complete.');
     }
 
     public function updateRows($range, array $values, $spreadsheetId) 

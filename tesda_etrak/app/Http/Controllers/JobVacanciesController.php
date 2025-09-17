@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\JobVacancy;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class JobVacanciesController extends Controller
 {
@@ -16,7 +18,7 @@ class JobVacanciesController extends Controller
         return view('job-vacancies.index', compact('vacancies', 'search', 'search_category'));
     }
 
-    public function apiShow(JobVacancy $vacancy) {
+    public function vacancyApi(JobVacancy $vacancy) {
         return response()->json($vacancy);
     }
 
@@ -71,6 +73,90 @@ class JobVacanciesController extends Controller
         }
 
         return view('job-vacancies.index', compact('vacancies', 'search', 'search_category'));
+    }
+
+    public function viewCompanies(Request $request) {
+        $companies = Company::orderBy('id', 'desc')->get();
+        $search = $request->input('search');
+        $search_category = $request->input('search_category');
+
+        return view('job-vacancies.view-companies', compact('companies', 'search', 'search_category'));
+    }
+
+    public function companyApi(Company $company) {
+        return response()->json($company);
+    }
+
+    public function addCompanyView() {
+        return view('job-vacancies.add-company');
+    }
+
+    public function addCompany(Request $request) 
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:50'],
+            'city' => ['required', 'string', 'max:50'],
+            'address' => ['required', 'string', 'max:255'],
+            'contact_details' => ['nullable', 'string', 'max:255'],
+            'sector' => ['nullable', 'string', 'max:255'],
+            'logo_url' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+        ]);
+
+        foreach ($validated as $key => $value) {
+            $validated[$key] = strip_tags($value);
+        }
+
+        $name = isset($validated['name']) == true ? $validated['name'] : '';
+        $city = isset($validated['city']) == true ? $validated['city'] : '';
+        $address = isset($validated['address']) == true ? $validated['address'] : '';
+        $contact_details = isset($validated['contact_details']) == true ? $validated['contact_details'] : '';
+        $sector = isset($validated['sector']) == true ? $validated['sector'] : '';
+
+        if ($request->hasFile('logo_url')) {
+            $validated['logo_url'] = $request->file('logo_url')->store('logos', 'public');
+        }
+
+        $logo_url = isset($validated['logo_url']) == true ? $validated['logo_url'] : '';
+
+        Company::create([
+            'name' => $name,
+            'city' => $city,
+            'address' => $address,
+            'contact_details' => $contact_details,
+            'sector' => $sector,
+            'logo_url' => $logo_url,
+        ]);
+
+        $success_message = 'Created successfully: ' . $name . ' - ' . $city;
+        return redirect()->route('admin.view.companies')->with('success', $success_message);
+    }
+
+    // Handle the image upload
+    public function store(Request $request)
+    {
+        // Validate the uploaded image
+        $validator = Validator::make($request->all(), [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',  // Limit to image types and size
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Handle file upload
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $image = $request->file('image');
+            $path = $image->store('images', 'public');  // Store image in storage/app/public/images
+
+            // Optionally, save $path to the database or do something else with it
+            
+            return back()->with('success', 'Image uploaded successfully!');
+        }
+
+        return back()->with('error', 'Failed to upload image.');
+
+        // php artisan storage:link
+        // Display: <img src="{{ asset('storage/' . $imagePath) }}" alt="Uploaded Image">
     }
 
     // Format: 08/05/1930

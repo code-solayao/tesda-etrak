@@ -53,21 +53,24 @@ Route::controller(TableOfGraduatesController::class)->group(function () {
 
 Route::middleware(['auth', 'role:admin,superadmin'])->controller(JobVacanciesController::class)->group(function () {
     Route::get('/admin/job-vacancies', 'index')->name('admin.job-vacancies');
-    Route::get('/admin/job-vacancies/{vacancy}/json', 'apiShow')->name('admin.vacancies.api');
+    Route::get('/admin/job-vacancies/{vacancy}/json', 'vacancyApi')->name('admin.vacancy.api');
+    Route::get('/admin/job-vacancies/view-companies/{company}/json', 'companyApi')->name('admin.company.api');
     Route::get('/admin/job-vacancies/search', 'searchVacancies')->name('admin.search.vacancies');
+    Route::get('/admin/job-vacancies/view-companies', 'viewCompanies')->name('admin.view.companies');
+    Route::get('/admin/job-vacancies/add-company', 'addCompanyView')->name('admin.add-company.view');
+    Route::post('/admin/job-vacancies/add-company', 'addCompany')->name('admin.add-company');
 });
 
 Route::middleware(['auth', 'role:user'])->get('/job-vacancies/search', [JobVacanciesController::class, 'searchVacancies'])->name('search.vacancies');
 
 Route::controller(JobVacanciesController::class)->group(function () {
     Route::get('/job-vacancies', 'index')->name('job-vacancies');
-    Route::get('/job-vacancies/{vacancy}/json', 'apiShow')->name('vacancies.api');
+    Route::get('/job-vacancies/{vacancy}/json', 'vacancyApi')->name('vacancy.api');
 });
 
 Route::middleware(['auth', 'role:superadmin'])->controller(ViaGoogleSheetsController::class)->group(function () {
-    Route::get('/admin/via-google-sheets', 'index')->name('admin.via-google-sheets');
-    Route::get('/admin/via-google-sheets/import-graduate-sheet', 'import_sheet')->name('admin.import-graduate');
-    Route::get('/admin/via-google-sheets/export-graduate-data', 'export_data')->name('admin.export-graduate');
+    Route::get('/admin/via-google-sheets', 'index')->name('via-google-sheets');
+    Route::get('/admin/via-google-sheets/import-graduate-sheet', 'importGraduates')->name('import.graduates');
+    Route::get('/admin/via-google-sheets/export-graduate-data', 'exportGraduates')->name('export.graduates');
     Route::get('/admin/via-google-sheets/import-vacancies', 'importVacancies')->name('import.vacancies');
-    Route::get('/admin/via-google-sheets/import-companies', 'importCompanies')->name('import.companies');
 });
