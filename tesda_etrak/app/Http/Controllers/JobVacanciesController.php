@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Validator;
 class JobVacanciesController extends Controller
 {
     public function index(Request $request) {
-        $vacancies = JobVacancy::orderBy('id', 'desc')->get();
+        $companies = Company::with('job_vacancies')->get(); // Eager Loading (reduce number of queries)
         $search = $request->input('search');
         $search_category = $request->input('search_category');
 
-        return view('job-vacancies.index', compact('vacancies', 'search', 'search_category'));
+        return view('job-vacancies.index', compact('companies', 'search', 'search_category'));
     }
 
     public function vacancyApi(JobVacancy $vacancy) {
@@ -73,6 +73,11 @@ class JobVacanciesController extends Controller
         }
 
         return view('job-vacancies.index', compact('vacancies', 'search', 'search_category'));
+    }
+
+    public function addVacancyView() {
+        $test = 'Hello world!';
+        return view('job-vacancies.add-vacancy', compact('test'));
     }
 
     public function viewCompanies(Request $request) {

@@ -17,8 +17,6 @@ class ViaGoogleSheetsController extends Controller
     protected $service;
 
     public function index() {
-        $sheetUrl = 'https://docs.google.com/spreadsheets/d/100jOk-835-aRxURFWkON1026rLkBKH8Rrwtdy8ojv6Q/edit?gid=601902906#gid=601902906';
-        $sheetId = substr($sheetUrl, 39, 44);
         return view('via-google-sheets.index');
     }
 
@@ -27,11 +25,11 @@ class ViaGoogleSheetsController extends Controller
         logger()->info('Initialising Google Sheets data import.');
 
         $client = new Client();
-        $client->setAuthConfig(storage_path('app/credentials.json'));
+        $client->setAuthConfig(storage_path('app/private/credentials.json'));
         $client->setScopes([Sheets::SPREADSHEETS_READONLY]);
         $service = new Sheets($client);
 
-        $spreadsheetId = '10LX-Ov_XGg984cGkGsAVoLF1S-CSfNz4DWhSaL44XJM';
+        $spreadsheetId = '100jOk-835-aRxURFWkON1026rLkBKH8Rrwtdy8ojv6Q';
         $sheet = 'List of Graduates';
 
         if (empty($spreadsheetId)) {

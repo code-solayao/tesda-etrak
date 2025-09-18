@@ -36,7 +36,7 @@ class ImportSheetsData extends Command
         $client = new Google_Client();
         $client->setApplicationName('Google Sheets to MySQL Import');
         $client->setScopes([Sheets::SPREADSHEETS_READONLY]);
-        $client->setAuthConfig(storage_path('app/credentials.json'));
+        $client->setAuthConfig(storage_path('app/private/credentials.json'));
         $service = new Sheets($client);
 
         // $spreadsheetId = env('EMPLOYMENT_MONITORING_SYSTEM_ID');

@@ -56,6 +56,7 @@ Route::middleware(['auth', 'role:admin,superadmin'])->controller(JobVacanciesCon
     Route::get('/admin/job-vacancies/{vacancy}/json', 'vacancyApi')->name('admin.vacancy.api');
     Route::get('/admin/job-vacancies/view-companies/{company}/json', 'companyApi')->name('admin.company.api');
     Route::get('/admin/job-vacancies/search', 'searchVacancies')->name('admin.search.vacancies');
+    Route::get('/admin/job-vacancies/add-vacancy', 'addVacancyView')->name('admin.add-vacancy.view');
     Route::get('/admin/job-vacancies/view-companies', 'viewCompanies')->name('admin.view.companies');
     Route::get('/admin/job-vacancies/add-company', 'addCompanyView')->name('admin.add-company.view');
     Route::post('/admin/job-vacancies/add-company', 'addCompany')->name('admin.add-company');

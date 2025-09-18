@@ -1,17 +1,21 @@
-@section('title', 'E-TRAK - Add Company')
+@section('title', 'E-TRAK - Add Vacancy')
 
 @section('vite')
     @vite(['resources/css/app.css', 'resources/js/app.js', 
-        'resources/js/job-vacancies/add-company.js'])
+        'resources/js/job-vacancies/add-vacancy.js'])
 @endsection
 
-@section('main', 'Add Company')
+@section('main', 'Add Vacancy')
+
+@php
+    $print = $test;
+@endphp
 
 <x-layout>
     <div class="mb-5">
-        <a href="{{ route('admin.job-vacancies') }}" class="btn btn-secondary">Go Back</a>
+        <a href="{{ route('admin.job-vacancies') }}" class="btn btn-secondary">{{ $print }}</a>
     </div>
-    <div class="bg-white border border-gray-300 mx-auto p-8 rounded-lg shadow-md">
+    <div class="bg-gray-100 border border-gray-300 mx-auto p-8 rounded-lg shadow-md">
         @if ($errors->any())
             <ul class="bg-red-400 mb-5 px-3 py-2 rounded-md">
                 @foreach ($errors->all() as $error)
@@ -22,31 +26,52 @@
         <form action="{{ route('admin.add-company') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
             <div>
-                <label for="name" class="form-label">Name</label>
-                <input type="text" name="name" id="name" class="form-input" value="{{ old('name') }}" autofocus />
+                <label for="request_date" class="form-label">Request Date</label>
+                <input type="date" name="request_date" id="requestDate" class="form-input" value="{{ old('request_date') }}" />
             </div>
             <div>
-                <label for="city" class="form-label">City</label>
-                <input type="text" name="city" id="city" class="form-input" value="{{ old('city') }}" />
+                <label for="company_id" class="form-label">Company</label>
+                <input type="text" name="company_id" id="companyId" class="form-input" value="{{ old('company_id') }}" />
             </div>
             <div>
-                <label for="address" class="form-label">Address</label>
-                <input type="text" name="address" id="address" class="form-input" value="{{ old('address') }}" />
+                <label for="vacancies" class="form-label">Vacancy</label>
+                <input type="text" name="vacancies" id="vacancies" class="form-input" value="{{ old('vacancies') }}" />
             </div>
             <div>
-                <label for="contact_details" class="form-label">Contact Details</label>
+                <label for="contact_details" class="form-label">Related Qualification</label>
                 <input type="text" name="contact_details" id="contactDetails" class="form-input" value="{{ old('contact_details') }}" />
             </div>
             <div>
-                <label for="sector" class="form-label">Sector</label>
-                <input type="text" name="sector" id="sector" class="form-input" value="{{ old('sector') }}" />
+                <label for="job_titles" class="form-label">Job Title</label>
+                <input type="text" name="job_titles" id="jobTitles" class="form-input" value="{{ old('job_titles') }}" />
             </div>
             <div>
-                <label for="logo_url" class="form-label">Company Logo</label>
-                <input type="file" name="logo_url" id="logoUrl" accept="image/*" class="form-input" value="{{ old('logo_url') }}" />
+                <label for="tr_qualifications" class="form-label">TR Qualification</label>
+                <input type="text" name="tr_qualifications" id="trQualifications" class="form-input" value="{{ old('tr_qualifications') }}" />
             </div>
-            <div class="flex items-center justify-baseline">
-                <button type="button" class="btn btn-primary rounded-lg mr-2" id="btnAdd">Add</button>
+            <div>
+                <label for="no_of_vacancies" class="form-label">Number of Vacancies</label>
+                <input type="text" name="tr_qualifications" id="numOfVacancies" class="form-input" value="{{ old('no_of_vacancies') }}" />
+            </div>
+            <div>
+                <label for="deployment_location" class="form-label">Deployment Location</label>
+                <input type="text" name="deployment_location" id="deploymentLocation" class="form-input" value="{{ old('deploymentLocation') }}" />
+            </div>
+            <div>
+                <label for="no_of_referred" class="form-label">Number of Referred</label>
+                <input type="text" name="no_of_referred" id="numOfReferred" class="form-input" value="{{ old('no_of_referred') }}" />
+            </div>
+            <div>
+                <label for="no_of_hired" class="form-label">Number of Hired</label>
+                <input type="text" name="no_of_hired" id="numOfHired" class="form-input" value="{{ old('no_of_hired') }}" />
+            </div>
+            <div>
+                <label for="remarks" class="form-label">Remarks</label>
+                <input type="text" name="remarks" id="remarks" class="form-input" value="{{ old('remarks') }}" />
+            </div>
+            <div>
+                <label for="attachment_link" class="form-label">Attachment Link</label>
+                <input type="text" name="attachment_link" id="attachmentLink" class="form-input" value="{{ old('attachment_link') }}" />
             </div>
             {{-- Modal --}}
             <div id="addCompanyModal" class="relative z-10 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
