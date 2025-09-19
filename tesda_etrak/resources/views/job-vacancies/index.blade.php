@@ -96,20 +96,6 @@
                 </template>
                 <template x-if="selectedCompany && !loading">
                     <div>
-                        @foreach ($companies as $company)
-                            <h2>{{ $company->name }}</h2>
-                            @if ($company->job_vacancies->isEmpty())
-                                <p>No job openings available at this time.</p>
-                            @else
-                                <ul>
-                                    @foreach ($company->job_vacancies as $vacancy)
-                                        <li>{{ $vacancy->vacancies }} - {{ $vacancy->deployment_location }}</li>
-                                    @endforeach
-                                </ul>
-                            @endif
-                        @endforeach
-                    </div>
-                    <div>
                         <!-- Company Logo -->
                         <div class="flex items-center space-x-4 mb-6">
                             <img :src="selectedCompany.logo_url || '{{ asset('images/logo_default.png') }}'" 

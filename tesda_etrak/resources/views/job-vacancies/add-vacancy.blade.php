@@ -8,12 +8,16 @@
 @section('main', 'Add Vacancy')
 
 @php
-    $print = $test;
+    
 @endphp
 
 <x-layout>
     <div class="mb-5">
-        <a href="{{ route('admin.job-vacancies') }}" class="btn btn-secondary">{{ $print }}</a>
+        <a href="{{ route('admin.job-vacancies') }}" class="btn btn-secondary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5 inline-block">
+                <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd" />
+            </svg> Go Back
+        </a>
     </div>
     <div class="bg-gray-100 border border-gray-300 mx-auto p-8 rounded-lg shadow-md">
         @if ($errors->any())
@@ -23,7 +27,7 @@
                 @endforeach
             </ul>
         @endif
-        <form action="{{ route('admin.add-company') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+        <form action="{{ route('admin.add-vacancy') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
             <div>
                 <label for="request_date" class="form-label">Request Date</label>
@@ -31,15 +35,24 @@
             </div>
             <div>
                 <label for="company_id" class="form-label">Company</label>
-                <input type="text" name="company_id" id="companyId" class="form-input" value="{{ old('company_id') }}" />
+                <select name="company_id" id="companyId" class="form-input">
+                    <option value="">-- Select a Company --</option>
+                    @foreach ($companies as $company)
+                        <option value="{{ $company->id }}" {{ old('company_id') == $company->id ? 'selected' : '' }}>{{ $company->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <label for="sector" class="form-label">Sector</label>
+                <input type="text" name="sector" id="sector" class="form-input" value="{{ old('sector') }}" />
             </div>
             <div>
                 <label for="vacancies" class="form-label">Vacancy</label>
                 <input type="text" name="vacancies" id="vacancies" class="form-input" value="{{ old('vacancies') }}" />
             </div>
             <div>
-                <label for="contact_details" class="form-label">Related Qualification</label>
-                <input type="text" name="contact_details" id="contactDetails" class="form-input" value="{{ old('contact_details') }}" />
+                <label for="related_qualifications" class="form-label">Related Qualification</label>
+                <input type="text" name="related_qualifications" id="relatedQualifications" class="form-input" value="{{ old('related_qualifications') }}" />
             </div>
             <div>
                 <label for="job_titles" class="form-label">Job Title</label>
@@ -51,7 +64,7 @@
             </div>
             <div>
                 <label for="no_of_vacancies" class="form-label">Number of Vacancies</label>
-                <input type="text" name="tr_qualifications" id="numOfVacancies" class="form-input" value="{{ old('no_of_vacancies') }}" />
+                <input type="text" name="no_of_vacancies" id="numOfVacancies" class="form-input" value="{{ old('no_of_vacancies') }}" />
             </div>
             <div>
                 <label for="deployment_location" class="form-label">Deployment Location</label>
@@ -73,8 +86,11 @@
                 <label for="attachment_link" class="form-label">Attachment Link</label>
                 <input type="text" name="attachment_link" id="attachmentLink" class="form-input" value="{{ old('attachment_link') }}" />
             </div>
+            <div class="flex items-center justify-baseline">
+                <button type="button" class="btn btn-primary rounded-lg mr-2" id="btnAdd">Add</button>
+            </div>
             {{-- Modal --}}
-            <div id="addCompanyModal" class="relative z-10 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div id="addVacancyModal" class="relative z-10 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                 <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
                 <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
                     <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -87,10 +103,10 @@
                                         </svg>
                                     </div>
                                     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                        <h3 class="text-base font-semibold text-gray-900" id="modal-title">Add Company</h3>
+                                        <h3 class="text-base font-semibold text-gray-900" id="modal-title">Add Vacancy</h3>
                                         <div class="mt-2">
                                             <p class="text-sm text-gray-500">
-                                                Do you confirm adding this company?
+                                                Do you confirm adding this vacancy?
                                             </p>
                                         </div>
                                     </div>

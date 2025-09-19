@@ -38,10 +38,6 @@
                 <input type="text" name="contact_details" id="contactDetails" class="form-input" value="{{ old('contact_details') }}" />
             </div>
             <div>
-                <label for="sector" class="form-label">Sector</label>
-                <input type="text" name="sector" id="sector" class="form-input" value="{{ old('sector') }}" />
-            </div>
-            <div>
                 <label for="logo_url" class="form-label">Company Logo</label>
                 <input type="file" name="logo_url" id="logoUrl" accept="image/*" class="form-input" value="{{ old('logo_url') }}" />
             </div>

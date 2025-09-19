@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\Validator;
 class JobVacanciesController extends Controller
 {
     public function index(Request $request) {
-        $companies = Company::with('job_vacancies')->get(); // Eager Loading (reduce number of queries)
+        // $vacancies = JobVacancy::with('companies')->get();
+        $vacancies = JobVacancy::orderBy('id', 'desc')->get();
         $search = $request->input('search');
         $search_category = $request->input('search_category');
 
-        return view('job-vacancies.index', compact('companies', 'search', 'search_category'));
+        return view('job-vacancies.index', compact('vacancies', 'search', 'search_category'));
     }
 
     public function vacancyApi(JobVacancy $vacancy) {
@@ -76,8 +77,44 @@ class JobVacanciesController extends Controller
     }
 
     public function addVacancyView() {
-        $test = 'Hello world!';
-        return view('job-vacancies.add-vacancy', compact('test'));
+        $companies = Company::with('jobVacancies')->get(); // Eager Loading (reduce number of queries)
+        return view('job-vacancies.add-vacancy', compact('companies'));
+    }
+
+    public function addVacancy(Request $request) {
+        $validated = $request->validate([
+            'request_date' => ['nullable', 'string', 'max:50'],
+            'company_id' => ['required', 'exists:companies,id'],
+            'sector' => ['nullable', 'string', 'max:255'],
+            'vacancies' => ['required', 'string', 'max:255'],
+            'related_qualifications' => ['nullable', 'string', 'max:255'],
+            'job_titles' => ['nullable', 'string', 'max:255'],
+            'tr_qualifications' => ['nullable', 'string', 'max:255'],
+            'no_of_vacancies' => ['nullable', 'string', 'max:255'],
+            'deployment_location' => ['nullable', 'string', 'max:255'],
+            'no_of_referred' => ['nullable', 'string', 'max:255'],
+            'no_of_hired' => ['nullable', 'string', 'max:255'],
+            'remarks' => ['nullable', 'string', 'max:255'],
+            'attachment_link' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        JobVacancy::create([
+            'request_date' => $validated['request_date'],
+            'company_id' => $validated['company_id'],
+            'sector' => $validated['sector'],
+            'vacancies' => $validated['vacancies'],
+            'related_qualifications' => $validated['related_qualifications'],
+            'job_titles' => $validated['job_titles'],
+            'tr_qualifications' => $validated['tr_qualifications'],
+            'no_of_vacancies' => $validated['no_of_vacancies'],
+            'deployment_location' => $validated['deployment_location'],
+            'no_of_referred' => $validated['no_of_referred'],
+            'no_of_hired' => $validated['no_of_hired'],
+            'remarks' => $validated['remarks'],
+            'attachment_link' => $validated['attachment_link'],
+        ]);
+
+        return redirect()->route('admin.job-vacancies')->with('success', 'Job vacancy added successfully!');
     }
 
     public function viewCompanies(Request $request) {
@@ -103,7 +140,6 @@ class JobVacanciesController extends Controller
             'city' => ['required', 'string', 'max:50'],
             'address' => ['required', 'string', 'max:255'],
             'contact_details' => ['nullable', 'string', 'max:255'],
-            'sector' => ['nullable', 'string', 'max:255'],
             'logo_url' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ]);
 
@@ -115,7 +151,6 @@ class JobVacanciesController extends Controller
         $city = isset($validated['city']) == true ? $validated['city'] : '';
         $address = isset($validated['address']) == true ? $validated['address'] : '';
         $contact_details = isset($validated['contact_details']) == true ? $validated['contact_details'] : '';
-        $sector = isset($validated['sector']) == true ? $validated['sector'] : '';
 
         if ($request->hasFile('logo_url')) {
             $validated['logo_url'] = $request->file('logo_url')->store('logos', 'public');
@@ -128,7 +163,6 @@ class JobVacanciesController extends Controller
             'city' => $city,
             'address' => $address,
             'contact_details' => $contact_details,
-            'sector' => $sector,
             'logo_url' => $logo_url,
         ]);
 

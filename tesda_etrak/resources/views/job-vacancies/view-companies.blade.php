@@ -57,11 +57,7 @@
                             <!-- Name -->
                             <h3 class="font-semibold text-md text-gray-800 truncate">{{ $company->name }}</h3>
                             <!-- Sector -->
-                            @if ($company->sector != null)
-                                <span class="text-sm text-gray-500 mt-1">{{ $company->sector }}</span>
-                            @else
-                                <span class="text-sm text-gray-500 mt-1">Not specified</span>
-                            @endif
+                            <span class="text-sm text-gray-500 mt-1">{{ $company->city }}</span>
                         </button>
                     @endforeach
                 </div>
@@ -98,8 +94,6 @@
                                 <dd class="text-gray-600" x-text="selectedCompany.address"></dd>
                                 <dt>Contact Details: </dt>
                                 <dd class="text-gray-600" x-text="selectedCompany.contact_details ?? 'N/A'"></dd>
-                                <dt>Sector: </dt>
-                                <dd class="text-gray-600" x-text="selectedCompany.sector ?? 'N/A'"></dd>
                             </dl>
                         </div>
                         <!-- Link to Profile -->

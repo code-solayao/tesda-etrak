@@ -93,7 +93,7 @@
             <div>
                 <label for="sector" class="form-label">Sector</label>
                 <select name="sector" id="sector" class="form-input">
-                    <option value="">-- Select an sector --</option>
+                    <option value="">-- Select a sector --</option>
                     @foreach ($sectors as $sector)
                         <option value="{{ $sector }}" {{ old('sector') == $sector ? 'selected' : '' }}>{{ $sector }}</option>
                     @endforeach
