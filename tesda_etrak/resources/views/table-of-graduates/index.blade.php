@@ -76,9 +76,9 @@
                     <th class="px-6 py-3 border-r">First Name</th>
                     <th class="px-6 py-3 border-r">Middle Name</th>
                     <th class="px-6 py-3 border-r">Ext.</th>
-                    <th class="px-6 py-3 border-r">Status of Employment</th>
-                    <th class="px-6 py-3 border-r">Year of Graduation</th>
                     <th class="px-6 py-3 border-r">Qualification Title</th>
+                    <th class="px-6 py-3 border-r">Year of Graduation</th>
+                    <th class="px-6 py-3 border-r">Status of Employment</th>
                     @alladmin
                         <th class="px-6 py-3 border-r"></th>
                     @endalladmin
@@ -92,9 +92,9 @@
                             <td class="px-6 py-3">{{ $graduate->first_name }}</td>
                             <td class="px-6 py-3">{{ $graduate->middle_name }}</td>
                             <td class="px-6 py-3">{{ $graduate->extension_name }}</td>
-                            <td class="px-6 py-3">{{ $graduate->employment_status }}</td>
-                            <td class="px-6 py-3">{{ $graduate->allocation }}</td>
                             <td class="px-6 py-3">{{ $graduate->qualification_title }}</td>
+                            <td class="px-6 py-3">{{ $graduate->allocation }}</td>
+                            <td class="px-6 py-3">{{ $graduate->employment_status }}</td>
                             <td class="px-6 py-3">
                                 <div class="flex justify-center space-x-2">
                                     <select class="action-select bg-gray-500 text-white hover:bg-gray-600 border font-semibold px-2 py-1 rounded-md" data-id="{{ $graduate->id }}">

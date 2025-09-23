@@ -475,7 +475,6 @@
                         {{ session('success') }}
                     </div>
                 @endif
-                
                 <h1 class="text-gray-600 lg:hidden text-5xl">@yield('main')</h1>
                 <h1 class="text-gray-600 lg:block hidden">@yield('main')</h1>
             </header>
