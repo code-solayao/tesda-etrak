@@ -56,7 +56,7 @@
             @enduser
         </div>
     @endauth
-    <section class="flex items-center justify-center space-x-2" x-data="{ selectedCompany: null, loading: false }">
+    <section class="flex items-center justify-center space-x-2" x-data="{ vacancy: null, loading: false }">
         <!-- Card Grid -->
         <div class="bg-gray-300 p-6 lg:p-8 rounded-lg lg:rounded-xl w-full lg:w-full">
             <div class="max-w-full mx-auto h-[calc(2.9*10rem)] lg:h-[calc(3.8*10rem)] overflow-y-auto pr-2">
@@ -64,13 +64,13 @@
                     @foreach ($vacancies as $vacancy)
                         <button type="button" class="cards group bg-gray-100 hover:bg-white border border-gray-300 cursor-pointer p-4 rounded-lg lg:rounded-xl shadow-sm text-center transition" 
                         @click="loading = true; 
-                        fetch('{{ route('vacancy.api', $vacancy->id) }}').then(res => res.json()).then(data => { selectedCompany = data; loading = false; })">
+                        fetch('{{ route('admin.vacancy.api', $vacancy->id) }}').then(res => res.json()).then(data => { vacancy = data; loading = false; })">
                             <!-- Company Logo -->
                             <div class="flex items-center justify-center mb-4">
-                                <img src="{{ asset('images/logo_default.png') }}" alt="{{ $vacancy->company_name }}" class="h-full max-h-12 object-contain">
+                                <img src="{{ asset('storage/' . $vacancy->company->logo_url) }}" alt="{{ $vacancy->company->name }}" class="h-full max-h-12 object-contain">
                             </div>
                             <!-- Company Name -->
-                            <h3 class="font-semibold text-md text-gray-800 truncate">{{ $vacancy->company_name }}</h3>
+                            <h3 class="font-semibold text-md text-gray-800 truncate">{{ $vacancy->company->name }}</h3>
                             <!-- Job Count -->
                             @if ($vacancy->no_of_vacancies != null)
                                 <span class="text-sm text-gray-500 mt-1">{{ $vacancy->no_of_vacancies }} vacancies</span>
@@ -85,7 +85,7 @@
         <!-- Vacancy Details -->
         <div class="bg-gray-100 border border-gray-400 hidden lg:block p-8 rounded-xl shadow-md w-full">
             <div class="h-[calc(3.8*10rem)] max-w-full mx-auto overflow-y-auto">
-                {{-- Loading Spinner --}}
+                <!-- Loading Spinner -->
                 <template x-if="loading">
                     <div class="flex items-center justify-center h-64">
                         <svg class="animate-spin h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -93,27 +93,29 @@
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
                         </svg>
                     </div>
+                    <p class="italic text-gray-400">Loading vacancy details...</p>
                 </template>
-                <template x-if="selectedCompany && !loading">
+                <!-- Details -->
+                <template x-if="vacancy && !loading">
                     <div>
                         <!-- Company Logo -->
                         <div class="flex items-center space-x-4 mb-6">
-                            <img :src="selectedCompany.logo_url || '{{ asset('images/logo_default.png') }}'" 
-                            :alt="selectedCompany.company_name + ' Logo'" class="max-w-24 w-full object-contain">
+                            <img :src="'{{ url('/storage') }}/' + vacancy.company.logo_url || '{{ asset('images/logo_default.png') }}'" 
+                            :alt="vacancy.company.name + ' Logo'" class="max-w-24 w-full object-contain">
                             <div>
-                                <h3 class="font-semibold text-3xl text-gray-900" x-text="selectedCompany.company_name"></h3>
-                                <span class="text-lg text-gray-500" x-text="selectedCompany.no_of_vacancies + ' vacancies'"></span>
+                                <h3 class="font-semibold text-3xl text-gray-900" x-text="vacancy.company.name"></h3>
+                                <span class="text-lg text-gray-500" x-text="vacancy.no_of_vacancies + ' vacancies'"></span>
                             </div>
                         </div>
                         <!-- Description -->
                         <div class="my-4">
                             <dl>
                                 <dt>Contact Details: </dt>
-                                <dd class="text-gray-600" x-text="selectedCompany.contact_details ?? 'N/A'"></dd>
+                                <dd class="text-gray-600" x-text="vacancy.company.contact_details ?? 'N/A'"></dd>
                                 <dt>Vacancies: </dt>
-                                <dd class="text-gray-600" x-text="selectedCompany.vacancies ?? 'N/A'"></dd>
+                                <dd class="text-gray-600" x-text="vacancy.vacancies ?? 'N/A'"></dd>
                                 <dt>Deployment Location</dt>
-                                <dd class="text-gray-600" x-text="selectedCompany.deployment_location ?? 'N/A'"></dd>
+                                <dd class="text-gray-600" x-text="vacancy.deployment_location ?? 'N/A'"></dd>
                             </dl>
                         </div>
                         <!-- Link to Jobs -->
@@ -125,7 +127,7 @@
                     </div>
                 </template>
                 <!-- Placeholder when no company is selected -->
-                <template x-if="!selectedCompany && !loading">
+                <template x-if="!vacancy && !loading">
                     <div class="text-xl text-gray-500">
                         <p>Select a company to see details</p>
                     </div>

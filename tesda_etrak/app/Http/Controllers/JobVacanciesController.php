@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class JobVacanciesController extends Controller
 {
     public function index(Request $request) {
-        // $vacancies = JobVacancy::with('companies')->get();
-        $vacancies = JobVacancy::orderBy('id', 'desc')->get();
+        $vacancies = JobVacancy::with('company')->orderBy('id', 'desc')->get();
         $search = $request->input('search');
         $search_category = $request->input('search_category');
 
@@ -20,6 +19,7 @@ class JobVacanciesController extends Controller
     }
 
     public function vacancyApi(JobVacancy $vacancy) {
+        $vacancy->load('company');
         return response()->json($vacancy);
     }
 

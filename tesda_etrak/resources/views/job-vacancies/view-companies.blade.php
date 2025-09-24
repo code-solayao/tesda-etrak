@@ -40,7 +40,7 @@
             </a>
         </div>
     </div>
-    <section class="flex items-center justify-center space-x-2" x-data="{ selectedCompany: null, loading: false }">
+    <section class="flex items-center justify-center space-x-2" x-data="{ company: null, loading: false }">
         <!-- Card Grid -->
         <div class="bg-gray-300 p-6 lg:p-8 rounded-lg lg:rounded-xl w-full lg:w-full">
             <div class="max-w-full mx-auto h-[calc(2.9*10rem)] lg:h-[calc(3.8*10rem)] overflow-y-auto pr-2">
@@ -48,7 +48,7 @@
                     @foreach ($companies as $company)
                         <button type="button" class="cards group bg-gray-100 hover:bg-white border border-gray-300 cursor-pointer p-4 rounded-lg lg:rounded-xl shadow-sm text-center transition" 
                         @click="loading = true; 
-                        fetch('{{ route('admin.company.api', $company->id) }}').then(res => res.json()).then(data => { selectedCompany = data; loading = false; })">
+                        fetch('{{ route('admin.company.api', $company->id) }}').then(res => res.json()).then(data => { company = data; loading = false; })">
                             <!-- Company Logo -->
                             <div class="flex items-center justify-center mb-4">
                                 <img src="{{ $company->logo_url ? asset('storage/' . $company->logo_url) : asset('images/logo.png') }}" 
@@ -75,25 +75,25 @@
                         </svg>
                     </div>
                 </template>
-                <template x-if="selectedCompany && !loading">
+                <template x-if="company && !loading">
                     <div>
                         <!-- Company Logo -->
                         <div class="flex items-center space-x-4 mb-6">
-                            <img :src="'{{ url('/storage') }}/' + selectedCompany.logo_url || '{{ asset('images/logo_default.png') }}'" 
-                            :alt="selectedCompany.name + ' Logo'" class="max-w-24 w-full object-contain">
+                            <img :src="'{{ url('/storage') }}/' + company.logo_url || '{{ asset('images/logo_default.png') }}'" 
+                            :alt="company.name + ' Logo'" class="max-w-24 w-full object-contain">
                             <div>
-                                <h3 class="font-semibold text-3xl text-gray-900" x-text="selectedCompany.name"></h3>
+                                <h3 class="font-semibold text-3xl text-gray-900" x-text="company.name"></h3>
                             </div>
                         </div>
                         <!-- Description -->
                         <div class="my-4">
                             <dl>
                                 <dt>City: </dt>
-                                <dd class="text-gray-600" x-text="selectedCompany.city"></dd>
+                                <dd class="text-gray-600" x-text="company.city"></dd>
                                 <dt>Address: </dt>
-                                <dd class="text-gray-600" x-text="selectedCompany.address"></dd>
+                                <dd class="text-gray-600" x-text="company.address"></dd>
                                 <dt>Contact Details: </dt>
-                                <dd class="text-gray-600" x-text="selectedCompany.contact_details ?? 'N/A'"></dd>
+                                <dd class="text-gray-600" x-text="company.contact_details ?? 'N/A'"></dd>
                             </dl>
                         </div>
                         <!-- Link to Profile -->
@@ -105,7 +105,7 @@
                     </div>
                 </template>
                 <!-- Placeholder when no company is selected -->
-                <template x-if="!selectedCompany && !loading">
+                <template x-if="!company && !loading">
                     <div class="text-xl text-gray-500">
                         <p>Select a company to see details</p>
                     </div>

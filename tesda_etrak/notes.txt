@@ -1,7 +1,4 @@
-- Baguhin ang hitsura ng view ng Job Vacancies
-- Gawin ang mga logo: Kayang-Kaya, Bagong Pilipinas
 - Dagdagan ang Data Privacy Act
-- Optional: E-TRAK video in the background
 - Ayusin ang "invalid JSON payload"
 - Ituloy ayusin ang Export data function
 
