@@ -114,12 +114,39 @@
                                 <dd class="text-gray-600" x-text="vacancy.company.contact_details ?? 'N/A'"></dd>
                                 <dt>Vacancies: </dt>
                                 <dd class="text-gray-600" x-text="vacancy.vacancies ?? 'N/A'"></dd>
-                                <dt>Deployment Location</dt>
+                                <dt>Deployment Location: </dt>
                                 <dd class="text-gray-600" x-text="vacancy.deployment_location ?? 'N/A'"></dd>
                             </dl>
                         </div>
+                        <div class="my-4">
+                            <button type="button" onclick="collapsibleDetails(this)" class="collapsible rounded-lg">More details</button>
+                            <div class="content hidden rounded-lg">
+                                <dl>
+                                    <dt>Request Date: </dt>
+                                    <dd class="text-gray-600" x-text="vacancy.company.request_date ?? 'N/A'"></dd>
+                                    <dt>Sector: </dt>
+                                    <dd class="text-gray-600" x-text="vacancy.sector ?? 'N/A'"></dd>
+                                    <dt>Related Qualifications: </dt>
+                                    <dd class="text-gray-600" x-text="vacancy.related_qualifications ?? 'N/A'"></dd>
+                                    <dt>Job Titles: </dt>
+                                    <dd class="text-gray-600" x-text="vacancy.job_titles ?? 'N/A'"></dd>
+                                    <dt>TR Qualifications: </dt>
+                                    <dd class="text-gray-600" x-text="vacancy.tr_qualifications ?? 'N/A'"></dd>
+                                    <dt>Number of Referred: </dt>
+                                    <dd class="text-gray-600" x-text="vacancy.no_of_referred ?? 'N/A'"></dd>
+                                    <dt>Number of Hired: </dt>
+                                    <dd class="text-gray-600" x-text="vacancy.no_of_hired ?? 'N/A'"></dd>
+                                    <dt>Remarks: </dt>
+                                    <dd class="text-gray-600" x-text="vacancy.remarks ?? 'N/A'"></dd>
+                                    <dt>Attachment Link: </dt>
+                                    <a :href="vacancy.attachment_link" class="text-blue-700 underline">
+                                        <dd x-text="vacancy.attachment_link ?? 'N/A'"></dd>
+                                    </a>
+                                </dl>
+                            </div>
+                        </div>
                         <!-- Link to Jobs -->
-                        <div class="mt-6">
+                        <div class="mt-6 hidden">
                             <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                                 View All Jobs
                             </a>
@@ -135,4 +162,18 @@
             </div>
         </div>
     </section>
+    
+    <script>
+        function collapsibleDetails(collapsible) {
+            collapsible.classList.toggle("active");
+            let content = collapsible.nextElementSibling;
+
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            }
+            else {
+                content.style.display = "block";
+            }
+        }
+    </script>
 </x-layout>
