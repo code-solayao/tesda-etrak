@@ -113,9 +113,9 @@
                             <td class="px-6 py-4">{{ $graduate->first_name }}</td>
                             <td class="px-6 py-4">{{ $graduate->middle_name }}</td>
                             <td class="px-6 py-4">{{ $graduate->extension_name }}</td>
-                            <td class="px-6 py-4">{{ $graduate->employment_status }}</td>
-                            <td class="px-6 py-4">{{ $graduate->allocation }}</td>
-                            <td class="px-6 py-4">{{ $graduate->qualification_title }}</td>
+                            <td class="px-6 py-3">{{ $graduate->qualification_title }}</td>
+                            <td class="px-6 py-3">{{ $graduate->allocation }}</td>
+                            <td class="px-6 py-3">{{ $graduate->employment_status }}</td>
                         </tr>
                     @enduser
                     @guest
@@ -124,9 +124,9 @@
                             <td class="px-6 py-4">{{ $graduate->first_name }}</td>
                             <td class="px-6 py-4">{{ $graduate->middle_name }}</td>
                             <td class="px-6 py-4">{{ $graduate->extension_name }}</td>
-                            <td class="px-6 py-4">{{ $graduate->employment_status }}</td>
-                            <td class="px-6 py-4">{{ $graduate->allocation }}</td>
                             <td class="px-6 py-4">{{ $graduate->qualification_title }}</td>
+                            <td class="px-6 py-4">{{ $graduate->allocation }}</td>
+                            <td class="px-6 py-4">{{ $graduate->employment_status }}</td>
                         </tr>
                     @endguest
                 @endforeach

@@ -7,6 +7,7 @@ use App\Models\Graduate;
 use App\Models\JobVacancy;
 use Carbon\Carbon;
 use Google\Client;
+use Google\Service\Exception;
 use Google\Service\Sheets;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -339,6 +340,51 @@ class ViaGoogleSheetsController extends Controller
         
         logger()->info('Local data export complete.');
         return redirect()->route('via-google-sheets')->with('success', 'Local data export complete.');
+    }
+
+    public function exportGrads() 
+    {
+        logger()->info('Initialising local data export.');
+
+        // Assuming you're using a specific range, e.g., "Sheet1!A1"
+        $spreadsheetId = '1-PlAbP1Y0dgqUEmblx3atGrjkkPWkOxrTE1qglkwfvM';  // Replace with your Google Sheets spreadsheet ID
+        $range = 'Sheet1!A1';  // Update the range if necessary
+
+        $this->client = new Client();
+        $this->client->setAuthConfig(storage_path('app/private/credentials.json'));
+        $this->client->setScopes(Sheets::SPREADSHEETS);
+
+        $this->service = new Sheets($this->client);
+
+        Graduate::chunk(1000, function ($rows) use ($spreadsheetId, $range) {
+            $values = $rows->map(function ($row) {
+                return array_map(function ($value) {
+                    return $value === null ? '' : $value;
+                }, (array) $row);
+            })->toArray();
+
+            $body = new Sheets\ValueRange([
+                'values' => $values
+            ]);
+
+            $params = [
+                'valueInputOption' => 'RAW',
+            ];
+            
+            try {
+                $this->service->spreadsheets_values->append($spreadsheetId, $range, $body, $params);
+            }
+            catch (Exception $e) {
+                dd('Exception found: ' . $e->getMessage());
+            }
+
+            logger()->info(count($values) . ' rows appended');
+            
+            // Update range to the next row
+            $range = 'Sheet1!A' . (count($rows) + 1);  // Example logic to move to next range
+        });
+
+        return response()->json(['message' => 'Data exported successfully!']);
     }
 
     public function importVacancies() 

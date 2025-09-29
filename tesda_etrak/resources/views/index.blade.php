@@ -15,7 +15,7 @@
             <p class="text-2xl">This is a project of <strong>Employment Monitoring System</strong></p>
         </div>
         <div class="border rounded-md shadow-md mb-auto ml-auto">
-            <video class="rounded w-xl" controls muted>
+            <video class="rounded w-xl" autoplay controls muted>
                 <source src="{{ asset('videos/index.webm') }}" type="video/webm">
                 <source src="{{ asset('videos/index.mp4') }}" type="video/mp4">
                 <source src="{{ asset('videos/index.ogg') }}" type="video/ogg">

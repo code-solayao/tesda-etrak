@@ -73,6 +73,6 @@ Route::controller(JobVacanciesController::class)->group(function () {
 Route::middleware(['auth', 'role:superadmin'])->controller(ViaGoogleSheetsController::class)->group(function () {
     Route::get('/admin/via-google-sheets', 'index')->name('via-google-sheets');
     Route::get('/admin/via-google-sheets/import-graduate-sheet', 'importGraduates')->name('import.graduates');
-    Route::get('/admin/via-google-sheets/export-graduate-data', 'exportGraduates')->name('export.graduates');
+    Route::get('/admin/via-google-sheets/export-graduate-data', 'exportGrads')->name('export.graduates');
     Route::get('/admin/via-google-sheets/import-vacancies', 'importVacancies')->name('import.vacancies');
 });
