@@ -23,7 +23,7 @@
             </video>
         </div>
     </div>
-    <div class="flex items-center justify-center mx-auto py-32 space-x-32">
+    <div class="border-4 border-gray-200 flex items-center justify-center mx-24 my-36 py-12 rounded-2xl shadow-lg space-x-60">
         <img src="{{ asset('images/logo_tesda.png') }}" alt="TESDA Logo" class="w-2xs">
         <img src="{{ asset('images/logo_kayang-kaya.png') }}" alt="Kayang-Kaya Logo" class="w-2xs">
         <img src="{{ asset('images/logo_bagong-pilipinas.png') }}" alt="Bagong Pilipinas Logo" class="w-2xs">

@@ -199,16 +199,18 @@ class ViaGoogleSheetsController extends Controller
     {
         logger()->info('Initialising local data export.');
 
+        set_time_limit(600);
+
         $this->client = new Client();
         $this->client->setApplicationName('Laravel Google Sheets Export');
-        $this->client->setAuthConfig(storage_path('app/credentials.json'));
+        $this->client->setAuthConfig(storage_path('app/private/credentials.json'));
         $this->client->setScopes(Sheets::SPREADSHEETS);
         $this->client->setAccessType('offline');
         $this->client->setPrompt('select_account consent');
         $this->service = new Sheets($this->client);
 
         $spreadsheetId = '1-PlAbP1Y0dgqUEmblx3atGrjkkPWkOxrTE1qglkwfvM';
-        $sheet = 'List of Graduates';
+        $sheet = 'Sheet1!A2:BA100000000';
 
         // Clear old data
         $this->clearSheet($sheet, $spreadsheetId);
@@ -269,10 +271,10 @@ class ViaGoogleSheetsController extends Controller
             'Verification',
             'Job Vacancies (Verification)',
         ]];
-        $this->updateRows('List of Graduates!A1', $headers, $spreadsheetId);
+        $this->updateRows('Sheet1!A1', $headers, $spreadsheetId);
 
         $data = [];
-        Graduate::chunk(1000, function ($rows) use (&$data) {
+        Graduate::chunk(1000, function ($rows) use (&$data, $spreadsheetId) {
             foreach ($rows as $row) {
                 $data[] = [
                     $row->district,
@@ -331,60 +333,26 @@ class ViaGoogleSheetsController extends Controller
                 ];
             }
 
+            $lastRow = $this->getLastRow($spreadsheetId, $this->service);
+            $nextRange = 'A' . ($lastRow + 1);
+            $this->updateRows($nextRange, $data, $spreadsheetId);
+
             sleep(1); // Prevent API quota issues
 
             logger()->info(count($data) . ' rows appended.');
         });
-
-        $this->updateRows($sheet, $data, $spreadsheetId);
         
         logger()->info('Local data export complete.');
         return redirect()->route('via-google-sheets')->with('success', 'Local data export complete.');
     }
 
-    public function exportGrads() 
+    public function getLastRow($spreadsheetId, $service) 
     {
-        logger()->info('Initialising local data export.');
+        $range = 'A:A';
+        $response = $service->spreadsheet_values->get($spreadsheetId, $range);
+        $values = $response->getValues();
 
-        // Assuming you're using a specific range, e.g., "Sheet1!A1"
-        $spreadsheetId = '1-PlAbP1Y0dgqUEmblx3atGrjkkPWkOxrTE1qglkwfvM';  // Replace with your Google Sheets spreadsheet ID
-        $range = 'Sheet1!A1';  // Update the range if necessary
-
-        $this->client = new Client();
-        $this->client->setAuthConfig(storage_path('app/private/credentials.json'));
-        $this->client->setScopes(Sheets::SPREADSHEETS);
-
-        $this->service = new Sheets($this->client);
-
-        Graduate::chunk(1000, function ($rows) use ($spreadsheetId, $range) {
-            $values = $rows->map(function ($row) {
-                return array_map(function ($value) {
-                    return $value === null ? '' : $value;
-                }, (array) $row);
-            })->toArray();
-
-            $body = new Sheets\ValueRange([
-                'values' => $values
-            ]);
-
-            $params = [
-                'valueInputOption' => 'RAW',
-            ];
-            
-            try {
-                $this->service->spreadsheets_values->append($spreadsheetId, $range, $body, $params);
-            }
-            catch (Exception $e) {
-                dd('Exception found: ' . $e->getMessage());
-            }
-
-            logger()->info(count($values) . ' rows appended');
-            
-            // Update range to the next row
-            $range = 'Sheet1!A' . (count($rows) + 1);  // Example logic to move to next range
-        });
-
-        return response()->json(['message' => 'Data exported successfully!']);
+        return count($values);
     }
 
     public function importVacancies() 
