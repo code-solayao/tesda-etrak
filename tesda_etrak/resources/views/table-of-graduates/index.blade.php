@@ -38,7 +38,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                     </svg> Create Record
                 </a>
-                <button type="button" class="btn btn-danger" id="toggleDeleteAll">
+                <button type="button" class="btn btn-danger" id="btnTruncate">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="inline-block mb-0.5 size-6">
                         <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
                     </svg> Clear All Records
@@ -160,16 +160,20 @@
                     <form id="deleteForm" method="POST">
                         @csrf
                         @method('DELETE')
-                        <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                        <div class="bg-gray-50 px-4 py-3 lg:hidden">
                             <input type="submit" name="delete" class="btn-danger-modal" role="button" value="Delete" />
-                            <button type="button" id="dismissDelete" class="btn-secondary-modal">Cancel</button>
+                            <button type="button" id="cancelDelete" class="btn-secondary-modal">Cancel</button>
+                        </div>
+                        <div class="bg-gray-50 hidden lg:flex flex-row-reverse px-6 py-3">
+                            <input type="submit" name="delete" class="btn-danger-modal" role="button" value="Delete" />
+                            <button type="button" id="cancelDelete_desktop" class="btn-secondary-modal mx-2">Cancel</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <div class="relative z-10 hidden" id="deleteAllModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="relative z-10 hidden" id="truncateModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
         <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
             <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -194,9 +198,13 @@
                     <form action="{{ route('admin.truncate-graduates') }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                        <div class="bg-gray-50 px-4 py-3 lg:hidden">
                             <input type="submit" name="delete_all" class="btn-danger-modal" role="button" value="Clear All Records" />
-                            <button type="button" id="dismissDeleteAll" class="btn-secondary-modal">Cancel</button>
+                            <button type="button" id="cancelTruncate" class="btn-secondary-modal">Cancel</button>
+                        </div>
+                        <div class="bg-gray-50 hidden lg:flex flex-row-reverse px-6 py-3">
+                            <input type="submit" name="delete_all" class="btn-danger-modal" role="button" value="Clear All Records" />
+                            <button type="button" id="cancelTruncate_desktop" class="btn-secondary-modal mx-2">Cancel</button>
                         </div>
                     </form>
                 </div>

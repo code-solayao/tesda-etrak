@@ -7,7 +7,6 @@ use App\Models\Graduate;
 use App\Models\JobVacancy;
 use Carbon\Carbon;
 use Google\Client;
-use Google\Service\Exception;
 use Google\Service\Sheets;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -31,6 +30,7 @@ class ViaGoogleSheetsController extends Controller
         $service = new Sheets($client);
 
         $spreadsheetId = '100jOk-835-aRxURFWkON1026rLkBKH8Rrwtdy8ojv6Q';
+        // $spreadsheetId = '10LX-Ov_XGg984cGkGsAVoLF1S-CSfNz4DWhSaL44XJM';
         $sheet = 'List of Graduates';
 
         if (empty($spreadsheetId)) {
@@ -332,27 +332,16 @@ class ViaGoogleSheetsController extends Controller
                     $row->job_vacancies,
                 ];
             }
-
-            $lastRow = $this->getLastRow($spreadsheetId, $this->service);
-            $nextRange = 'A' . ($lastRow + 1);
-            $this->updateRows($nextRange, $data, $spreadsheetId);
-
+            
             sleep(1); // Prevent API quota issues
-
+            
             logger()->info(count($data) . ' rows appended.');
         });
+
+        $this->updateRows($sheet, $data, $spreadsheetId);
         
         logger()->info('Local data export complete.');
         return redirect()->route('via-google-sheets')->with('success', 'Local data export complete.');
-    }
-
-    public function getLastRow($spreadsheetId, $service) 
-    {
-        $range = 'A:A';
-        $response = $service->spreadsheet_values->get($spreadsheetId, $range);
-        $values = $response->getValues();
-
-        return count($values);
     }
 
     public function importVacancies() 
