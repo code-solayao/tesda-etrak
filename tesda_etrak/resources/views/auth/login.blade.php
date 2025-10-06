@@ -23,9 +23,11 @@
                 </video>
             </div>
         </div>
-        <div class="flex items-center justify-center">
-            <div class="w-sm h-[800px] p-8 pt-60 space-y-6 bg-sky-300 rounded-2xl shadow-lg">
-                <h2 class="text-2xl font-bold text-center text-gray-800">Sign in</h2>
+        <div class="bg-sky-300 flex items-center justify-center h-[800px] rounded-2xl shadow-lg">
+            <div class="w-sm p-8 space-y-6">
+                <div class="border-b border-b-blue-500 p-2">
+                    <h2 class="text-blue-600 text-2xl text-center font-bold">Sign in</h2>
+                </div>
                 @if ($errors->any())
                     <ul class="px-3 py-2 bg-red-400 rounded-md">
                         @foreach ($errors->all() as $error)

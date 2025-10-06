@@ -9,6 +9,7 @@
 </head>
 @php
     $authViews = ['view.login', 'view.signup'];
+    $withHome = ['home', 'view.login', 'view.signup'];
 @endphp
 <body id="body">
     <header class="bg-blue-400 fixed left-0 shadow-md top-0 w-full z-20">
@@ -468,18 +469,24 @@
             </aside>
         @endif
         <!-- Main -->
-        <main class="flex-1 overflow-y-auto px-6 lg:ml-20 transition-all duration-300">
-            <header>
-                @if (session('success'))
-                    <div class="bg-green-200 text-green-600 border drop-shadow font-semibold p-3 mb-3 rounded text-center text-lg">
-                        {{ session('success') }}
-                    </div>
-                @endif
-                <h1 class="text-gray-600 lg:hidden text-5xl">@yield('main')</h1>
-                <h1 class="text-gray-600 lg:block hidden">@yield('main')</h1>
-            </header>
-            {{ $slot }}
-        </main>
+        @if (in_array(Route::currentRouteName(), $withHome))
+            <main class="flex-1 overflow-y-auto px-6 lg:ml-20 transition-all duration-300">
+                {{ $slot }}
+            </main>
+        @else
+            <main class="flex-1 overflow-y-auto p-6 lg:ml-20 transition-all duration-300">
+                <header class="mb-8">
+                    @if (session('success'))
+                        <div class="bg-green-200 text-green-600 border drop-shadow font-semibold p-3 mb-3 rounded text-center text-lg">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    <h1 class="text-gray-600 lg:hidden text-5xl">@yield('main')</h1>
+                    <h1 class="text-gray-600 lg:block hidden">@yield('main')</h1>
+                </header>
+                {{ $slot }}
+            </main>
+        @endif
     </div>
 </body>
 </html>
