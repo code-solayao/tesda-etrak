@@ -8,11 +8,15 @@ document.getElementById("employmentTab")?.addEventListener('click', function () 
     openTab(2);
 });
 
-document.getElementById("toggleDelete")?.addEventListener('click', function () {
-    document.getElementById("confirmationModal").classList.remove('hidden');
+document.getElementById("btnDelete").addEventListener('click', function () {
+    document.getElementById("deleteModal").classList.remove('hidden');
 });
-document.getElementById("dismissDelete")?.addEventListener('click', function () {
-    document.getElementById("confirmationModal").classList.add('hidden');
+document.getElementById("cancelDelete").addEventListener('click', function () {
+    document.getElementById("deleteModal").classList.add("hidden");
+});
+
+document.getElementById("cancelDelete_desktop").addEventListener('click', function () {
+    document.getElementById("deleteModal").classList.add("hidden");
 });
 
 blankedDefinitions();

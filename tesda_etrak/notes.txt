@@ -1,4 +1,4 @@
-- Dagdagan ang Data Privacy Act
+- Use Seed-Factory method to test the export function
 
 public function export_data() 
 {
