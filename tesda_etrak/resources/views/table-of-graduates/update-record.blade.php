@@ -17,8 +17,10 @@
 @endphp
 
 <x-layout>
-    <span class="text-4xl font-bold border-b-4 pt-5">{{ $graduate->full_name }} - {{ $graduate->qualification_title }}</span>
     <div class="mx-auto bg-white px-8 pb-8 pt-5 rounded-lg shadow-md">
+        <div class="block mb-2">
+            <span class="text-4xl font-bold border-b-4">{{ $graduate->full_name }} - {{ $graduate->qualification_title }}</span>
+        </div>
         @if ($errors->any())
             <ul class="px-3 py-2 bg-red-400 rounded-md mb-5">
                 @foreach ($errors->all() as $error)
@@ -28,9 +30,9 @@
         @endif
         <div class="w-full">
             <div class="flex border-b" id="tabs">
-                <button class="px-4 py-2 border-b-2 border-black" id="detailsTab">Details</button>
-                <button class="px-4 py-2 border-b-2 border-transparent hover:border-gray-300" id="verificationTab">Verification</button>
-                <button class="px-4 py-2 border-b-2 border-transparent hover:border-gray-300" id="employmentTab">Employment</button>
+                <button class="px-4 py-2 border-b-2 border-black" id="tabDetails">Details</button>
+                <button class="px-4 py-2 border-b-2 border-transparent hover:border-gray-300" id="tabVerification">Verification</button>
+                <button class="px-4 py-2 border-b-2 border-transparent hover:border-gray-300" id="tabEmployment">Employment</button>
             </div>
         </div>
         <div class="p-4">
@@ -124,85 +126,85 @@
                     <div class="mb-5">
                         <label class="form-label">Status of Verification</label>
                         <div class="mt-2 space-y-2">
-                            <label for="noVerifStatusBtn" class="flex items-center">
-                                <input type="radio" name="verification_status" id="noVerifStatusBtn" class="form-radio" value="" {{ old('verification_status', $graduate->verification_status) == '' ? 'checked' : '' }} />
+                            <label for="btnNone" class="flex items-center">
+                                <input type="radio" name="verification_status" id="btnNone" class="form-radio" value="" {{ old('verification_status', $graduate->verification_status) == '' ? 'checked' : '' }} />
                                 <span class="ml-2 text-gray-700">None</span>
                             </label>
-                            <label for="respondedBtn" class="flex items-center">
-                                <input type="radio" name="verification_status" id="respondedBtn" class="form-radio" value="Responded" {{ old('verification_status', $graduate->verification_status) == 'Responded' ? 'checked' : '' }} />
+                            <label for="btnResponded" class="flex items-center">
+                                <input type="radio" name="verification_status" id="btnResponded" class="form-radio" value="Responded" {{ old('verification_status', $graduate->verification_status) == 'Responded' ? 'checked' : '' }} />
                                 <span class="ml-2 text-gray-700">Responded</span>
                             </label>
-                            <label for="noResponseBtn" class="flex items-center">
-                                <input type="radio" name="verification_status" id="noResponseBtn" class="form-radio" value="No Response (For Follow-up)" {{ old('verification_status', $graduate->verification_status) == 'No Response (For Follow-up)' ? 'checked' : '' }} />
+                            <label for="btnNoResponse" class="flex items-center">
+                                <input type="radio" name="verification_status" id="btnNoResponse" class="form-radio" value="No Response (For Follow-up)" {{ old('verification_status', $graduate->verification_status) == 'No Response (For Follow-up)' ? 'checked' : '' }} />
                                 <span class="ml-2 text-gray-700">No Response (For Follow-up)</span>
                             </label>
                         </div>
                         <hr class="mt-5">
                     </div>
-                    <div class="mb-4" id="responded">
+                    <div class="mb-4" id="divResponded">
                         <div>
                             <label class="form-label">Type of Response</label>
                             <div class="mt-2 space-y-2 ml-[30px]">
-                                <label for="interestedBtn" class="flex items-center">
-                                    <input type="radio" name="response_status" id="interestedBtn" class="form-radio" value="Interested" {{ old('response_status', $graduate->response_status) == 'Interested' ? 'checked' : '' }} />
+                                <label for="btnInterested" class="flex items-center">
+                                    <input type="radio" name="response_status" id="btnInterested" class="form-radio" value="Interested" {{ old('response_status', $graduate->response_status) == 'Interested' ? 'checked' : '' }} />
                                     <span class="ml-2 text-gray-700">Interested</span>
                                 </label>
-                                <label for="notInterestedBtn" class="flex items-center">
-                                    <input type="radio" name="response_status" id="notInterestedBtn" class="form-radio" value="Not Interested" {{ old('response_status', $graduate->response_status) == 'Not Interested' ? 'checked' : '' }} />
+                                <label for="btnNotInterested" class="flex items-center">
+                                    <input type="radio" name="response_status" id="btnNotInterested" class="form-radio" value="Not Interested" {{ old('response_status', $graduate->response_status) == 'Not Interested' ? 'checked' : '' }} />
                                     <span class="ml-2 text-gray-700">Not Interested</span>
                                 </label>
                                 {{-- response_status : Interested --}}
-                                <div id="interested">
+                                <div id="divInterested">
                                     <label class="form-label">Refer to Company?</label>
-                                    <fieldset id="referralStatusForm" class="mt-2 space-y-2" disabled>
+                                    <fieldset id="formReferralStatus" class="mt-2 space-y-2" disabled>
                                         {{-- referral_status : Yes --}}
-                                        <label for="referYesBtn" class="flex items-center">
-                                            <input type="radio" name="referral_status" id="referYesBtn" class="form-radio" value="Yes" {{ old('referral_status', $graduate->referral_status) == 'Yes' ? 'checked' : '' }} />
+                                        <label for="btnYes" class="flex items-center">
+                                            <input type="radio" name="referral_status" id="btnYes" class="form-radio" value="Yes" {{ old('referral_status', $graduate->referral_status) == 'Yes' ? 'checked' : '' }} />
                                             <span class="ml-2 text-gray-700">YES</span>
                                         </label>
-                                        <input type="date" name="referral_date" id="referralDate" class="form-input mb-3 ml-5" value="{{ old('referral_date', $graduate->referral_date) }}" disabled />
+                                        <input type="date" name="referral_date" id="referral_date" class="form-input mb-3 ml-5" value="{{ old('referral_date', $graduate->referral_date) }}" disabled />
                                         {{-- referral_status : No --}}
-                                        <label for="referNoBtn" class="flex items-center">
-                                            <input type="radio" name="referral_status" id="referNoBtn" class="form-radio" value="No" {{ old('referral_status', $graduate->referral_status) == 'No' ? 'checked' : '' }} />
+                                        <label for="btnNo" class="flex items-center">
+                                            <input type="radio" name="referral_status" id="btnNo" class="form-radio" value="No" {{ old('referral_status', $graduate->referral_status) == 'No' ? 'checked' : '' }} />
                                             <span class="ml-2 text-gray-700">NO</span>
                                         </label>
-                                        <textarea name="no_referral_reason" id="noReferralReason" rows="3" class="form-input mb-3 ml-5" placeholder="Reason" disabled>
+                                        <textarea name="no_referral_reason" id="no_referral_reason" rows="3" class="form-input mb-3 ml-5" placeholder="Reason" disabled>
                                             {{ old('no_referral_reason', $graduate->no_referral_reason) }}
                                         </textarea>
                                     </fieldset>
                                 </div>
                                 {{-- response_status : Not Interested --}}
-                                <div id="notInterested">
-                                    <label for="notInterestedReason" class="form-label">Reason</label>
-                                    <textarea name="not_interested_reason" id="notInterestedReason" rows="3" class="form-input" disabled>{{ old('not_interested_reason', $graduate->not_interested_reason) }}</textarea>
+                                <div id="divNotInterested">
+                                    <label for="not_interested_reason" class="form-label">Reason</label>
+                                    <textarea name="not_interested_reason" id="not_interested_reason" rows="3" class="form-input" disabled>{{ old('not_interested_reason', $graduate->not_interested_reason) }}</textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-4" id="noResponse">
+                    <div class="mb-4" id="divNoResponse">
                         <div>
                             <label class="form-label mb-4">No Response (For Follow-up)</label>
                             <div class="mb-4 ml-[30px]">
-                                <label for="followup1" class="form-label">First Follow-up</label>
-                                <input type="date" name="follow_up_date_1" id="followup1" class="form-input" value="{{ old('follow_up_date_1', $graduate->follow_up_date_1) }}" />
+                                <label for="follow_up_date_1" class="form-label">First Follow-up</label>
+                                <input type="date" name="follow_up_date_1" id="follow_up_date_1" class="form-input" value="{{ old('follow_up_date_1', $graduate->follow_up_date_1) }}" />
                             </div>
                             <div class="mb-4 ml-[30px]">
-                                <label for="followup2" class="form-label">Second Follow-up</label>
-                                <input type="date" name="follow_up_date_2" id="followup2" class="form-input" value="{{ old('follow_up_date_2', $graduate->follow_up_date_2) }}" />
+                                <label for="follow_up_date_2" class="form-label">Second Follow-up</label>
+                                <input type="date" name="follow_up_date_2" id="follow_up_date_2" class="form-input" value="{{ old('follow_up_date_2', $graduate->follow_up_date_2) }}" />
                             </div>
                             <div class="mb-4 ml-[30px]">
-                                <label for="invalidContact" class="flex items-center">
-                                    <input type="checkbox" name="invalid_contact" id="invalidContact" {{ old('invalid_contact', $graduate->invalid_contact) == 'Yes' ? 'checked' : '' }} />
+                                <label for="invalid_contact" class="flex items-center">
+                                    <input type="checkbox" name="invalid_contact" id="invalid_contact" {{ old('invalid_contact', $graduate->invalid_contact) == 'Yes' ? 'checked' : '' }} />
                                     <span class="ml-2 text-gray-700">Invalid Contact</span>
                                 </label>
                             </div>
                             <div class="mb-4 ml-[30px] mt-6">
-                                <textarea name="follow_up_remarks" id="followUpRemarks" rows="3" placeholder="Remarks" class="form-input">{{ old('follow_up_remarks', $graduate->follow_up_remarks) }}</textarea>
+                                <textarea name="follow_up_remarks" id="follow_up_remarks" rows="3" placeholder="Remarks" class="form-input">{{ old('follow_up_remarks', $graduate->follow_up_remarks) }}</textarea>
                             </div>
                         </div>
                     </div>
                     <div class="flex items-center justify-baseline">
-                        <button type="button" class="btn btn-primary rounded-lg mr-2" id="toggleUpdate1">Update</button>
+                        <button type="button" class="btn btn-primary rounded-lg mr-2" id="btnUpdate_1">Update</button>
                         <a href="{{ route('admin.record-details', $graduate->id) }}" class="btn btn-secondary rounded-lg">Cancel</a>
                     </div>
                 </div>
@@ -282,7 +284,7 @@
                     </div>
                 </div>
                 {{-- Modal --}}
-                <div class="relative z-10 hidden" id="confirmationModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                <div class="relative z-10 hidden" id="modalUpdate" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                     <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
                     <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
                         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -306,7 +308,7 @@
                                 </div>
                                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                     <input type="submit" name="update" class="btn-primary-modal" role="button" value="Confirm" />
-                                    <button type="button" id="dismissUpdate" class="btn-secondary-modal">Cancel</button>
+                                    <button type="button" id="btnCancelUpdate" class="btn-secondary-modal">Cancel</button>
                                 </div>
                             </div>
                         </div>

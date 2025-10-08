@@ -1,45 +1,51 @@
 //#region VARIABLES
-var verificationTab = document.getElementById("verificationTab");
+const tabDetails = document.getElementById("tabDetails");
+const tabVerification = document.getElementById("tabVerification");
+const tabEmployment = document.getElementById("tabEmployment");
 
-var noVerifStatusBtn = document.getElementById("noVerifStatusBtn");
-var respondedBtn = document.getElementById("respondedBtn");
-var noResponseBtn = document.getElementById("noResponseBtn");
+const noVerifStatusBtn = document.getElementById("btnNone");
+const respondedBtn = document.getElementById("btnResponded");
+const noResponseBtn = document.getElementById("btnNoResponse");
+const responded = document.getElementById("divResponded");
+const noResponse = document.getElementById("divNoResponse");
 
-var interestedBtn = document.getElementById("interestedBtn");
-var notInterestedBtn = document.getElementById("notInterestedBtn");
-var interested = document.getElementById("interested");
-var notInterested = document.getElementById("notInterested");
+const interestedBtn = document.getElementById("btnInterested");
+const notInterestedBtn = document.getElementById("btnNotInterested");
+const interested = document.getElementById("interested");
+const notInterested = document.getElementById("notInterested");
 
-var referralStatusForm = document.getElementById("referralStatusForm");
-var referYesBtn = document.getElementById("referYesBtn");
-var referNoBtn = document.getElementById("referNoBtn");
-var referralDate = document.getElementById("referralDate");
-var noReferralReason = document.getElementById("noReferralReason");
+const referralStatusForm = document.getElementById("referralStatusForm");
+const referYesBtn = document.getElementById("referYesBtn");
+const referNoBtn = document.getElementById("referNoBtn");
+const referralDate = document.getElementById("referral_date");
+const noReferralReason = document.getElementById("no_referral_reason");
 
-var notInterestedReason = document.getElementById("notInterestedReason");
+const notInterestedReason = document.getElementById("not_interested_reason");
 
-var invalidContact = document.getElementById("invalidContact");
-var followUpRemarks = document.getElementById("followUpRemarks");
+const followUpDate_1 = document.getElementById("follow_up_date_1");
+const followUpDate_2 = document.getElementById("follow_up_date_2");
+const invalidContact = document.getElementById("invalid_contact");
+const followUpRemarks = document.getElementById("follow_up_remarks");
 
-var proceedBtn = document.getElementById("proceedBtn");
-var notProceedBtn = document.getElementById("notProceedBtn");
-var proceed = document.getElementById("proceed");
-var notProceed = document.getElementById("notProceed");
-var notProceedReason = document.getElementById("notProceedReason");
+const proceedBtn = document.getElementById("proceedBtn");
+const notProceedBtn = document.getElementById("notProceedBtn");
+const proceed = document.getElementById("proceed");
+const notProceed = document.getElementById("notProceed");
+const notProceedReason = document.getElementById("notProceedReason");
 //#endregion
 
 //#region INITIALISATION
-document.getElementById("detailsTab")?.addEventListener('click', function () {
+tabDetails.addEventListener('click', function () {
     openTab(0, "details");
 });
-verificationTab?.addEventListener('click', function () {
+tabVerification.addEventListener('click', function () {
     openTab(1, "verification");
 
     interested.style.display = "none";
     notInterested.style.display = "none";
     refreshVerification();
 });
-document.getElementById("employmentTab")?.addEventListener('click', function () {
+tabEmployment.addEventListener('click', function () {
     openTab(2, "employment");
 });
 
@@ -106,23 +112,27 @@ document.getElementById("notHired")?.addEventListener('click', function () {
     employmentStatusValue(this.id);
 });
 
-document.getElementById("responded").style.display = "none";
-document.getElementById("noResponse").style.display = "none";
+responded.style.display = "none";
+noResponse.style.display = "none";
 proceed.style.display = "none";
 notProceed.style.display = "none";
 
-document.getElementById("toggleUpdate1")?.addEventListener('click', function () {
-    document.getElementById("confirmationModal").classList.remove('hidden');
+const btnUpdate_1 = document.getElementById("btnUpdate_1");
+const btnUpdate_2 = document.getElementById("btnUpdate_2");
+const btnCancelUpdate = document.getElementById("btnCancelUpdate");
+const modalUpdate = document.getElementById("modalUpdate");
+btnUpdate_1.addEventListener('click', function () {
+    modalUpdate.classList.remove('hidden');
 });
-document.getElementById("toggleUpdate2")?.addEventListener('click', function () {
-    document.getElementById("confirmationModal").classList.remove('hidden');
+btnUpdate_2.addEventListener('click', function () {
+    modalUpdate.classList.remove('hidden');
 });
-document.getElementById("dismissUpdate")?.addEventListener('click', function () {
-    document.getElementById("confirmationModal").classList.add('hidden');
+btnCancelUpdate.addEventListener('click', function () {
+    modalUpdate.classList.add('hidden');
 });
 //#endregion
 
-verificationTab.click();
+tabVerification.click();
 dateFormatRead();
 
 //#region FUNCTIONS
@@ -134,15 +144,13 @@ function openTab(index, tabName) {
     document.querySelectorAll("#tabs button").forEach((btn, i) => {
         btn.classList.toggle("border-black", i === index);
         btn.classList.toggle("border-transparent", i !== index);
+        btn.classList.toggle("hover:border-gray-300", i !== index);
     });
 
     if (tabName !== "employment") return;
 }
 
 function verificationStatusValue(response) {
-    let responded = document.getElementById("responded");
-    let noResponse = document.getElementById("noResponse");
-
     if (response == "responded") {
         responded.style.display = "block";
         noResponse.style.display = "none";
@@ -161,8 +169,8 @@ function verificationStatusValue(response) {
 }
 
 function respondedStatus() {
-    resetDate(document.getElementById("followup1"));
-    resetDate(document.getElementById("followup2"));
+    resetDate(followUpDate_1);
+    resetDate(followUpDate_1);
 
     invalidContact.checked = false;
     invalidContact.value = "";
