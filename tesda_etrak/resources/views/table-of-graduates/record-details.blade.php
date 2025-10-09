@@ -31,274 +31,276 @@
             </div>
         </div>
         <div class="p-4 bg-neutral-200">
-            <div class="tab-content">
-                <dl>
-                    <dt>Name: </dt>
-                    <dd>{{ $graduate->full_name }}</dd>
-                    <dt>District: </dt>
-                    <dd>{{ $graduate->district }}</dd>
-                    <dt>City: </dt>
-                    <dd>{{ $graduate->city }}</dd>
-                    <dt>Type of Scholarship: </dt>
-                    <dd>{{ $graduate->scholarship_type }}</dd>
-                    <dt>Name of TVI: </dt>
-                    <dd>{{ $graduate->tvi }}</dd>
-                    <dt>Qualification Title: </dt>
-                    <dd>{{ $graduate->qualification_title }}</dd>
-                    <dt>Sector: </dt>
-                    <dd>{{ $graduate->sector }}</dd>
-                    <dt>Year of Graduation: </dt>
-                    <dd>{{ $graduate->allocation }}</dd>
-                    <dt>Sex: </dt>
-                    <dd>{{ $graduate->sex }}</dd>
-                    <dt>Date of Birth: </dt>
-                    <dd class="dateFormat">{{ $graduate->birthdate }}</dd>
-                    <dt>Contact Number: </dt>
-                    <dd>{{ $graduate->contact_number }}</dd>
-                    <dt>E-mail Address: </dt>
-                    <dd>{{ $graduate->email }}</dd>
-                    <dt>Address: </dt>
-                    <dd>{{ $graduate->address }}</dd>
-                </dl>
-            </div>
-            <div class="tab-content hidden">
-                <dl>
-                    <dt>Means of Verification: </dt>
-                    <dd>{{ $graduate->verification_means }}</dd>
-                    <dt>Date of Verification: </dt>
-                    <dd class="dateFormat">{{ $graduate->verification_date }}</dd>
-                    <dt>Status of Verification: </dt>
-                    <dd id="verification_status">{{ $graduate->verification_status }}</dd>
-        
-                    @switch($graduate->verification_status)
-                        @case("Responded")
-                            <dt>Status of Response: </dt>
-                            <dd>{{ $graduate->response_status }}</dd>
-        
-                            @switch($graduate->response_status)
-                                @case("Interested")
-                                    <dt>Refer to Company? </dt>
-                                    <dd id="referralStatus">{{ $graduate->referral_status }}</dd>
-        
-                                    @if ($graduate->referral_status === "Yes")
-                                        <dt>Date of Referral: </dt>
-                                        <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
-                                    @elseif ($graduate->referral_status === "No")
-                                        <dt>Reason (No Referral): </dt>
-                                        <dd>{{ $graduate->no_referral_reason }}</dd>
-                                    @else
-                                        <dt>Date of Referral: </dt>
-                                        <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
-                                        <dt>Reason (No Referral): </dt>
-                                        <dd>{{ $graduate->no_referral_reason }}</dd>
-                                    @endif
-                                    @break
-        
-                                @case("Not Interested")
-                                    <dt>Reason (Not Interested): </dt>
-                                    <dd>{{ $graduate->not_interested_reason }}</dd>
-                                    @break
-        
-                                @default
-                                    {{-- response_status: "Interested" --}}
-                                    <dt>Refer to Company? </dt>
-                                    <dd>{{ $graduate->referral_status }}</dd>
-        
-                                    @if ($graduate->referral_status === "Yes")
-                                        <dt>Date of Referral: </dt>
-                                        <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
-                                    @elseif ($graduate->referral_status === "No")
-                                        <dt>Reason (No Referral): </dt>
-                                        <dd>{{ $graduate->no_referral_reason }}</dd>
-                                    @else
-                                        {{-- referral_status: "Yes" --}}
-                                        <dt>Date of Referral: </dt>
-                                        <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
-                                        {{-- referral_status: "No" --}}
-                                        <dt>Reason (No Referral): </dt>
-                                        <dd>{{ $graduate->no_referral_reason }}</dd>
-                                    @endif
-
-                                    {{-- response_status: "Not Interested" --}}
-                                    <dt>Reason (Not Interested): </dt>
-                                    <dd>{{ $graduate->not_interested_reason }}</dd>
-                            @endswitch
-                            @break
-        
-                        @case("No Response (For Follow-up)")
-                            <dt>First Follow-up Date: </dt>
-                            <dd class="dateFormat">{{ $graduate->follow_up_date_1 }}</dd>
-                            <dt>Second Follow-up Date: </dt>
-                            <dd class="dateFormat">{{ $graduate->follow_up_date_2 }}</dd>
-        
-                            @if (!empty($graduate->invalid_contact))
-                                <dt>Invalid Contact? </dt>
-                                <dd>{{ $graduate->invalid_contact }}</dd>
-                            @endif
-
-                            <dt>Remarks: </dt>
-                            <dd>{{ $graduate->follow_up_remarks }}</dd>
-                            @break
-        
-                        @default
-                            {{-- verification_status: "Responded" --}}
-                            <dt>Status of Response: </dt>
-                            <dd>{{ $graduate->response_status }}</dd>
-        
-                            @switch($graduate->response_status)
-                                @case("Interested")
-                                    <dt>Refer to Company? </dt>
-                                    <dd id="referralStatus">{{ $graduate->referral_status }}</dd>
-        
-                                    @if ($graduate->referral_status === "Yes")
-                                        <dt>Date of Referral: </dt>
-                                        <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
-                                    @elseif ($graduate->referral_status === "No")
-                                        <dt>Reason (No Referral): </dt>
-                                        <dd>{{ $graduate->no_referral_reason }}</dd>
-                                    @else
-                                        <dt>Date of Referral: </dt>
-                                        <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
-                                        <dt>Reason (No Referral): </dt>
-                                        <dd>{{ $graduate->no_referral_reason }}</dd>
-                                    @endif
-                                    @break
-        
-                                @case("Not Interested")
-                                    <dt>Reason (Not Interested): </dt>
-                                    <dd>{{ $graduate->not_interested_reason }}</dd>
-                                    @break
-        
-                                @default
-                                    {{-- response_status: "Interested" --}}
-                                    <dt>Refer to Company? </dt>
-                                    <dd id="referralStatus">{{ $graduate->referral_status }}</dd>
-        
-                                    @if ($graduate->referral_status === "Yes")
-                                        <dt>Date of Referral: </dt>
-                                        <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
-                                    @elseif ($graduate->referral_status === "No")
-                                        <dt>Reason (No Referral): </dt>
-                                        <dd>{{ $graduate->no_referral_reason }}</dd>
-                                    @else
-                                        {{-- referral_status: "Yes" --}}
-                                        <dt>Date of Referral: </dt>
-                                        <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
-                                        {{-- referral_status: "No" --}}
-                                        <dt>Reason (No Referral): </dt>
-                                        <dd>{{ $graduate->no_referral_reason }}</dd>
-                                    @endif
-        
-                                    {{-- response_status: "Not Interested" --}}
-                                    <dt>Reason (Not Interested): </dt>
-                                    <dd>{{ $graduate->not_interested_reason }}</dd>
-                            @endswitch
-        
-                            {{-- verification_status: "No Response (For Follow-up)" --}}
-                            <dt>First Follow-up Date: </dt>
-                            <dd class="dateFormat">{{ $graduate->follow_up_date_1 }}</dd>
-                            <dt>Second Follow-up Date: </dt>
-                            <dd class="dateFormat">{{ $graduate->follow_up_date_2 }}</dd>
-                            
-                            @if (!empty($graduate->invalid_contact))
-                                <dt>Invalid Contact? </dt>
-                                <dd>{{ $graduate->invalid_contact }}</dd>
-                            @endif
-                    @endswitch
-                </dl>
-            </div>
-            <div class="tab-content hidden">
-                <dl>
-                    <dt>Company Name: </dt>
-                    <dd>{{ $graduate->company_name }}</dd>
-                    <dt>Company Address: </dt>
-                    <dd>{{ $graduate->company_address }}</dd>
-                    <dt>Job Title: </dt>
-                    <dd>{{ $graduate->job_title }}</dd>
-        
-                    <dt>Application Status: </dt>
-                    <dd>{{ $graduate->application_status }}</dd>
-                    @switch($graduate->application_status)
-                        @case("Proceeded")
-                            <dt>Status of Employment: </dt>
-                            <dd>{{ $graduate->employment_status }}</dd>
-                            @switch($graduate->employment_status)
-                                @case("Hired")
-                                    <dt>Date Hired: </dt>
-                                    <dd class="dateFormat">{{ $graduate->hired_date }}</dd>
-                                    @break
-                                @case("Submitted Documents")
-                                    <dt>Submission of Documents Date: </dt>
-                                    <dd class="dateFormat">{{ $graduate->submitted_documents_date }}</dd>
-                                    @break
-                                @case("For Interview")
-                                    <dt>Interview Date: </dt>
-                                    <dd class="dateFormat">{{ $graduate->interview_date }}</dd>
-                                    @break
-                                @case("Not Hired")
-                                    <dt>Reason (Not Hired): </dt>
-                                    <dd>{{ $graduate->not_hired_reason }}</dd>
-                                    @break
-                                @default
-                                    <dt class="ms-[30px]">Date Hired: </dt>
-                                    <dd class="ms-[30px] dateFormat">{{ $graduate->hired_date }}</dd>
-                                    <dt class="ms-[30px]">Submission of Documents Date: </dt>
-                                    <dd class="ms-[30px] dateFormat">{{ $graduate->submitted_documents_date }}</dd>
-                                    <dt class="ms-[30px]">Interview Date: </dt>
-                                    <dd class="ms-[30px] dateFormat">{{ $graduate->interview_date }}</dd>
-                                    <dt class="ms-[30px]">Reason (Not Hired): </dt>
-                                    <dd class="ms-[30px]">{{ $graduate->not_hired_reason }}</dd>
-                            @endswitch
-
-                            <dt>Remarks: </dt>
-                            <dd>{{ $graduate->remarks }}</dd>
-                            @break
-        
-                        @case("Did Not Proceed")
-                            <dt>Reason (Did Not Proceed): </dt>
-                            <dd>{{ $graduate->not_proceed_reason }}</dd>
-                            @break
-        
-                        @default
-                            {{-- application_status: "Proceed" --}}
-                            <dt>Status of Employment: </dt>
-                            <dd>{{ $graduate->employment_status }}</dd>
-                            @switch($graduate->employment_status)
-                                @case("Hired")
-                                    <dt>Date Hired: </dt>
-                                    <dd class="dateFormat">{{ $graduate->hired_date }}</dd>
-                                    @break
-                                @case("Submitted Documents")
-                                    <dt>Submission of Documents Date: </dt>
-                                    <dd class="dateFormat">{{ $graduate->submitted_documents_date }}</dd>
-                                    @break
-                                @case("For Interview")
-                                    <dt>Interview Date: </dt>
-                                    <dd class="dateFormat">{{ $graduate->interview_date }}</dd>
-                                    @break
-                                @case("Not Hired")
-                                    <dt>Reason (Not Hired): </dt>
-                                    <dd>{{ $graduate->not_hired_reason }}</dd>
-                                    @break
-                                @default
-                                    <dt class="ms-[30px]">Date Hired: </dt>
-                                    <dd class="ms-[30px] dateFormat">{{ $graduate->hired_date }}</dd>
-                                    <dt class="ms-[30px]">Submission of Documents Date: </dt>
-                                    <dd class="ms-[30px] dateFormat">{{ $graduate->submitted_documents_date }}</dd>
-                                    <dt class="ms-[30px]">Interview Date: </dt>
-                                    <dd class="ms-[30px] dateFormat">{{ $graduate->interview_date }}</dd>
-                                    <dt class="ms-[30px]">Reason (Not Hired): </dt>
-                                    <dd class="ms-[30px]">{{ $graduate->not_hired_reason }}</dd>
-                            @endswitch
-                            
-                            <dt>Remarks: </dt>
-                            <dd>{{ $graduate->remarks }}</dd>
-
-                            {{-- application_status: "Don't Proceed" --}}
-                            <dt>Reason (Did Not Proceed): </dt>
-                            <dd>{{ $graduate->not_proceed_reason }}</dd>
-                    @endswitch
-                </dl>
+            <div class="h-[calc(3.18*10rem)] max-w-full mx-auto overflow-y-auto">
+                <div class="tab-content">
+                    <dl>
+                        <dt>Name: </dt>
+                        <dd>{{ $graduate->full_name }}</dd>
+                        <dt>District: </dt>
+                        <dd>{{ $graduate->district }}</dd>
+                        <dt>City: </dt>
+                        <dd>{{ $graduate->city }}</dd>
+                        <dt>Type of Scholarship: </dt>
+                        <dd>{{ $graduate->scholarship_type }}</dd>
+                        <dt>Name of TVI: </dt>
+                        <dd>{{ $graduate->tvi }}</dd>
+                        <dt>Qualification Title: </dt>
+                        <dd>{{ $graduate->qualification_title }}</dd>
+                        <dt>Sector: </dt>
+                        <dd>{{ $graduate->sector }}</dd>
+                        <dt>Year of Graduation: </dt>
+                        <dd>{{ $graduate->allocation }}</dd>
+                        <dt>Sex: </dt>
+                        <dd>{{ $graduate->sex }}</dd>
+                        <dt>Date of Birth: </dt>
+                        <dd class="dateFormat">{{ $graduate->birthdate }}</dd>
+                        <dt>Contact Number: </dt>
+                        <dd>{{ $graduate->contact_number }}</dd>
+                        <dt>E-mail Address: </dt>
+                        <dd>{{ $graduate->email }}</dd>
+                        <dt>Address: </dt>
+                        <dd>{{ $graduate->address }}</dd>
+                    </dl>
+                </div>
+                <div class="tab-content hidden">
+                    <dl>
+                        <dt>Means of Verification: </dt>
+                        <dd>{{ $graduate->verification_means }}</dd>
+                        <dt>Date of Verification: </dt>
+                        <dd class="dateFormat">{{ $graduate->verification_date }}</dd>
+                        <dt>Status of Verification: </dt>
+                        <dd id="verification_status">{{ $graduate->verification_status }}</dd>
+            
+                        @switch($graduate->verification_status)
+                            @case("Responded")
+                                <dt>Status of Response: </dt>
+                                <dd>{{ $graduate->response_status }}</dd>
+            
+                                @switch($graduate->response_status)
+                                    @case("Interested")
+                                        <dt>Refer to Company? </dt>
+                                        <dd id="referralStatus">{{ $graduate->referral_status }}</dd>
+            
+                                        @if ($graduate->referral_status === "Yes")
+                                            <dt>Date of Referral: </dt>
+                                            <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
+                                        @elseif ($graduate->referral_status === "No")
+                                            <dt>Reason (No Referral): </dt>
+                                            <dd>{{ $graduate->no_referral_reason }}</dd>
+                                        @else
+                                            <dt>Date of Referral: </dt>
+                                            <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
+                                            <dt>Reason (No Referral): </dt>
+                                            <dd>{{ $graduate->no_referral_reason }}</dd>
+                                        @endif
+                                        @break
+            
+                                    @case("Not Interested")
+                                        <dt>Reason (Not Interested): </dt>
+                                        <dd>{{ $graduate->not_interested_reason }}</dd>
+                                        @break
+            
+                                    @default
+                                        {{-- response_status: "Interested" --}}
+                                        <dt>Refer to Company? </dt>
+                                        <dd>{{ $graduate->referral_status }}</dd>
+            
+                                        @if ($graduate->referral_status === "Yes")
+                                            <dt>Date of Referral: </dt>
+                                            <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
+                                        @elseif ($graduate->referral_status === "No")
+                                            <dt>Reason (No Referral): </dt>
+                                            <dd>{{ $graduate->no_referral_reason }}</dd>
+                                        @else
+                                            {{-- referral_status: "Yes" --}}
+                                            <dt>Date of Referral: </dt>
+                                            <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
+                                            {{-- referral_status: "No" --}}
+                                            <dt>Reason (No Referral): </dt>
+                                            <dd>{{ $graduate->no_referral_reason }}</dd>
+                                        @endif
+    
+                                        {{-- response_status: "Not Interested" --}}
+                                        <dt>Reason (Not Interested): </dt>
+                                        <dd>{{ $graduate->not_interested_reason }}</dd>
+                                @endswitch
+                                @break
+            
+                            @case("No Response (For Follow-up)")
+                                <dt>First Follow-up Date: </dt>
+                                <dd class="dateFormat">{{ $graduate->follow_up_date_1 }}</dd>
+                                <dt>Second Follow-up Date: </dt>
+                                <dd class="dateFormat">{{ $graduate->follow_up_date_2 }}</dd>
+            
+                                @if (!empty($graduate->invalid_contact))
+                                    <dt>Invalid Contact? </dt>
+                                    <dd>{{ $graduate->invalid_contact }}</dd>
+                                @endif
+    
+                                <dt>Remarks: </dt>
+                                <dd>{{ $graduate->follow_up_remarks }}</dd>
+                                @break
+            
+                            @default
+                                {{-- verification_status: "Responded" --}}
+                                <dt>Status of Response: </dt>
+                                <dd>{{ $graduate->response_status }}</dd>
+            
+                                @switch($graduate->response_status)
+                                    @case("Interested")
+                                        <dt>Refer to Company? </dt>
+                                        <dd id="referralStatus">{{ $graduate->referral_status }}</dd>
+            
+                                        @if ($graduate->referral_status === "Yes")
+                                            <dt>Date of Referral: </dt>
+                                            <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
+                                        @elseif ($graduate->referral_status === "No")
+                                            <dt>Reason (No Referral): </dt>
+                                            <dd>{{ $graduate->no_referral_reason }}</dd>
+                                        @else
+                                            <dt>Date of Referral: </dt>
+                                            <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
+                                            <dt>Reason (No Referral): </dt>
+                                            <dd>{{ $graduate->no_referral_reason }}</dd>
+                                        @endif
+                                        @break
+            
+                                    @case("Not Interested")
+                                        <dt>Reason (Not Interested): </dt>
+                                        <dd>{{ $graduate->not_interested_reason }}</dd>
+                                        @break
+            
+                                    @default
+                                        {{-- response_status: "Interested" --}}
+                                        <dt>Refer to Company? </dt>
+                                        <dd id="referralStatus">{{ $graduate->referral_status }}</dd>
+            
+                                        @if ($graduate->referral_status === "Yes")
+                                            <dt>Date of Referral: </dt>
+                                            <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
+                                        @elseif ($graduate->referral_status === "No")
+                                            <dt>Reason (No Referral): </dt>
+                                            <dd>{{ $graduate->no_referral_reason }}</dd>
+                                        @else
+                                            {{-- referral_status: "Yes" --}}
+                                            <dt>Date of Referral: </dt>
+                                            <dd class="dateFormat">{{ $graduate->referral_date }}</dd>
+                                            {{-- referral_status: "No" --}}
+                                            <dt>Reason (No Referral): </dt>
+                                            <dd>{{ $graduate->no_referral_reason }}</dd>
+                                        @endif
+            
+                                        {{-- response_status: "Not Interested" --}}
+                                        <dt>Reason (Not Interested): </dt>
+                                        <dd>{{ $graduate->not_interested_reason }}</dd>
+                                @endswitch
+            
+                                {{-- verification_status: "No Response (For Follow-up)" --}}
+                                <dt>First Follow-up Date: </dt>
+                                <dd class="dateFormat">{{ $graduate->follow_up_date_1 }}</dd>
+                                <dt>Second Follow-up Date: </dt>
+                                <dd class="dateFormat">{{ $graduate->follow_up_date_2 }}</dd>
+                                
+                                @if (!empty($graduate->invalid_contact))
+                                    <dt>Invalid Contact? </dt>
+                                    <dd>{{ $graduate->invalid_contact }}</dd>
+                                @endif
+                        @endswitch
+                    </dl>
+                </div>
+                <div class="tab-content hidden">
+                    <dl>
+                        <dt>Company Name: </dt>
+                        <dd>{{ $graduate->company_name }}</dd>
+                        <dt>Company Address: </dt>
+                        <dd>{{ $graduate->company_address }}</dd>
+                        <dt>Job Title: </dt>
+                        <dd>{{ $graduate->job_title }}</dd>
+            
+                        <dt>Application Status: </dt>
+                        <dd>{{ $graduate->application_status }}</dd>
+                        @switch($graduate->application_status)
+                            @case("Proceeded")
+                                <dt>Status of Employment: </dt>
+                                <dd>{{ $graduate->employment_status }}</dd>
+                                @switch($graduate->employment_status)
+                                    @case("Hired")
+                                        <dt>Date Hired: </dt>
+                                        <dd class="dateFormat">{{ $graduate->hired_date }}</dd>
+                                        @break
+                                    @case("Submitted Documents")
+                                        <dt>Submission of Documents Date: </dt>
+                                        <dd class="dateFormat">{{ $graduate->submitted_documents_date }}</dd>
+                                        @break
+                                    @case("For Interview")
+                                        <dt>Interview Date: </dt>
+                                        <dd class="dateFormat">{{ $graduate->interview_date }}</dd>
+                                        @break
+                                    @case("Not Hired")
+                                        <dt>Reason (Not Hired): </dt>
+                                        <dd>{{ $graduate->not_hired_reason }}</dd>
+                                        @break
+                                    @default
+                                        <dt class="ms-[30px]">Date Hired: </dt>
+                                        <dd class="ms-[30px] dateFormat">{{ $graduate->hired_date }}</dd>
+                                        <dt class="ms-[30px]">Submission of Documents Date: </dt>
+                                        <dd class="ms-[30px] dateFormat">{{ $graduate->submitted_documents_date }}</dd>
+                                        <dt class="ms-[30px]">Interview Date: </dt>
+                                        <dd class="ms-[30px] dateFormat">{{ $graduate->interview_date }}</dd>
+                                        <dt class="ms-[30px]">Reason (Not Hired): </dt>
+                                        <dd class="ms-[30px]">{{ $graduate->not_hired_reason }}</dd>
+                                @endswitch
+    
+                                <dt>Remarks: </dt>
+                                <dd>{{ $graduate->remarks }}</dd>
+                                @break
+            
+                            @case("Did Not Proceed")
+                                <dt>Reason (Did Not Proceed): </dt>
+                                <dd>{{ $graduate->not_proceed_reason }}</dd>
+                                @break
+            
+                            @default
+                                {{-- application_status: "Proceed" --}}
+                                <dt>Status of Employment: </dt>
+                                <dd>{{ $graduate->employment_status }}</dd>
+                                @switch($graduate->employment_status)
+                                    @case("Hired")
+                                        <dt>Date Hired: </dt>
+                                        <dd class="dateFormat">{{ $graduate->hired_date }}</dd>
+                                        @break
+                                    @case("Submitted Documents")
+                                        <dt>Submission of Documents Date: </dt>
+                                        <dd class="dateFormat">{{ $graduate->submitted_documents_date }}</dd>
+                                        @break
+                                    @case("For Interview")
+                                        <dt>Interview Date: </dt>
+                                        <dd class="dateFormat">{{ $graduate->interview_date }}</dd>
+                                        @break
+                                    @case("Not Hired")
+                                        <dt>Reason (Not Hired): </dt>
+                                        <dd>{{ $graduate->not_hired_reason }}</dd>
+                                        @break
+                                    @default
+                                        <dt class="ms-[30px]">Date Hired: </dt>
+                                        <dd class="ms-[30px] dateFormat">{{ $graduate->hired_date }}</dd>
+                                        <dt class="ms-[30px]">Submission of Documents Date: </dt>
+                                        <dd class="ms-[30px] dateFormat">{{ $graduate->submitted_documents_date }}</dd>
+                                        <dt class="ms-[30px]">Interview Date: </dt>
+                                        <dd class="ms-[30px] dateFormat">{{ $graduate->interview_date }}</dd>
+                                        <dt class="ms-[30px]">Reason (Not Hired): </dt>
+                                        <dd class="ms-[30px]">{{ $graduate->not_hired_reason }}</dd>
+                                @endswitch
+                                
+                                <dt>Remarks: </dt>
+                                <dd>{{ $graduate->remarks }}</dd>
+    
+                                {{-- application_status: "Don't Proceed" --}}
+                                <dt>Reason (Did Not Proceed): </dt>
+                                <dd>{{ $graduate->not_proceed_reason }}</dd>
+                        @endswitch
+                    </dl>
+                </div>
             </div>
         </div>
     </div>

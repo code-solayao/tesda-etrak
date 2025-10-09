@@ -3,20 +3,20 @@ const tabDetails = document.getElementById("tabDetails");
 const tabVerification = document.getElementById("tabVerification");
 const tabEmployment = document.getElementById("tabEmployment");
 
-const noVerifStatusBtn = document.getElementById("btnNone");
-const respondedBtn = document.getElementById("btnResponded");
-const noResponseBtn = document.getElementById("btnNoResponse");
-const responded = document.getElementById("divResponded");
-const noResponse = document.getElementById("divNoResponse");
+const btnNone = document.getElementById("btnNone");
+const btnResponded = document.getElementById("btnResponded");
+const btnNoResponse = document.getElementById("btnNoResponse");
+const divResponded = document.getElementById("divResponded");
+const divNoResponse = document.getElementById("divNoResponse");
 
-const interestedBtn = document.getElementById("btnInterested");
-const notInterestedBtn = document.getElementById("btnNotInterested");
-const interested = document.getElementById("interested");
-const notInterested = document.getElementById("notInterested");
+const btnInterested = document.getElementById("btnInterested");
+const btnNotInterested = document.getElementById("btnNotInterested");
+const divInterested = document.getElementById("divInterested");
+const divNotInterested = document.getElementById("divNotInterested");
 
 const referralStatusForm = document.getElementById("referralStatusForm");
-const referYesBtn = document.getElementById("referYesBtn");
-const referNoBtn = document.getElementById("referNoBtn");
+const btnYes = document.getElementById("btnYes");
+const btnNo = document.getElementById("btnNo");
 const referralDate = document.getElementById("referral_date");
 const noReferralReason = document.getElementById("no_referral_reason");
 
@@ -27,116 +27,43 @@ const followUpDate_2 = document.getElementById("follow_up_date_2");
 const invalidContact = document.getElementById("invalid_contact");
 const followUpRemarks = document.getElementById("follow_up_remarks");
 
-const proceedBtn = document.getElementById("proceedBtn");
-const notProceedBtn = document.getElementById("notProceedBtn");
-const proceed = document.getElementById("proceed");
-const notProceed = document.getElementById("notProceed");
-const notProceedReason = document.getElementById("notProceedReason");
+const btnProceed = document.getElementById("btnProceed");
+const btnNotProceed = document.getElementById("btnNotProceed");
+const divProceed = document.getElementById("divProceed");
+const divNotProceed = document.getElementById("divNotProceed");
+const notProceedReason = document.getElementById("not_proceed_reason");
+
+const btnHired = document.getElementById("btnHired");
+const btnSubmitDocs = document.getElementById("btnSubmitDocs");
+const btnForInterview = document.getElementById("btnForInterview");
+const btnNotHired = document.getElementById("btnNotHired");
+
+const hiredDate = document.getElementById("hired_date");
+const submitDocsDate = document.getElementById("submitted_documents_date");
+const interviewDate = document.getElementById("interview_date");
+const notHiredReason = document.getElementById("not_hired_reason");
 //#endregion
 
-//#region INITIALISATION
-tabDetails.addEventListener('click', function () {
-    openTab(0, "details");
-});
-tabVerification.addEventListener('click', function () {
-    openTab(1, "verification");
+//#region FUNCTIONS AND INITIALISATION
+document.addEventListener("DOMContentLoaded", function () {
+    tabDetails.addEventListener('click', function () {
+        openTab(0);
+    });
+    tabVerification.addEventListener('click', function () {
+        openTab(1);
 
-    interested.style.display = "none";
-    notInterested.style.display = "none";
-    refreshVerification();
-});
-tabEmployment.addEventListener('click', function () {
-    openTab(2, "employment");
-});
+        divInterested.style.display = "none";
+        divNotInterested.style.display = "none";
+        refreshVerification();
+    });
+    tabEmployment.addEventListener('click', function () {
+        openTab(2);
+    });
 
-noVerifStatusBtn?.addEventListener('click', function () {
-    verificationStatusValue("");
-});
-respondedBtn?.addEventListener('click', function () {
-    verificationStatusValue("responded");
-});
-noResponseBtn?.addEventListener('click', function () {
-    verificationStatusValue("no response");
+    tabVerification.click();
 });
 
-interestedBtn?.addEventListener('click', function () {
-    interested.style.display = "block";
-    notInterested.style.display = "none";
-
-    referralStatusForm.disabled = false;
-    notInterestedReason.disabled = true;
-    notInterestedReason.value = "";
-});
-notInterestedBtn?.addEventListener('click', function () {
-    notInterested.style.display = "block";
-    interested.style.display = "none";
-
-    notInterestedReason.disabled = false;
-    referralStatusForm.disabled = true;
-    referYesBtn.checked = false;
-    referNoBtn.checked = false;
-    referralDate.disabled = true;
-    resetDate(referralDate);
-    noReferralReason.disabled = true;
-    noReferralReason.value = "";
-});
-
-referYesBtn?.addEventListener('click', function () {
-    referralStatus(true);
-});
-referNoBtn?.addEventListener('click', function () {
-    referralStatus(false);
-});
-
-invalidContact?.addEventListener('click', function () {
-    invalidContactValue(invalidContact.checked);
-});
-
-proceedBtn?.addEventListener('click', function () {
-    applicationStatusValue(true);
-});
-notProceedBtn?.addEventListener('click', function () {
-    applicationStatusValue(false);
-});
-
-document.getElementById("hired")?.addEventListener('click', function () {
-    employmentStatusValue(this.id);
-});
-document.getElementById("submitDocs")?.addEventListener('click', function () {
-    employmentStatusValue(this.id);
-});
-document.getElementById("forInterview")?.addEventListener('click', function () {
-    employmentStatusValue(this.id);
-});
-document.getElementById("notHired")?.addEventListener('click', function () {
-    employmentStatusValue(this.id);
-});
-
-responded.style.display = "none";
-noResponse.style.display = "none";
-proceed.style.display = "none";
-notProceed.style.display = "none";
-
-const btnUpdate_1 = document.getElementById("btnUpdate_1");
-const btnUpdate_2 = document.getElementById("btnUpdate_2");
-const btnCancelUpdate = document.getElementById("btnCancelUpdate");
-const modalUpdate = document.getElementById("modalUpdate");
-btnUpdate_1.addEventListener('click', function () {
-    modalUpdate.classList.remove('hidden');
-});
-btnUpdate_2.addEventListener('click', function () {
-    modalUpdate.classList.remove('hidden');
-});
-btnCancelUpdate.addEventListener('click', function () {
-    modalUpdate.classList.add('hidden');
-});
-//#endregion
-
-tabVerification.click();
-dateFormatRead();
-
-//#region FUNCTIONS
-function openTab(index, tabName) {
+function openTab(index) {
     document.querySelectorAll(".tab-content").forEach((tab, i) => {
         tab.classList.toggle("hidden", i !== index);
     });
@@ -146,24 +73,60 @@ function openTab(index, tabName) {
         btn.classList.toggle("border-transparent", i !== index);
         btn.classList.toggle("hover:border-gray-300", i !== index);
     });
-
-    if (tabName !== "employment") return;
 }
+
+function refreshVerification() {
+    if (btnNone.checked == true) {
+        btnNone.click();
+    }
+    if (btnResponded.checked == true) {
+        btnResponded.click();
+    }
+    if (btnNoResponse.checked == true) {
+        btnNoResponse.click();
+    }
+
+    if (btnInterested.checked == true) {
+        btnInterested.click();
+    }
+    if (btnNotInterested.checked == true) {
+        btnNotInterested.click();
+    }
+
+    if (btnYes.checked == true) {
+        btnYes.click();
+    }
+    if (btnNo.checked == true) {
+        btnNo.click();
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    btnNone.addEventListener('click', function () {
+        verificationStatusValue("");
+    });
+    btnResponded.addEventListener('click', function () {
+        verificationStatusValue("responded");
+    });
+    btnNoResponse.addEventListener('click', function () {
+        verificationStatusValue("no response");
+    });
+});
 
 function verificationStatusValue(response) {
     if (response == "responded") {
-        responded.style.display = "block";
-        noResponse.style.display = "none";
+        divResponded.style.display = "block";
+        divNoResponse.style.display = "none";
         respondedStatus();
     }
     else if (response == "no response") {
-        noResponse.style.display = "block";
-        responded.style.display = "none";
+        divNoResponse.style.display = "block";
+        divResponded.style.display = "none";
         noResponseStatus();
     }
     else {
-        responded.style.display = "none";
-        noResponse.style.display = "none";
+        divResponded.style.display = "none";
+        divNoResponse.style.display = "none";
         noVerificationStatus();
     }
 }
@@ -178,19 +141,19 @@ function respondedStatus() {
 }
 
 function noResponseStatus() {
-    interested.style.display = "none";
-    notInterested.style.display = "none";
+    divInterested.style.display = "none";
+    divNotInterested.style.display = "none";
 
-    interestedBtn.checked = false;
+    btnInterested.checked = false;
     referralStatusForm.disabled = true;
-    referYesBtn.checked = false;
-    referNoBtn.checked = false;
+    btnYes.checked = false;
+    btnNo.checked = false;
     referralDate.disabled = true;
     resetDate(referralDate);
     noReferralReason.disabled = true;
     noReferralReason.value = "";
 
-    notInterestedBtn.checked = false;
+    btnNotInterested.checked = false;
     notInterestedReason.disabled = true;
     notInterestedReason.value = "";
 
@@ -198,24 +161,24 @@ function noResponseStatus() {
 }
 
 function noVerificationStatus() {
-    interested.style.display = "none";
-    notInterested.style.display = "none";
+    divInterested.style.display = "none";
+    divNotInterested.style.display = "none";
 
-    interestedBtn.checked = false;
+    btnInterested.checked = false;
     referralStatusForm.disabled = true;
-    referYesBtn.checked = false;
-    referNoBtn.checked = false;
+    btnYes.checked = false;
+    btnNo.checked = false;
     referralDate.disabled = true;
     resetDate(referralDate);
     noReferralReason.disabled = true;
     noReferralReason.value = "";
 
-    notInterestedBtn.checked = false;
+    btnNotInterested.checked = false;
     notInterestedReason.disabled = true;
     notInterestedReason.value = "";
 
-    resetDate(document.getElementById("followup1"));
-    resetDate(document.getElementById("followup2"));
+    resetDate(followUpDate_1);
+    resetDate(followUpDate_2);
 
     invalidContact.checked = false;
     invalidContact.value = "";
@@ -223,8 +186,47 @@ function noVerificationStatus() {
     employmentField(true);
 }
 
-function referralStatus(refer) {
-    if (refer == true) {
+document.addEventListener("DOMContentLoaded", function () {
+    btnInterested.addEventListener('click', function () {
+        divInterested.style.display = "block";
+        divNotInterested.style.display = "none";
+
+        referralStatusForm.disabled = false;
+        notInterestedReason.disabled = true;
+        notInterestedReason.value = "";
+    });
+    btnNotInterested.addEventListener('click', function () {
+        divNotInterested.style.display = "block";
+        divInterested.style.display = "none";
+
+        notInterestedReason.disabled = false;
+        referralStatusForm.disabled = true;
+        btnYes.checked = false;
+        btnNo.checked = false;
+        referralDate.disabled = true;
+        resetDate(referralDate);
+        noReferralReason.disabled = true;
+        noReferralReason.value = "";
+
+        employmentField(true);
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    btnYes.addEventListener('click', function () {
+        referralStatus(true);
+    });
+    btnNo.addEventListener('click', function () {
+        referralStatus(false);
+    });
+
+    invalidContact.addEventListener('click', function () {
+        invalidContactValue(invalidContact.checked);
+    });
+});
+
+function referralStatus(canRefer) {
+    if (canRefer) {
         referralDate.disabled = false;
         noReferralReason.disabled = true;
         noReferralReason.value = "";
@@ -247,28 +249,150 @@ function invalidContactValue(isChecked) {
     }
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    btnProceed.addEventListener('click', function () {
+        applicationStatusValue(true);
+    });
+    btnNotProceed.addEventListener('click', function () {
+        applicationStatusValue(false);
+    });
+});
+
+function applicationStatusValue(canProceed) {
+    if (canProceed == true) {
+        divProceed.style.display = "block";
+        divNotProceed.style.display = "none";
+        proceedStatus();
+    }
+    else {
+        divNotProceed.style.display = "block";
+        divProceed.style.display = "none";
+        notProceedStatus();
+    }
+}
+
+function proceedStatus() {
+    notProceedReason.disabled = true;
+    notProceedReason.value = "";
+
+    remarks.disabled = false;
+}
+
+function notProceedStatus() {
+    notProceedReason.disabled = false;
+
+    btnHired.checked = false;
+    btnSubmitDocs.checked = false;
+    btnForInterview.checked = false;
+    btnNotHired.checked = false;
+
+    hiredDate.disabled = true;
+    resetDate(hiredDate);
+    submitDocsDate.disabled = true;
+    resetDate(submitDocsDate);
+    interviewDate.disabled = true;
+    resetDate(interviewDate);
+    notHiredReason.disabled = true;
+    notHiredReason.value = "";
+    remarks.disabled = true;
+    remarks.value = "";
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    btnHired.addEventListener('click', function () {
+        employmentStatusValue(this.id);
+    });
+    btnSubmitDocs.addEventListener('click', function () {
+        employmentStatusValue(this.id);
+    });
+    btnForInterview.addEventListener('click', function () {
+        employmentStatusValue(this.id);
+    });
+    btnNotHired.addEventListener('click', function () {
+        employmentStatusValue(this.id);
+    });
+});
+
+function employmentStatusValue(id) {
+    if (id === btnHired.id) {
+        hiredDate.disabled = false;
+    }
+    else {
+        hiredDate.disabled = true;
+        resetDate(hiredDate);
+    }
+
+    if (id === btnSubmitDocs.id) {
+        submitDocsDate.disabled = false;
+    }
+    else {
+        submitDocsDate.disabled = true;
+        resetDate(submitDocsDate);
+    }
+
+    if (id === btnForInterview.id) {
+        interviewDate.disabled = false;
+    }
+    else {
+        interviewDate.disabled = true;
+        resetDate(interviewDate);
+    }
+
+    if (id === btnNotHired.id) {
+        notHiredReason.disabled = false;
+    }
+    else {
+        notHiredReason.disabled = true;
+        notHiredReason.value = "";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    divResponded.style.display = "none";
+    divNoResponse.style.display = "none";
+    divProceed.style.display = "none";
+    divNotProceed.style.display = "none";
+
+    const btnUpdate_1 = document.getElementById("btnUpdate_1");
+    const btnUpdate_2 = document.getElementById("btnUpdate_2");
+    const btnCancelUpdate = document.getElementById("btnCancelUpdate");
+    const modalUpdate = document.getElementById("modalUpdate");
+
+    btnUpdate_1.addEventListener('click', function () {
+        modalUpdate.classList.remove('hidden');
+    });
+    btnUpdate_2.addEventListener('click', function () {
+        modalUpdate.classList.remove('hidden');
+    });
+    btnCancelUpdate.addEventListener('click', function () {
+        modalUpdate.classList.add('hidden');
+    });
+});
+
 function employmentField(isDisabled) {
-    let hiredDate = document.getElementById("hiredDate");
-    let submitDocsDate = document.getElementById("submitDocsDate");
-    let interviewDate = document.getElementById("interviewDate");
-    let notHiredReason = document.getElementById("notHiredReason");
-    let notProceedReason = document.getElementById("notProceedReason");
-    let remarks = document.getElementById("remarks");
+    const companyName = document.getElementById("company_name");
+    const companyAddress = document.getElementById("company_address");
+    const jobTitle = document.getElementById("job_title");
+
+    const notProceedReason = document.getElementById("not_proceed_reason");
+    const remarks = document.getElementById("remarks");
 
     document.getElementById("employmentField").disabled = isDisabled;
 
     if (isDisabled) {
-        document.getElementById("companyName").value = "";
-        document.getElementById("companyAddress").value = "";
-        document.getElementById("jobTitle").value = "";
+        companyName.value = "";
+        companyAddress.value = "";
+        jobTitle.value = "";
 
-        proceedBtn.checked = false;
-        notProceedBtn.checked = false;
+        btnProceed.checked = false;
+        btnNotProceed.checked = false;
+        divProceed.style.display = "none";
+        divNotProceed.style.display = "none";
 
-        document.getElementById("hired").checked = false;
-        document.getElementById("submitDocs").checked = false;
-        document.getElementById("forInterview").checked = false;
-        document.getElementById("notHired").checked = false;
+        btnHired.checked = false;
+        btnSubmitDocs.checked = false;
+        btnForInterview.checked = false;
+        btnNotHired.checked = false;
 
         hiredDate.disabled = true;
         resetDate(hiredDate);
@@ -286,82 +410,14 @@ function employmentField(isDisabled) {
     }
 }
 
-function applicationStatusValue(canProceed) {
-    if (canProceed == true) {
-        proceed.style.display = "block";
-        notProceed.style.display = "none";
-        proceedStatus();
-    }
-    else {
-        notProceed.style.display = "block";
-        proceed.style.display = "none";
-        notProceedStatus();
-    }
-}
+function resetDate(element) {
+    element.value = "";
 
-function proceedStatus() {
-    notProceedReason.disabled = true;
-    notProceedReason.value = "";
-
-    remarks.disabled = false;
-}
-
-function notProceedStatus() {
-    notProceedReason.disabled = false;
-
-    document.getElementById("hired").checked = false;
-    document.getElementById("submitDocs").checked = false;
-    document.getElementById("forInterview").checked = false;
-    document.getElementById("notHired").checked = false;
-
-    hiredDate.disabled = true;
-    resetDate(hiredDate);
-    submitDocsDate.disabled = true;
-    resetDate(submitDocsDate);
-    interviewDate.disabled = true;
-    resetDate(interviewDate);
-    notHiredReason.disabled = true;
-    notHiredReason.value = "";
-    remarks.disabled = true;
-    remarks.value = "";
-}
-
-function employmentStatusValue(id) {
-    let hired = document.getElementById("hiredDate");
-    let submitDocs = document.getElementById("submitDocsDate");
-    let forInterview = document.getElementById("interviewDate");
-    let notHired = document.getElementById("notHiredReason");
-
-    if (id === "hired") {
-        hired.disabled = false;
-    }
-    else {
-        hired.disabled = true;
-        resetDate(hired);
-    }
-
-    if (id === "submitDocs") {
-        submitDocs.disabled = false;
-    }
-    else {
-        submitDocs.disabled = true;
-        resetDate(submitDocs);
-    }
-
-    if (id === "forInterview") {
-        forInterview.disabled = false;
-    }
-    else {
-        forInterview.disabled = true;
-        resetDate(forInterview);
-    }
-
-    if (id === "notHired") {
-        notHired.disabled = false;
-    }
-    else {
-        notHired.disabled = true;
-        notHired.value = "";
+    // prevent error on older browsers (eg. IE8)
+    if (element.type === "date") {
+        // update the input content visually
+        element.type = "text";
+        element.type = "date";
     }
 }
 
@@ -440,41 +496,6 @@ function dateFormatRead() {
         dateFormat.value = `${monthName} ${day}, ${year}`;
     }
 }
-
-function resetDate(element) {
-    element.value = "";
-
-    // prevent error on older browsers (eg. IE8)
-    if (element.type === "date") {
-        // update the input content visually
-        element.type = "text";
-        element.type = "date";
-    }
-}
-
-function refreshVerification() {
-    if (noVerifStatusBtn.checked == true) {
-        noVerifStatusBtn.click();
-    }
-    if (respondedBtn.checked == true) {
-        respondedBtn.click();
-    }
-    if (noResponseBtn.checked == true) {
-        noResponseBtn.click();
-    }
-
-    if (interestedBtn.checked == true) {
-        interestedBtn.click();
-    }
-    if (notInterestedBtn.checked == true) {
-        notInterestedBtn.click();
-    }
-
-    if (referYesBtn.checked == true) {
-        referYesBtn.click();
-    }
-    if (referNoBtn.checked == true) {
-        referNoBtn.click();
-    }
-}
 //#endregion
+
+dateFormatRead();

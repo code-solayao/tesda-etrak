@@ -156,7 +156,7 @@
                                 {{-- response_status : Interested --}}
                                 <div id="divInterested">
                                     <label class="form-label">Refer to Company?</label>
-                                    <fieldset id="formReferralStatus" class="mt-2 space-y-2" disabled>
+                                    <fieldset id="referralStatusForm" class="mt-2 space-y-2" disabled>
                                         {{-- referral_status : Yes --}}
                                         <label for="btnYes" class="flex items-center">
                                             <input type="radio" name="referral_status" id="btnYes" class="form-radio" value="Yes" {{ old('referral_status', $graduate->referral_status) == 'Yes' ? 'checked' : '' }} />
@@ -213,55 +213,55 @@
                         <fieldset id="employmentField" disabled>
                             <div class="mb-5">
                                 <label for="company_name" class="form-label">Name of Company</label>
-                                <input type="text" name="company_name" id="companyName" class="form-input" value="{{ old('company_name', $graduate->company_name) }}" />
+                                <input type="text" name="company_name" id="company_name" class="form-input bg-gray-200" value="{{ old('company_name', $graduate->company_name) }}" />
                             </div>
                             <div class="mb-5">
                                 <label for="company_address" class="form-label">Address of Company</label>
-                                <textarea name="company_address" id="companyAddress" rows="3" class="form-input">{{ old('company_address', $graduate->company_address) }}</textarea>
+                                <textarea name="company_address" id="company_address" rows="3" class="form-input bg-gray-200">{{ old('company_address', $graduate->company_address) }}</textarea>
                             </div>
                             <div class="mb-5">
                                 <label for="job_title" class="form-label">Job Title</label>
-                                <input type="text" name="job_title" id="jobTitle" class="form-input" value="{{ old('job_title', $graduate->job_title) }}" />
+                                <input type="text" name="job_title" id="job_title" class="form-input bg-gray-200" value="{{ old('job_title', $graduate->job_title) }}" />
                             </div>
                             <div class="mt-2 space-y-2">
                                 <label class="form-label">Application Status</label>
-                                <label for="proceedBtn" class="flex items-center">
-                                    <input type="radio" name="application_status" id="proceedBtn" class="form-radio" value="Proceeded" {{ old('application_status', $graduate->application_status) == 'Proceed' ? 'checked' : '' }} />
+                                <label for="btnProceed" class="flex items-center">
+                                    <input type="radio" name="application_status" id="btnProceed" class="form-radio" value="Proceeded" {{ old('application_status', $graduate->application_status) == 'Proceed' ? 'checked' : '' }} />
                                     <span class="ml-2 text-gray-700">Proceed</span>
                                 </label>
-                                <label for="notProceedBtn" class="flex items-center">
-                                    <input type="radio" name="application_status" id="notProceedBtn" class="form-radio" value="Did Not Proceed" {{ old('application_status', $graduate->application_status) == 'Don\'t Proceed' ? 'checked' : '' }} />
+                                <label for="btnNotProceed" class="flex items-center">
+                                    <input type="radio" name="application_status" id="btnNotProceed" class="form-radio" value="Did Not Proceed" {{ old('application_status', $graduate->application_status) == 'Don\'t Proceed' ? 'checked' : '' }} />
                                     <span class="ml-2 text-gray-700">Will Not Proceed</span>
                                 </label>
                             </div>
                             <hr class="my-4">
                             {{-- application_status : Proceed --}}
-                            <div class="mt-2 space-y-2" id="proceed">
+                            <div class="mt-2 space-y-2" id="divProceed">
                                 <label class="form-label">Employment Status</label>
                                 {{-- employment_status : Hired --}}
-                                <label for="hired" class="flex items-center">
-                                    <input type="radio" name="employment_status" id="hired" class="form-radio" value="Hired" {{ old('employment_status', $graduate->employment_status) == 'Hired' ? 'checked' : '' }} />
+                                <label for="btnHired" class="flex items-center">
+                                    <input type="radio" name="employment_status" id="btnHired" class="form-radio" value="Hired" {{ old('employment_status', $graduate->employment_status) == 'Hired' ? 'checked' : '' }} />
                                     <span class="ml-2 text-gray-700">Hired</span>
                                 </label>
-                                <input type="date" name="hired_date" id="hiredDate" class="form-input mb-3 ml-5" value="{{ old('hired_date', $graduate->hired_date) }}" disabled />
+                                <input type="date" name="hired_date" id="hired_date" class="form-input mb-3 ml-5" value="{{ old('hired_date', $graduate->hired_date) }}" disabled />
                                 {{-- employment_status : Submitted Documents --}}
-                                <label for="submitDocs" class="flex items-center">
-                                    <input type="radio" name="employment_status" id="submitDocs" class="form-radio" value="Submitted Documents" {{ old('employment_status', $graduate->employment_status) == 'Submitted Documents' ? 'checked' : '' }} />
+                                <label for="btnSubmitDocs" class="flex items-center">
+                                    <input type="radio" name="employment_status" id="btnSubmitDocs" class="form-radio" value="Submitted Documents" {{ old('employment_status', $graduate->employment_status) == 'Submitted Documents' ? 'checked' : '' }} />
                                     <span class="ml-2 text-gray-700">Submitted Documents</span>
                                 </label>
-                                <input type="date" name="submitted_documents_date" id="submitDocsDate" class="form-input mb-3 ml-5" value="{{ old('submitted_documents_date', $graduate->submitted_documents_date) }}" disabled />
+                                <input type="date" name="submitted_documents_date" id="submitted_documents_date" class="form-input mb-3 ml-5" value="{{ old('submitted_documents_date', $graduate->submitted_documents_date) }}" disabled />
                                 {{-- employment_status : For Interview --}}
-                                <label for="forInterview" class="flex items-center">
-                                    <input type="radio" name="employment_status" id="forInterview" class="form-radio" value="For Interview" {{ old('employment_status', $graduate->employment_status) == 'For Interview' ? 'checked' : '' }} />
+                                <label for="btnForInterview" class="flex items-center">
+                                    <input type="radio" name="employment_status" id="btnForInterview" class="form-radio" value="For Interview" {{ old('employment_status', $graduate->employment_status) == 'For Interview' ? 'checked' : '' }} />
                                     <span class="ml-2 text-gray-700">For Interview</span>
                                 </label>
-                                <input type="date" name="interview_date" id="interviewDate" class="form-input mb-3 ml-5" value="{{ old('interview_date', $graduate->interview_date) }}" disabled />
+                                <input type="date" name="interview_date" id="interview_date" class="form-input mb-3 ml-5" value="{{ old('interview_date', $graduate->interview_date) }}" disabled />
                                 {{-- employment_status : Not Hired --}}
-                                <label for="notHired" class="flex items-center">
-                                    <input type="radio" name="employment_status" id="notHired" class="form-radio" value="Not Hired" {{ old('employment_status', $graduate->employment_status) == 'Not Hired' ? 'checked' : '' }} />
+                                <label for="btnNotHired" class="flex items-center">
+                                    <input type="radio" name="employment_status" id="btnNotHired" class="form-radio" value="Not Hired" {{ old('employment_status', $graduate->employment_status) == 'Not Hired' ? 'checked' : '' }} />
                                     <span class="ml-2 text-gray-700">Not Hired</span>
                                 </label>
-                                <select name="not_hired_reason" id="notHiredReason" class="form-input mb-3 ml-5" disabled>
+                                <select name="not_hired_reason" id="not_hired_reason" class="form-input mb-3 ml-5" disabled>
                                     <option value="">-- Select a reason --</option>
                                     @foreach ($not_hired_reasons as $reason)
                                         <option value="{{ $reason }}" {{ old('not_hired_reason', $graduate->not_hired_reason) == $reason ? 'selected' : '' }}>
@@ -272,14 +272,14 @@
                                 <textarea name="remarks" id="remarks" rows="3" class="form-input my-5" placeholder="Remarks" disabled>{{ old('remarks', $graduate->remarks) }}</textarea>
                             </div>
                             {{-- application_status : Don't Proceed --}}
-                            <div class="mb-5" id="notProceed">
-                                <label for="notProceedReason" class="form-label">Reason</label>
-                                <textarea name="not_proceed_reason" id="notProceedReason" rows="3" class="form-input">{{ old('not_proceed_reason', $graduate->not_proceed_reason) }}</textarea>
+                            <div class="mb-5" id="divNotProceed">
+                                <label for="not_proceed_reason" class="form-label">Reason</label>
+                                <textarea name="not_proceed_reason" id="not_proceed_reason" rows="3" class="form-input">{{ old('not_proceed_reason', $graduate->not_proceed_reason) }}</textarea>
                             </div>
                         </fieldset>
                     </div>
                     <div class="flex items-center justify-baseline">
-                        <button type="button" class="btn btn-primary rounded-lg mr-2" id="toggleUpdate2">Update</button>
+                        <button type="button" class="btn btn-primary rounded-lg mr-2" id="btnUpdate_2">Update</button>
                         <a href="{{ route('admin.record-details', $graduate->id) }}" class="btn btn-secondary rounded-lg">Cancel</a>
                     </div>
                 </div>
