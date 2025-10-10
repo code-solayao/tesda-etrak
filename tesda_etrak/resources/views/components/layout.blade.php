@@ -9,7 +9,7 @@
 </head>
 @php
     $authViews = ['view.login', 'view.signup'];
-    $withHome = ['home', 'view.login', 'view.signup'];
+    $withHome = ['home', 'admin.home', 'view.login', 'view.signup'];
 @endphp
 <body id="body">
     <header class="bg-blue-400 fixed left-0 shadow-md top-0 w-full z-20">

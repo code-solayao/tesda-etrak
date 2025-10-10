@@ -28,9 +28,11 @@ function openTab(index) {
     });
 
     document.querySelectorAll("#tabs button").forEach((btn, i) => {
-        btn.classList.toggle("border-black", i === index);
-        btn.classList.toggle("border-transparent", i !== index);
-        btn.classList.toggle("hover:border-gray-300", i !== index);
+        btn.classList.toggle("bg-neutral-500", i === index);
+        btn.classList.toggle("text-white", i === index);
+        btn.classList.toggle("bg-transparent", i !== index);
+        btn.classList.toggle("hover:bg-neutral-300", i !== index);
+        btn.classList.toggle("text-black", i !== index);
     });
 }
 

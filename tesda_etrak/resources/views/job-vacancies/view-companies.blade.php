@@ -8,7 +8,7 @@
 @section('main', 'Companies with Vacancies')
 
 <x-layout>
-    <div class="flex items-center justify-start mb-4">
+    <div class="flex items-center justify-start mb-1">
         <div class="flex flex-row-reverse">
             <a href="{{ route('admin.add-company.view') }}" class="btn btn-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 inline-block">
@@ -45,7 +45,7 @@
                 </div>
             </div>
         </div>
-        <!-- company Details -->
+        <!-- Company Details -->
         <div class="bg-gray-100 border border-gray-400 hidden lg:block p-8 rounded-xl shadow-md w-full">
             <div class="h-[calc(3.8*10rem)] max-w-full mx-auto overflow-y-auto">
                 {{-- Loading Spinner --}}

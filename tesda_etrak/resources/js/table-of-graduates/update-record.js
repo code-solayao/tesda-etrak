@@ -358,14 +358,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnCancelUpdate = document.getElementById("btnCancelUpdate");
     const modalUpdate = document.getElementById("modalUpdate");
 
-    btnUpdate_1.addEventListener('click', function () {
+    btnUpdate_1.addEventListener("click", function () {
         modalUpdate.classList.remove('hidden');
     });
-    btnUpdate_2.addEventListener('click', function () {
-        modalUpdate.classList.remove('hidden');
+    btnUpdate_2.addEventListener("click", function () {
+        modalUpdate.classList.remove("hidden");
     });
-    btnCancelUpdate.addEventListener('click', function () {
-        modalUpdate.classList.add('hidden');
+    btnCancelUpdate.addEventListener("click", function () {
+        modalUpdate.classList.add("hidden");
     });
 });
 
@@ -380,6 +380,8 @@ function employmentField(isDisabled) {
     document.getElementById("employmentField").disabled = isDisabled;
 
     if (isDisabled) {
+        tabEmployment.classList.add("hidden");
+
         companyName.value = "";
         companyAddress.value = "";
         jobTitle.value = "";
@@ -407,6 +409,9 @@ function employmentField(isDisabled) {
 
         notProceedReason.disabled = true;
         notProceedReason.value = "";
+    }
+    else {
+        tabEmployment.classList.remove("hidden");
     }
 }
 
