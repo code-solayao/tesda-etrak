@@ -9,7 +9,7 @@
 </head>
 @php
     $authViews = ['view.login', 'view.signup'];
-    $withHome = ['home', 'admin.home', 'view.login', 'view.signup'];
+    $noHeader = ['admin.dashboard', 'admin.home', 'dashboard', 'home', 'view.login', 'view.signup'];
 @endphp
 <body id="body">
     <header class="bg-blue-400 fixed left-0 shadow-md top-0 w-full z-20">
@@ -469,7 +469,7 @@
             </aside>
         @endif
         <!-- Main -->
-        @if (in_array(Route::currentRouteName(), $withHome))
+        @if (in_array(Route::currentRouteName(), $noHeader))
             <main class="flex-1 overflow-y-auto px-6 lg:ml-20 transition-all duration-300">
                 {{ $slot }}
             </main>
