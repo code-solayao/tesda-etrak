@@ -5,8 +5,8 @@
 @endsection
 
 <x-layout>
-    <div class="flex items-start justify-between">
-        <div class="space-y-8">
+    <section class="flex items-start justify-between">
+        <section class="space-y-8">
             <div class="flex items-center justify-start mt-auto space-x-10">
                 <img src="{{ asset('images/logo_default.png') }}" alt="E-TRAK Logo" class="w-3xs">
                 <div>
@@ -14,16 +14,14 @@
                     <p class="text-2xl">This is a project of <strong>Employment Monitoring System</strong></p>
                 </div>
             </div>
-            <div>
-                <video class="border mr-auto rounded shadow-md w-4xl" autoplay controls muted>
-                    <source src="{{ asset('videos/index.webm') }}" type="video/webm">
-                    <source src="{{ asset('videos/index.mp4') }}" type="video/mp4">
-                    <source src="{{ asset('videos/index.ogg') }}" type="video/ogg">
-                    Your browser does not support HTML video.
-                </video>
-            </div>
-        </div>
-        <div class="flex items-baseline justify-end">
+            <video class="border mr-auto rounded shadow-md w-4xl" autoplay controls muted>
+                <source src="{{ asset('videos/index.webm') }}" type="video/webm">
+                <source src="{{ asset('videos/index.mp4') }}" type="video/mp4">
+                <source src="{{ asset('videos/index.ogg') }}" type="video/ogg">
+                Your browser does not support HTML video.
+            </video>
+        </section>
+        <section class="flex items-baseline justify-end">
             <div class="bg-sky-300 flex fixed items-center justify-center h-[800px] rounded-2xl shadow-lg">
                 <div class="w-sm p-8 space-y-6">
                     <div class="border-b border-b-blue-500 p-2">
@@ -60,12 +58,14 @@
                     </div>
                 </div>
             </div>
+        </section>
+    </section>
+    <section class="block my-12">
+        <div class="border-gray-200 border-4 flex items-center justify-center py-6 rounded-2xl shadow-lg space-x-28 w-3/4">
+            <img src="{{ asset('images/logo_tesda.png') }}" alt="TESDA Logo" class="w-48">
+            <img src="{{ asset('images/logo_bagong-pilipinas.png') }}" alt="Bagong Pilipinas Logo" class="w-48">
+            <img src="{{ asset('images/logo_dps-2025.png') }}" alt="DPS Registration Seal 2025" class="w-48">
+            <img src="{{ asset('images/logo_kayang-kaya.png') }}" alt="Kayang-Kaya Logo" class="w-48">
         </div>
-    </div>
-    <div class="border-4 border-gray-200 flex items-center justify-center my-12 py-6 rounded-2xl shadow-lg space-x-28 w-3/4">
-        <img src="{{ asset('images/logo_tesda.png') }}" alt="TESDA Logo" class="w-48">
-        <img src="{{ asset('images/logo_bagong-pilipinas.png') }}" alt="Bagong Pilipinas Logo" class="w-48">
-        <img src="{{ asset('images/logo_dps-2025.png') }}" alt="DPS Registration Seal 2025" class="w-48">
-        <img src="{{ asset('images/logo_kayang-kaya.png') }}" alt="Kayang-Kaya Logo" class="w-48">
-    </div>
+    </section>
 </x-layout>

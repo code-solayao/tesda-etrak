@@ -13,7 +13,7 @@
 @endphp
 <body id="body">
     <header class="bg-blue-400 fixed left-0 shadow-md top-0 w-full z-20">
-        <nav class="lg:hidden container mx-auto p-4">
+        <nav class="sm:hidden container mx-auto p-4">
             <div class="flex items-center justify-between relative">
                 @if (!in_array(Route::currentRouteName(), $authViews))
                     <!-- Hamburger Menu Icon -->
@@ -24,14 +24,13 @@
                     </button>
                 @else
                     <!-- Home Icon -->
-                    <a href="{{ route('home') }}" class="text-white hover:bg-blue-500 border p-2 rounded-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                            <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
-                            <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+                    <a href="{{ route('home') }}" class="bg-blue-100 text-blue-500 border-white border p-2 rounded-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.0" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
                         </svg>
                     </a>
                 @endif
-                <div class="text-white absolute font-[Fremont,Verdana] font-bold left-1/2 text-3xl transform -translate-x-1/2">
+                <div class="text-white absolute font-[FremontBold,Verdana] font-bold left-1/2 text-3xl transform -translate-x-1/2">
                     @alladmin
                         <a href="{{ route('admin.home') }}">E-TRAK</a>
                     @endadmin
@@ -474,7 +473,7 @@
                 {{ $slot }}
             </main>
         @else
-            <main class="flex-1 overflow-y-auto p-6 lg:ml-20 transition-all duration-300">
+            <main class="flex-1 overflow-y-auto p-6 lg:ml-20 transition-all duration-300" x-data="{ print: 'Hello World!' }">
                 <header class="mb-8">
                     @if (session('success'))
                         <div class="bg-green-200 text-green-600 border drop-shadow font-semibold p-3 mb-3 rounded text-center text-lg">

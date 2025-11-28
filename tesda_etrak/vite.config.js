@@ -8,16 +8,13 @@ export default defineConfig({
         port: 5173,
         strictPort: true,
         hmr: {
-            host: '192.168.5.46',
+            host: '192.168.5.47',
             // host: '10.20.191.128',
         },
     },
     plugins: [
         laravel({
-            input: [
-                'resources/css/app.css', 
-                'resources/js/app.js'
-            ],
+            input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
         }),
         tailwindcss(),
