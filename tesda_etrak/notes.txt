@@ -338,3 +338,10 @@ public function exportToGoogleSheets(GoogleSheetsService $sheetsService)
 
     return back()->with('success', 'Google Sheet updated in batches successfully!');
 }
+
+layout.blade.php:
+<!-- Floating Login Panel -->
+<div class="bg-blue-100 absolute right-0 mt-2 w-80 shadow-xl rounded-lg p-6 z-50 border border-gray-200"
+    x-show="showLogin"
+    x-transition>
+</div>

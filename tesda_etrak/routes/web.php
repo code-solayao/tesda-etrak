@@ -15,8 +15,12 @@ Route::get('/google-error-502', function () {
     return view('via-google-sheets.google-error-502');
 });
 
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/', 'index')->name('home');
+});
+
 Route::middleware('guest')->controller(AuthController::class)->group(function () {
-    Route::get('/login', 'view_login')->name('view.login');
+    // Route::get('/login', 'view_login')->name('view.login');
     Route::get('/signup', 'view_signup')->name('view.signup');
     Route::post('/login', 'login')->name('login');
     Route::post('/signup', 'signup')->name('signup');
@@ -30,7 +34,6 @@ Route::middleware(['auth', 'role:admin,superadmin'])->controller(HomeController:
 });
 
 Route::middleware('auth')->controller(HomeController::class)->group(function () {
-    Route::get('/', 'index')->name('home');
     Route::get('/dashboard', 'dashboard')->name('dashboard');
 });
 

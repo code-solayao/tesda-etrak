@@ -5,52 +5,6 @@
 @endsection
 
 <x-layout>
-    <div x-data="{ open: false }">
-        <!-- Toggle Button -->
-        <button @click="open = true" 
-            class="px-4 py-2 bg-blue-600 text-white rounded-lg">
-            <span>Login</span>
-        </button>
-        <!-- Background Overlay -->
-        <div class="fixed inset-0 bg-black/50 z-40 pointer-events-auto"
-            x-show="open"
-            @click="open = false"
-            x-transition.opacity>
-        </div>
-        <!-- Floating Login Panel -->
-        <div class="bg-blue-100 absolute right-0 mt-2 w-80 shadow-xl rounded-lg p-6 z-50 border border-gray-200"
-            x-show="open"
-            x-transition>
-            <h2 class="text-2xl font-semibold mb-4 text-center">Login</h2>
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-                <!-- Email -->
-                <div class="mb-3">
-                    <label class="block text-sm font-medium">Email</label>
-                    <input type="email" name="email" required
-                        class="w-full mt-1 p-2 border rounded-lg focus:ring focus:ring-blue-300">
-                </div>
-                <!-- Password -->
-                <div class="mb-4">
-                    <label class="block text-sm font-medium">Password</label>
-                    <input type="password" name="password" required
-                        class="w-full mt-1 p-2 border rounded-lg focus:ring focus:ring-blue-300">
-                </div>
-                <!-- Submit -->
-                <button type="submit"
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
-                    Login
-                </button>
-                <!-- Close Button -->
-                <button 
-                    type="button"
-                    @click="open = false"
-                    class="w-full mt-3 text-center text-gray-600 hover:underline text-sm">
-                    Close
-                </button>
-            </form>
-        </div>
-    </div>
     <section class="block sm:flex flex-row-reverse items-start justify-between">
         <div id="loginForm">
             <section class="sm:hidden flex items-baseline justify-baseline">
@@ -91,41 +45,7 @@
                     </div>
                 </div>
             </section>
-            <section class="bg-blue-100 border-gray-200 border fixed p-8 right-10 rounded-2xl shadow-lg w-sm z-50"
-                x-show="open"
-                x-transition>
-                <div class="border-b border-b-blue-500 p-2">
-                    <h2 class="text-blue-600 text-2xl font-semibold mb-4 text-center">Sign in</h2>
-                </div>
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label class="block text-sm font-medium">Email</label>
-                        <input type="email" name="email" required
-                            class="w-full mt-1 p-2 border rounded-lg focus:ring focus:ring-blue-300">
-                    </div>
-                    <!-- Password -->
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium">Password</label>
-                        <input type="password" name="password" required
-                            class="w-full mt-1 p-2 border rounded-lg focus:ring focus:ring-blue-300">
-                    </div>
-                    <!-- Submit -->
-                    <button type="submit"
-                        class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
-                        Login
-                    </button>
-                    <!-- Close Button -->
-                    <button 
-                        type="button"
-                        @click="open = false"
-                        class="w-full mt-3 text-center text-gray-600 hover:underline text-sm">
-                        Close
-                    </button>
-                </form>
-            </section>
-            <section class="hidden sm:hidden items-baseline justify-end">
+            <section class="hidden sm:flex items-baseline justify-end">
                 <div class="bg-sky-300 fixed flex items-center justify-center h-[800px] rounded-2xl shadow-lg">
                     <div class="w-sm p-8 space-y-6">
                         <div class="border-b border-b-blue-500 p-2">
