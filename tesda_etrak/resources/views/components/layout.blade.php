@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ sidebarOpen: false }" class="h-full">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ sidebarOpen: false, showLogin: false }" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,14 +41,6 @@
                         <a href="{{ route('home') }}">E-TRAK</a>
                     @endguest
                 </div>
-                @if (!in_array(Route::currentRouteName(), $authViews))
-                    @guest
-                        <div class="flex flex-row-reverse">
-                            {{-- <a href="{{ route('view.login') }}" class="btn btn-secondary bg-blue-100 hover:bg-blue-200 text-blue-700 ml-5">Log In</a> --}}
-                            <a href="{{ route('view.signup') }}" class="btn btn-secondary bg-indigo-500 hover:bg-indigo-400 hidden lg:block">Sign Up</a>
-                        </div>
-                    @endguest
-                @endif
             </div>
         </nav>
         <!-- Desktop NAV -->
@@ -70,47 +62,12 @@
                 @if (!in_array(Route::currentRouteName(), $authViews))
                     @guest
                         <div class="flex flex-row-reverse">
-                            <div x-data="{ showLogin: false }">
+                            <div>
                                 <!-- Toggle Button -->
                                 <button @click="showLogin = true" 
                                     class="btn btn-secondary bg-blue-100 hover:bg-blue-200 text-blue-700 ml-5">
                                     <span>Log In</span>
                                 </button>
-                                <!-- Background Overlay -->
-                                <div class="fixed inset-0 bg-black/50 z-40 pointer-events-auto"
-                                    x-show="showLogin"
-                                    @click="showLogin = false"
-                                    x-transition.opacity>
-                                </div>
-                                <!-- Floating Login Panel -->
-                                <div class="bg-white border-gray-400 border fixed top-1/2 left-1/2 w-80 -translate-x-1/2 -translate-y-1/2 shadow-xl rounded-xl p-6 z-50"
-                                    x-show="showLogin"
-                                    x-transition>
-                                    <h2 class="text-2xl font-semibold mb-4 text-center">Log In</h2>
-                                    <form action="{{ route('login') }}" method="POST">
-                                        @csrf
-                                        <div class="my-4">
-                                            <input type="email" name="email" 
-                                            class="w-full px-4 py-2 bg-gray-100 text-gray-800 border border-gray-500 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
-                                            placeholder="E-mail" autofocus />
-                                        </div>
-                                        <div class="my-4">
-                                            <input type="password" name="password" 
-                                            class="w-full px-4 py-2 text-gray-800 bg-gray-100 border border-gray-500 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
-                                            placeholder="Password" />
-                                        </div>
-                                        <div class="mt-7">
-                                            <input type="submit" name="login" value="Sign In" 
-                                            class="w-full px-4 py-2 cursor-pointer font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500" />
-                                        </div>
-                                        <div class="mt-3">
-                                            <button type="button" class="text-gray-600 text-sm border-gray-400 border cursor-pointer py-2 rounded-md w-full hover:bg-gray-400 hover:text-white hover:font-semibold"
-                                                @click="showLogin = false">
-                                                <span>Close</span>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
                             </div>
                             <a href="{{ route('view.signup') }}" class="btn btn-secondary bg-indigo-500 hover:bg-indigo-400">Sign Up</a>
                         </div>
@@ -320,7 +277,7 @@
                     </li>
                 </ul>
                 <!-- Bottom Section -->
-                <div class="border-t border-blue-500 flex flex-col pt-3 text-center space-y-2">
+                <div class="border-t border-blue-500 flex flex-col pt-3 text-center space-y-2" x-data="{ showLogin: false }">
                     @auth
                         @superadmin
                             <span class="bg-blue-500 text-white font-semibold py-2 rounded-md">[Super Admin] {{ Auth::user()->name }}</span>
@@ -337,8 +294,12 @@
                         </form>
                     @endauth
                     @guest
+                        <!-- Toggle Button -->
+                        <button @click="showLogin = true" id="sidebarLogin"
+                            class="btn btn-secondary bg-blue-100 hover:bg-blue-200 text-blue-700">
+                            <span>Log In</span>
+                        </button>
                         <a href="{{ route('view.signup') }}" class="btn btn-secondary bg-indigo-500 hover:bg-indigo-400">Sign Up</a>
-                        {{-- <a href="{{ route('view.login') }}" class="btn btn-secondary bg-blue-100 hover:bg-blue-200 text-blue-700">Log In</a> --}}
                     @endguest
                 </div>
             </aside>
@@ -529,6 +490,43 @@
                 {{ $slot }}
             </main>
         @endif
+        <div id="mobileLogin">
+            <!-- Background Overlay -->
+            <div class="fixed inset-0 bg-black/50 z-40 pointer-events-auto"
+                x-show="showLogin"
+                @click="showLogin = false"
+                x-transition.opacity>
+            </div>
+            <!-- Floating Login Panel -->
+            <div class="bg-white border-gray-400 border fixed top-1/2 left-1/2 w-80 -translate-x-1/2 -translate-y-1/2 shadow-xl rounded-xl p-6 z-50"
+                x-show="showLogin"
+                x-transition>
+                <h2 class="text-2xl font-semibold mb-4 text-center">Log In</h2>
+                <form action="{{ route('login') }}" method="POST">
+                    @csrf
+                    <div class="my-4">
+                        <input type="email" name="email" 
+                        class="w-full px-4 py-2 bg-gray-100 text-gray-800 border border-gray-500 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                        placeholder="E-mail" autofocus />
+                    </div>
+                    <div class="my-4">
+                        <input type="password" name="password" 
+                        class="w-full px-4 py-2 text-gray-800 bg-gray-100 border border-gray-500 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                        placeholder="Password" />
+                    </div>
+                    <div class="mt-7">
+                        <input type="submit" name="login" value="Sign In" 
+                        class="w-full px-4 py-2 cursor-pointer font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                    <div class="mt-3">
+                        <button type="button" class="text-gray-600 text-sm border-gray-400 border cursor-pointer py-2 rounded-md w-full hover:bg-gray-400 hover:text-white hover:font-semibold"
+                            @click="showLogin = false">
+                            <span>Close</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 </html>

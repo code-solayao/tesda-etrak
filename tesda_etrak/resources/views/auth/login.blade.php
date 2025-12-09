@@ -7,7 +7,7 @@
 <x-layout>
     <section class="block sm:flex flex-row-reverse items-start justify-between">
         <div id="loginForm">
-            <section class="sm:hidden flex items-baseline justify-baseline">
+            <section class="sm:hidden hidden items-baseline justify-baseline">
                 <div class="bg-sky-300 fixed flex items-center justify-center rounded-2xl shadow-lg w-[calc(60vh-3rem)] h-[calc(100vh-9.8rem)]">
                     <div class="w-sm p-8 space-y-6">
                         <div class="border-b border-b-blue-500 p-2">
