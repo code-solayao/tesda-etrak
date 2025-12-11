@@ -1,7 +1,7 @@
 @section('title', 'E-TRAK - Sign in')
 
 @section('vite')
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/auth/login.js']);
+    @vite(['resources/css/app.css', 'resources/js/app.js']);
 @endsection
 
 <x-layout>
@@ -84,7 +84,7 @@
                 </div>
             </section>
         </div>
-        <div id="title z-10">
+        <div id="title">
             <section class="space-y-8 sm:hidden">
                 <div class="text-center space-x-10">
                     <img src="{{ asset('images/logo_default.png') }}" alt="E-TRAK Logo" class="mx-auto w-3xs">

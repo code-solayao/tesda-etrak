@@ -15,10 +15,6 @@ Route::get('/google-error-502', function () {
     return view('via-google-sheets.google-error-502');
 });
 
-Route::controller(HomeController::class)->group(function () {
-    Route::get('/', 'index')->name('home');
-});
-
 Route::middleware('guest')->controller(AuthController::class)->group(function () {
     Route::get('/login', 'view_login')->name('view.login');
     Route::get('/signup', 'view_signup')->name('view.signup');
@@ -33,7 +29,8 @@ Route::middleware(['auth', 'role:admin,superadmin'])->controller(HomeController:
     Route::get('/admin/dashboard', 'dashboard')->name('admin.dashboard');
 });
 
-Route::middleware('auth')->controller(HomeController::class)->group(function () {
+Route::middleware('auth', 'role:user')->controller(HomeController::class)->group(function () {
+    Route::get('/', 'index')->name('home');
     Route::get('/dashboard', 'dashboard')->name('dashboard');
 });
 
@@ -49,7 +46,7 @@ Route::middleware(['auth', 'role:admin,superadmin'])->controller(TableOfGraduate
     Route::delete('/admin/list-of-graduates', 'truncate')->name('admin.truncate-graduates');
 });
 
-Route::middleware('auth')->controller(TableOfGraduatesController::class)->group(function () {
+Route::middleware('auth', 'role:user')->controller(TableOfGraduatesController::class)->group(function () {
     Route::get('/list-of-graduates', 'index')->name('table-of-graduates');
     Route::get('/list-of-graduates/search', 'search_graduates')->name('search-graduates');
 });
