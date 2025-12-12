@@ -13,6 +13,7 @@
 @endphp
 <body id="body">
     <header class="bg-blue-400 fixed left-0 shadow-md top-0 w-full z-20">
+        <!-- Mobile NAV -->
         <nav class="sm:hidden container mx-auto p-4">
             <div class="flex items-center justify-between relative">
                 @if (!in_array(Route::currentRouteName(), $authViews))
@@ -24,11 +25,48 @@
                     </button>
                 @else
                     <!-- Login Icon -->
-                    <button id="loginBtn" class="bg-blue-100 text-blue-500 border-white border p-2 rounded-md">
+                    <button @click="showLogin = true" class="bg-blue-100 text-blue-500 border-white border p-2 rounded-md">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.0" stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
                         </svg>
                     </button>
+                    <div id="mobileLogin">
+                        <!-- Background Overlay -->
+                        <div class="fixed inset-0 bg-black/50 z-40 pointer-events-auto"
+                            x-show="showLogin"
+                            @click="showLogin = false"
+                            x-transition.opacity>
+                        </div>
+                        <!-- Floating Login Panel -->
+                        <div class="bg-white border-gray-400 border fixed top-1/2 left-1/2 w-80 -translate-x-1/2 -translate-y-1/2 shadow-xl rounded-xl p-6 z-50"
+                            x-show="showLogin"
+                            x-transition>
+                            <h2 class="text-2xl font-semibold mb-4 text-center">Sign In</h2>
+                            <form action="{{ route('login') }}" method="POST">
+                                @csrf
+                                <div class="my-4">
+                                    <input type="email" name="email" 
+                                    class="w-full px-4 py-2 bg-gray-100 text-gray-800 border border-gray-500 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                                    placeholder="E-mail" autofocus />
+                                </div>
+                                <div class="my-4">
+                                    <input type="password" name="password" 
+                                    class="w-full px-4 py-2 text-gray-800 bg-gray-100 border border-gray-500 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                                    placeholder="Password" />
+                                </div>
+                                <div class="mt-7">
+                                    <input type="submit" name="login" value="Log In" 
+                                    class="w-full px-4 py-2 cursor-pointer font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500" />
+                                </div>
+                                <div class="mt-3">
+                                    <button type="button" class="text-gray-600 text-sm border-gray-400 border cursor-pointer py-2 rounded-md w-full hover:bg-gray-400 hover:text-white hover:font-semibold"
+                                        @click="showLogin = false">
+                                        <span>Close</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 @endif
                 <div class="text-white absolute font-[FremontBold,Verdana] font-bold left-1/2 text-3xl transform -translate-x-1/2">
                     @alladmin
@@ -341,13 +379,6 @@
                                     <span class="hidden group-hover:inline-block transition-opacity duration-200">Job Vacancies</span>
                                 </a>
                             </li>
-                            <li>
-                                <!-- Toggle Button -->
-                                <button @click="showLogin = true" id="sidebarLogin"
-                                    class="btn btn-secondary bg-blue-100 hover:bg-blue-200 text-blue-700">
-                                    <span>Log In</span>
-                                </button>
-                            </li>
                         @endalladmin
                         @superadmin
                             <li>
@@ -490,43 +521,6 @@
                 {{ $slot }}
             </main>
         @endif
-        <div id="mobileLogin">
-            <!-- Background Overlay -->
-            <div class="fixed inset-0 bg-black/50 z-40 pointer-events-auto"
-                x-show="showLogin"
-                @click="showLogin = false"
-                x-transition.opacity>
-            </div>
-            <!-- Floating Login Panel -->
-            <div class="bg-white border-gray-400 border fixed top-1/2 left-1/2 w-80 -translate-x-1/2 -translate-y-1/2 shadow-xl rounded-xl p-6 z-50"
-                x-show="showLogin"
-                x-transition>
-                <h2 class="text-2xl font-semibold mb-4 text-center">Log In</h2>
-                <form action="{{ route('login') }}" method="POST">
-                    @csrf
-                    <div class="my-4">
-                        <input type="email" name="email" 
-                        class="w-full px-4 py-2 bg-gray-100 text-gray-800 border border-gray-500 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="E-mail" autofocus />
-                    </div>
-                    <div class="my-4">
-                        <input type="password" name="password" 
-                        class="w-full px-4 py-2 text-gray-800 bg-gray-100 border border-gray-500 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="Password" />
-                    </div>
-                    <div class="mt-7">
-                        <input type="submit" name="login" value="Sign In" 
-                        class="w-full px-4 py-2 cursor-pointer font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                    <div class="mt-3">
-                        <button type="button" class="text-gray-600 text-sm border-gray-400 border cursor-pointer py-2 rounded-md w-full hover:bg-gray-400 hover:text-white hover:font-semibold"
-                            @click="showLogin = false">
-                            <span>Close</span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
     </div>
 </body>
 </html>
