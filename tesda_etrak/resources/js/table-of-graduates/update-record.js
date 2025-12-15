@@ -42,6 +42,11 @@ const hiredDate = document.getElementById("hired_date");
 const submitDocsDate = document.getElementById("submitted_documents_date");
 const interviewDate = document.getElementById("interview_date");
 const notHiredReason = document.getElementById("not_hired_reason");
+
+const VerificationStatus = Object.freeze({
+    RESPONDED: btnResponded.value,
+    NO_RESPONSE: btnNoResponse.value
+});
 //#endregion
 
 //#region FUNCTIONS AND INITIALISATION
@@ -80,10 +85,10 @@ function refreshVerification() {
         btnNone.click();
     }
     if (btnResponded.checked == true) {
-        btnResponded.click();
+        verificationStatusValue(VerificationStatus.RESPONDED);
     }
     if (btnNoResponse.checked == true) {
-        btnNoResponse.click();
+        verificationStatusValue(VerificationStatus.NO_RESPONSE);
     }
 
     if (btnInterested.checked == true) {
@@ -106,27 +111,27 @@ document.addEventListener("DOMContentLoaded", function () {
         verificationStatusValue("");
     });
     btnResponded.addEventListener('click', function () {
-        verificationStatusValue("responded");
+        verificationStatusValue(VerificationStatus.RESPONDED);
     });
     btnNoResponse.addEventListener('click', function () {
-        verificationStatusValue("no response");
+        verificationStatusValue(VerificationStatus.NO_RESPONSE);
     });
 });
 
 function verificationStatusValue(response) {
-    if (response == "responded") {
-        divResponded.style.display = "block";
-        divNoResponse.style.display = "none";
+    if (response == VerificationStatus.RESPONDED) {
+        divResponded.classList.remove("hidden");
+        divNoResponse.classList.add("hidden");
         respondedStatus();
     }
-    else if (response == "no response") {
-        divNoResponse.style.display = "block";
-        divResponded.style.display = "none";
+    else if (response == VerificationStatus.NO_RESPONSE) {
+        divNoResponse.classList.remove("hidden");
+        divResponded.classList.add("hidden");
         noResponseStatus();
     }
     else {
-        divResponded.style.display = "none";
-        divNoResponse.style.display = "none";
+        divResponded.classList.add("hidden");
+        divNoResponse.classList.add("hidden");
         noVerificationStatus();
     }
 }
@@ -348,11 +353,6 @@ function employmentStatusValue(id) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    divResponded.style.display = "none";
-    divNoResponse.style.display = "none";
-    divProceed.style.display = "none";
-    divNotProceed.style.display = "none";
-
     const btnUpdate_1 = document.getElementById("btnUpdate_1");
     const btnUpdate_2 = document.getElementById("btnUpdate_2");
     const btnCancelUpdate = document.getElementById("btnCancelUpdate");

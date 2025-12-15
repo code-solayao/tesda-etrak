@@ -141,7 +141,7 @@
                         </div>
                         <hr class="mt-5">
                     </div>
-                    <div class="mb-4" id="divResponded">
+                    <div class="hidden mb-4" id="divResponded">
                         <div>
                             <label class="form-label">Type of Response</label>
                             <div class="mt-2 space-y-2 ml-[30px]">
@@ -154,7 +154,7 @@
                                     <span class="ml-2 text-gray-700">Not Interested</span>
                                 </label>
                                 <!-- response_status : Interested -->
-                                <div id="divInterested">
+                                <div class="hidden" id="divInterested">
                                     <label class="form-label">Refer to Company?</label>
                                     <fieldset id="referralStatusForm" class="mt-2 space-y-2" disabled>
                                         <!-- referral_status : Yes -->
@@ -174,14 +174,14 @@
                                     </fieldset>
                                 </div>
                                 <!-- response_status : Not Interested -->
-                                <div id="divNotInterested">
+                                <div class="hidden" id="divNotInterested">
                                     <label for="not_interested_reason" class="form-label">Reason</label>
                                     <textarea name="not_interested_reason" id="not_interested_reason" rows="3" class="form-input" disabled>{{ old('not_interested_reason', $graduate->not_interested_reason) }}</textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-4" id="divNoResponse">
+                    <div class="hidden mb-4" id="divNoResponse">
                         <div>
                             <label class="form-label mb-4">No Response (For Follow-up)</label>
                             <div class="mb-4 ml-[30px]">
