@@ -20,6 +20,10 @@
 }
 
 @layer components {
+    body {
+        @apply bg-blue-50 text-gray-900;
+    }
+
     h1 {
         @apply font-bold text-7xl;
     }
@@ -71,10 +75,6 @@
     .form-radio {
         @apply text-blue-500 border-gray-300 focus:ring-blue-500;
     }
-}
-
-#body {
-    @apply bg-cyan-50 text-gray-900;
 }
 
 dt {

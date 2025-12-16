@@ -56,9 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     tabVerification.addEventListener('click', function () {
         openTab(1);
-
-        divInterested.style.display = "none";
-        divNotInterested.style.display = "none";
         refreshVerification();
     });
     tabEmployment.addEventListener('click', function () {

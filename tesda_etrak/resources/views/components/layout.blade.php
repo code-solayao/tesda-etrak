@@ -11,7 +11,7 @@
     $authViews = ['view.login', 'view.signup'];
     $noHeader = ['admin.dashboard', 'admin.home', 'dashboard', 'home', 'view.login', 'view.signup'];
 @endphp
-<body id="body">
+<body>
     <header class="bg-blue-400 fixed left-0 shadow-md top-0 w-full z-20">
         <!-- Mobile NAV -->
         <nav class="sm:hidden container mx-auto p-4">
@@ -336,7 +336,7 @@
             </aside>
             <!-- Sidebar (Desktop) -->
             @auth
-                <aside class="bg-sky-100 hover:w-64 lg:flex fixed flex-col group h-[calc(100vh-4rem)] hidden left-0 shadow-md top-[4rem] w-20 z-10 transition-all duration-300">
+                <aside class="bg-blue-100 border-r border-blue-300 hover:w-64 lg:flex fixed flex-col group h-[calc(100vh-4rem)] hidden left-0 shadow-md top-[4rem] w-20 z-10 transition-all duration-300">
                     <ul class="space-y-4 pt-10 pb-4 px-4">
                         @alladmin
                             <li>
