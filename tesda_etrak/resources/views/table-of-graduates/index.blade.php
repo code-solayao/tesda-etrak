@@ -87,7 +87,7 @@
             <tbody class="leading-normal text-center text-md">
                 @foreach ($graduates as $graduate)
                     @alladmin
-                        <tr data-url="{{ route('admin.record-details', $graduate->id) }}" class="body-row border-b border-gray-300 hover:bg-gray-100">
+                        <tr data-url="{{ route('admin.record-details', $graduate->id) }}" class="body-row border-b border-gray-300 hover:bg-blue-100">
                             <td class="px-6 py-3">{{ $graduate->last_name }}</td>
                             <td class="px-6 py-3">{{ $graduate->first_name }}</td>
                             <td class="px-6 py-3">{{ $graduate->middle_name }}</td>

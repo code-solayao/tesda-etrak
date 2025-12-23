@@ -8,7 +8,7 @@
     <section class="block sm:flex flex-row-reverse items-start justify-between">
         <div id="loginForm">
             <section class="hidden sm:flex items-baseline justify-end">
-                <div class="bg-gray-200 border-gray-400 border fixed flex items-center justify-center h-[800px] rounded-2xl drop-shadow-lg">
+                <div class="bg-blue-200 border-gray-400 border fixed flex items-center justify-center h-[800px] rounded-2xl drop-shadow-lg">
                     <div class="w-sm p-8 space-y-6">
                         <div class="border-b p-2">
                             <h2 class="text-black text-2xl text-center font-medium">Sign in</h2>
@@ -24,12 +24,12 @@
                             @csrf
                             <div>
                                 <input type="email" name="email" 
-                                class="w-full px-4 py-2 mt-1 text-gray-800 bg-gray-100 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                                class="w-full px-4 py-2 mt-1 text-gray-800 bg-gray-100 border border-gray-400 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
                                 placeholder="E-mail" autofocus />
                             </div>
                             <div>
                                 <input type="password" name="password" 
-                                class="w-full px-4 py-2 mt-1 text-gray-800 bg-gray-100 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
+                                class="w-full px-4 py-2 mt-1 text-gray-800 bg-gray-100 border border-gray-400 rounded-lg focus:ring-blue-500 focus:border-blue-500" 
                                 placeholder="Password" />
                             </div>
                             <div>
