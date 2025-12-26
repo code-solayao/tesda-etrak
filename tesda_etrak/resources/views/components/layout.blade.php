@@ -143,7 +143,7 @@
                 x-transition.opacity>
             </div>
             <!-- Sidebar -->
-            <aside class="bg-sky-200 fixed flex flex-col h-full left-0 p-6 shadow-md top-0 w-64 z-40 transform transition-transform ease-in-out duration-300" 
+            <aside class="bg-gray-100 fixed flex flex-col h-full left-0 p-6 shadow-md top-0 w-64 z-40 transform transition-transform ease-in-out duration-300" 
                 x-show="sidebarOpen" 
                 x-transition:enter="translate-x-0" 
                 x-transition:leave="-translate-x-full" 
@@ -336,7 +336,7 @@
             </aside>
             <!-- Sidebar (Desktop) -->
             @auth
-                <aside class="bg-blue-100 border-r border-blue-300 hover:w-64 lg:flex fixed flex-col group h-[calc(100vh-4rem)] hidden left-0 shadow-md top-[4rem] w-20 z-10 transition-all duration-300">
+                <aside class="bg-gray-100 border-r border-gray-300 hover:w-64 lg:flex fixed flex-col group h-[calc(100vh-4rem)] hidden left-0 shadow-md top-[4rem] w-20 z-10 transition-all duration-300">
                     <ul class="space-y-4 pt-10 pb-4 px-4">
                         @alladmin
                             <li>

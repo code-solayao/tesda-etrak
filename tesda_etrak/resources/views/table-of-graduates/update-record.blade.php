@@ -154,7 +154,7 @@
                                     <span class="ml-2 text-gray-700">Not Interested</span>
                                 </label>
                                 <!-- response_status : Interested -->
-                                <div class="hidden" id="divInterested">
+                                <div class="hidden my-0" id="divInterested">
                                     <label class="form-label">Refer to Company?</label>
                                     <fieldset id="referralStatusForm" class="mt-2 space-y-2" disabled>
                                         <!-- referral_status : Yes -->
@@ -162,19 +162,17 @@
                                             <input type="radio" name="referral_status" id="btnYes" class="form-radio" value="Yes" {{ old('referral_status', $graduate->referral_status) == 'Yes' ? 'checked' : '' }} />
                                             <span class="ml-2 text-gray-700">YES</span>
                                         </label>
-                                        <input type="date" name="referral_date" id="referral_date" class="form-input mb-3 ml-5" value="{{ old('referral_date', $graduate->referral_date) }}" disabled />
+                                        <input type="date" name="referral_date" id="referral_date" class="form-input mb-3 ml-5 bg-gray-200" value="{{ old('referral_date', $graduate->referral_date) }}" disabled />
                                         <!-- referral_status : No -->
                                         <label for="btnNo" class="flex items-center">
                                             <input type="radio" name="referral_status" id="btnNo" class="form-radio" value="No" {{ old('referral_status', $graduate->referral_status) == 'No' ? 'checked' : '' }} />
                                             <span class="ml-2 text-gray-700">NO</span>
                                         </label>
-                                        <textarea name="no_referral_reason" id="no_referral_reason" rows="3" class="form-input mb-3 ml-5" placeholder="Reason" disabled>
-                                            {{ old('no_referral_reason', $graduate->no_referral_reason) }}
-                                        </textarea>
+                                        <textarea name="no_referral_reason" id="no_referral_reason" rows="3" class="form-input mb-3 ml-5 bg-gray-200" placeholder="Reason" disabled>{{ old('no_referral_reason', $graduate->no_referral_reason) }}</textarea>
                                     </fieldset>
                                 </div>
                                 <!-- response_status : Not Interested -->
-                                <div class="hidden" id="divNotInterested">
+                                <div class="hidden my-0" id="divNotInterested">
                                     <label for="not_interested_reason" class="form-label">Reason</label>
                                     <textarea name="not_interested_reason" id="not_interested_reason" rows="3" class="form-input" disabled>{{ old('not_interested_reason', $graduate->not_interested_reason) }}</textarea>
                                 </div>

@@ -44,8 +44,17 @@ const interviewDate = document.getElementById("interview_date");
 const notHiredReason = document.getElementById("not_hired_reason");
 
 const VerificationStatus = Object.freeze({
+    NONE: btnNone.value,
     RESPONDED: btnResponded.value,
     NO_RESPONSE: btnNoResponse.value
+});
+const ResponseType = Object.freeze({
+    INTERESTED: btnInterested.value,
+    NOT_INTERESTED: btnNotInterested.value
+});
+const Referral_Status = Object.freeze({
+    YES: btnYes.value,
+    NO: btnNo.value
 });
 //#endregion
 
@@ -79,7 +88,7 @@ function openTab(index) {
 
 function refreshVerification() {
     if (btnNone.checked == true) {
-        btnNone.click();
+        verificationStatusValue(VerificationStatus.NONE);
     }
     if (btnResponded.checked == true) {
         verificationStatusValue(VerificationStatus.RESPONDED);
@@ -89,23 +98,23 @@ function refreshVerification() {
     }
 
     if (btnInterested.checked == true) {
-        btnInterested.click();
+        typeOfResponse(ResponseType.INTERESTED);
     }
     if (btnNotInterested.checked == true) {
-        btnNotInterested.click();
+        typeOfResponse(ResponseType.NOT_INTERESTED);
     }
 
     if (btnYes.checked == true) {
-        btnYes.click();
+        referralStatus(Referral_Status.YES);
     }
     if (btnNo.checked == true) {
-        btnNo.click();
+        referralStatus(Referral_Status.NO);
     }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
     btnNone.addEventListener('click', function () {
-        verificationStatusValue("");
+        verificationStatusValue(VerificationStatus.NONE);
     });
     btnResponded.addEventListener('click', function () {
         verificationStatusValue(VerificationStatus.RESPONDED);
@@ -143,8 +152,8 @@ function respondedStatus() {
 }
 
 function noResponseStatus() {
-    divInterested.style.display = "none";
-    divNotInterested.style.display = "none";
+    divInterested.classList.add("hidden");
+    divNotInterested.classList.add("hidden");
 
     btnInterested.checked = false;
     referralStatusForm.disabled = true;
@@ -190,18 +199,27 @@ function noVerificationStatus() {
 
 document.addEventListener("DOMContentLoaded", function () {
     btnInterested.addEventListener('click', function () {
-        divInterested.style.display = "block";
-        divNotInterested.style.display = "none";
-
-        referralStatusForm.disabled = false;
-        notInterestedReason.disabled = true;
-        notInterestedReason.value = "";
+        typeOfResponse(ResponseType.INTERESTED);
     });
     btnNotInterested.addEventListener('click', function () {
-        divNotInterested.style.display = "block";
-        divInterested.style.display = "none";
+        typeOfResponse(ResponseType.NOT_INTERESTED);
+    });
+});
 
+function typeOfResponse(response) {
+    if (response == ResponseType.INTERESTED) {
+        divInterested.classList.remove("hidden");
+        referralStatusForm.disabled = false;
+        
+        divNotInterested.classList.add("hidden");
+        notInterestedReason.disabled = true;
+        notInterestedReason.value = "";
+    }
+    else {
+        divNotInterested.classList.remove("hidden");
         notInterestedReason.disabled = false;
+        
+        divInterested.classList.add("hidden");
         referralStatusForm.disabled = true;
         btnYes.checked = false;
         btnNo.checked = false;
@@ -211,15 +229,15 @@ document.addEventListener("DOMContentLoaded", function () {
         noReferralReason.value = "";
 
         employmentField(true);
-    });
-});
+    }
+}
 
 document.addEventListener("DOMContentLoaded", function () {
     btnYes.addEventListener('click', function () {
-        referralStatus(true);
+        referralStatus(Referral_Status.YES);
     });
     btnNo.addEventListener('click', function () {
-        referralStatus(false);
+        referralStatus(Referral_Status.NO);
     });
 
     invalidContact.addEventListener('click', function () {
@@ -227,16 +245,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-function referralStatus(canRefer) {
-    if (canRefer) {
+function referralStatus(response) {
+    if (response == Referral_Status.YES) {
         referralDate.disabled = false;
+        referralDate.classList.remove("bg-gray-200");
         noReferralReason.disabled = true;
         noReferralReason.value = "";
+        noReferralReason.classList.add("bg-gray-200");
         employmentField(false);
     }
     else {
         noReferralReason.disabled = false;
+        noReferralReason.classList.remove("bg-gray-200");
         referralDate.disabled = true;
+        referralDate.classList.add("bg-gray-200");
         resetDate(referralDate);
         employmentField(true);
     }
